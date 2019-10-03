@@ -19,7 +19,9 @@ export const BADGE_PRINTED       = 'BADGE_PRINTED';
 export const getBadge = () => (dispatch, getState) => {
 
     dispatch(stopLoading());
-    return 1;
+    dispatch(createAction(REQUEST_BADGE));
+
+    return;
 
     let params = {
         access_token : accessToken,

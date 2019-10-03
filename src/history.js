@@ -11,20 +11,5 @@
  * limitations under the License.
  **/
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './app';
-import { Provider } from 'react-redux'
-import store from './store';
-import 'font-awesome/css/font-awesome.css';
-import './styles/general.less';
-import 'sweetalert2/dist/sweetalert2.css';
-import 'openstack-uicore-foundation/lib/css/components.css';
-
-
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.querySelector('#root')
-);
+import { createBrowserHistory } from 'history';
+export default createBrowserHistory();

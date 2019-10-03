@@ -4,7 +4,7 @@ import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED} from "../actions/base-acti
 
 
 const DEFAULT_STATE = {
-    badge: null,
+    badge: {badge_type: 'crew', summit_id:1},
     loading: 0,
 }
 
@@ -19,7 +19,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return {...state, loading: 0};
         break;
         case REQUEST_BADGE: {
-
+            console.log('reducer');
             return state
         }
         break;
