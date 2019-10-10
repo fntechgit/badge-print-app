@@ -13,7 +13,6 @@ class Badge {
         const template_path = `./badge_templates/summit_${summit_id}/${badge_type}/badge_1.js`;
 
         // TODO get all files in dir dynamically
-
         /*if (templates.length == 0) {
             return (<div>Template not found.</div>);
         } else {
@@ -22,10 +21,11 @@ class Badge {
         }*/
 
         const BadgeTemplate = React.lazy(() => import(`../badge_templates/summit_${summit_id}/${badge_type}/badge_1.js`));
-        //const PrintableBadge = printableBadge(BadgeTemplate);
+        const PrintableBadge = printableBadge(BadgeTemplate);
+
         return (
             <React.Suspense fallback={<div>Loading Badge</div>}>
-                <BadgeTemplate badge={this._badge} />
+                <PrintableBadge badge={this._badge} />
             </React.Suspense>
         );
     }

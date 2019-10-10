@@ -1,7 +1,7 @@
 import React from 'react'
+import { Print } from 'react-easy-print';
 
-
-export function printableBadge(BadgeComponent) {
+export default function printableBadge(BadgeComponent) {
     return class extends React.Component {
         constructor(props) {
             super(props);
@@ -13,7 +13,11 @@ export function printableBadge(BadgeComponent) {
         }
 
         render() {
-            return <BadgeComponent {...this.props}  onPrint={this.onPrint} />
+            return (
+                <Print single name="badge">
+                    <BadgeComponent {...this.props}  onPrint={this.onPrint} />
+                </Print>
+            );
         }
     }
 }
