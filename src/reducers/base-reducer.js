@@ -1,10 +1,10 @@
 
 import { START_LOADING, STOP_LOADING } from "openstack-uicore-foundation/lib/actions";
-import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED} from "../actions/base-actions";
+import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED, CLEAR_BADGE} from "../actions/base-actions";
 
 
 const DEFAULT_STATE = {
-    badge: {badge_type: 'crew', summit_id:1},
+    badge: null,
     loading: 0,
 }
 
@@ -19,18 +19,21 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return {...state, loading: 0};
         break;
         case REQUEST_BADGE: {
-            console.log('reducer');
             return state
         }
         break;
         case BADGE_RECEIVED: {
-
-            return state
+            let badge = {...payload.response};
+            return {...state, badge: badge};
         }
         break;
         case BADGE_PRINTED: {
 
             return state
+        }
+        break;
+        case CLEAR_BADGE: {
+            return {...state, badge: null};
         }
         break;
         default:

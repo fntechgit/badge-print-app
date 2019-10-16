@@ -52,16 +52,16 @@ module.exports = {
                 use: "url-loader?limit=10000&minetype=application/font-woff&name=fonts/[name].[ext]"
             },
             {
-                test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: "file-loader?name=fonts/[name].[ext]"
             },
             {
                 test: /\.jpg|\.png|\.gif$/,
-                use: "file-loader?name=images/[name].[ext]"
+                use: "file-loader?name=images/[path][name].[ext]"
             },
             {
                 test: /\.svg/,
-                use: "file-loader?name=svg/[name].[ext]!svgo-loader"
+                use: "file-loader?name=svg/[path][name].[ext]!svgo-loader"
             },
             {
                 test: /\.yaml$/,

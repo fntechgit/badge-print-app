@@ -7,6 +7,7 @@ import history from './history'
 import PrintPage from "./pages/print-page";
 import NoMatchPage from "./pages/no-match-page"
 import PrintProvider, { Print, NoPrint } from 'react-easy-print';
+import {clearBadge} from "./actions/base-actions";
 
 
 // move all env var to global scope so ui core has access to this
@@ -14,8 +15,12 @@ window.API_BASE_URL        = process.env['API_BASE_URL'];
 
 class App extends React.PureComponent {
 
+    componentDidMount() {
+        this.props.clearBadge();
+    }
+
     render() {
-        let { loading } = this.props;
+        let { loading, badge } = this.props;
 
         return (
             <PrintProvider>
@@ -29,7 +34,7 @@ class App extends React.PureComponent {
                                         Print Badge
                                     </div>
                                     <div className="col-md-6 title">
-                                        <button onClick={() => window.print()}>PRINT</button>
+                                        <button className="btn btn-default btn-lg" disabled={!badge} onClick={() => window.print()}>PRINT</button>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +53,9 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = ({ baseState }) => ({
-    loading : baseState.loading,
-})
+    ...baseState
+});
 
-export default connect(mapStateToProps, {})(App)
+export default connect(mapStateToProps, {
+    clearBadge
+})(App)
