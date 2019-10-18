@@ -75,7 +75,7 @@ export const getBadge = (summitId, ticketId, accessToken) => (dispatch, getState
 
     dispatch(startLoading());
 
-    return getRequest(
+    return putRequest(
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
         `${window.API_BASE_URL}/api/v1/summits/${summitId}/tickets/${ticketId}/badge/current/print`,

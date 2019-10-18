@@ -30,9 +30,9 @@ export default ({badge}) => {
                 <p className="badge-content">{badge.getTwitter()}</p>
             </div>
 
-            {badge.getQRCode() &&
+            {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content ">
-                <img id="qr-code-img" className="bdg-image" src={badge.getQRCode()}/>
+                {badge.getQRCode()}
             </div>
             }
 

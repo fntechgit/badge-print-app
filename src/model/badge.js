@@ -78,12 +78,17 @@ class Badge {
         return twitter;
     }
 
+    hasQRCode() {
+        return this._badge.qr_code;
+    }
+
     getQRCode() {
+        var QRCode = require('qrcode.react');
         const {qr_code} = this._badge;
         let qr = null;
 
         if (qr_code) {
-            qr = qr_code;
+            qr = <QRCode value={qr_code} />
         }
 
         return qr;
@@ -109,6 +114,12 @@ class Badge {
         }
 
         return feature;
+    }
+
+    getQRCode() {
+        var QRCode = require('qrcode.react');
+
+        return <QRCode value={this._badge.qr_code} />
     }
 
 }
