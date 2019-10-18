@@ -34,10 +34,12 @@ class Badge {
         const {owner} = this._badge.ticket;
         let fullName = 'N/A';
 
-        if (owner.first_name && owner.surname) {
-            fullName = `${owner.first_name} ${owner.surname}`;
-        } else if (owner.member) {
-            fullName = `${owner.member.first_name} ${owner.member.last_name}`;
+        if (owner) {
+            if (owner.first_name && owner.surname) {
+                fullName = `${owner.first_name} ${owner.surname}`;
+            } else if (owner.member) {
+                fullName = `${owner.member.first_name} ${owner.member.last_name}`;
+            }
         }
 
         return fullName;

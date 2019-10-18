@@ -78,7 +78,7 @@ export const getBadge = (summitId, ticketId, accessToken) => (dispatch, getState
     return getRequest(
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitId}/tickets/${ticketId}/badge`,
+        `${window.API_BASE_URL}/api/v1/summits/${summitId}/tickets/${ticketId}/badge/current/print`,
         errorHandler
     )(params)(dispatch)
         .then((payload) => {
