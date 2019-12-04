@@ -22,7 +22,7 @@ class PrintPage extends React.Component {
     }
 
     render(){
-        let {badge, match, location, loading} = this.props;
+        let {badge, match, location, loading, size} = this.props;
         let accessToken = this.qs.parse(location.search, { ignoreQueryPrefix: true }).access_token;
 
         if (loading) return (<div>Loading badge</div>);
@@ -44,7 +44,7 @@ class PrintPage extends React.Component {
         return (
             <div className="container print-page-wrapper">
                 <div className="badge-wrapper">
-                    {badgeObj.renderTemplate()}
+                    {badgeObj.renderTemplate(size)}
                 </div>
             </div>
         );

@@ -8,19 +8,16 @@ class Badge {
         this._badge  = badge;
     }
 
-    renderTemplate() {
+    renderTemplate(size) {
         const {type} = this._badge;
-        const template_path = `../badge_templates/summit_${type.summit_id}/${type.name}/badge_1.js`;
+        const canPrint = false;
 
-        // TODO get all files in dir dynamically
-        /*if (templates.length == 0) {
-            return (<div>Template not found.</div>);
-        } else {
-            const BadgeTemplate = printableBadge(React.lazy(() => import(template_path)));
-            return <BadgeTemplate badge={this._badge} />
-        }*/
+        const BadgeTemplate = React.lazy(
+            () =>
+                import(`../badge_templates/summit_${type.summit_id}/${type.name}/${size}/badge_1.js`)
+                    .catch(() => ({ default: () => <div className="no-template">There is no Badge Template for this size or badge type.</div> }))
+        );
 
-        const BadgeTemplate = React.lazy(() => import(`../badge_templates/summit_${type.summit_id}/${type.name}/badge_1.js`));
         const PrintableBadge = printableBadge(BadgeTemplate);
 
         return (

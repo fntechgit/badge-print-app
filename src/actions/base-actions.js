@@ -1,20 +1,17 @@
 import Swal from "sweetalert2";
 import {
-    getRequest,
     putRequest,
-    postRequest,
-    deleteRequest,
     createAction,
     stopLoading,
     startLoading,
     showMessage
 } from "openstack-uicore-foundation/lib/methods";
 
-
 export const REQUEST_BADGE       = 'REQUEST_BADGE';
 export const BADGE_RECEIVED      = 'BADGE_RECEIVED';
 export const BADGE_PRINTED       = 'BADGE_PRINTED';
 export const CLEAR_BADGE         = 'CLEAR_BADGE';
+export const UPDATE_SIZE         = 'UPDATE_SIZE';
 
 
 export const errorHandler = (err, res) => (dispatch, state) => {
@@ -63,7 +60,6 @@ export const errorHandler = (err, res) => (dispatch, state) => {
     }
 }
 
-
 export const getBadge = (summitId, ticketId, accessToken) => (dispatch, getState) => {
 
     let params = {
@@ -87,12 +83,14 @@ export const getBadge = (summitId, ticketId, accessToken) => (dispatch, getState
     );
 };
 
-
 export const clearBadge = () => (dispatch) => {
 
     dispatch(createAction(CLEAR_BADGE)({}));
 
 };
 
+export const changeSize = (size) => (dispatch) => {
 
+    dispatch(createAction(UPDATE_SIZE)({size}));
 
+};

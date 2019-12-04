@@ -1,10 +1,16 @@
 
 import { START_LOADING, STOP_LOADING } from "openstack-uicore-foundation/lib/actions";
-import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED, CLEAR_BADGE} from "../actions/base-actions";
+import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED, CLEAR_BADGE, UPDATE_SIZE} from "../actions/base-actions";
 
 
 const DEFAULT_STATE = {
     badge: null,
+    sizes: [
+        {value: "50x60", label: '5" by 6"'},
+        {value: "40x50", label: '4" by 5"'},
+        {value: "35x55", label: '3.5" by 5.5"'}
+    ],
+    size: "40x50",
     loading: 0,
 }
 
@@ -34,6 +40,11 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         break;
         case CLEAR_BADGE: {
             return {...state, badge: null};
+        }
+        break;
+        case UPDATE_SIZE: {
+            let {size} = payload;
+            return {...state, size };
         }
         break;
         default:

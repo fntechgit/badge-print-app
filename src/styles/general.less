@@ -60,13 +60,24 @@ body {
   .header-title {
     font-size: 16px;
     margin: 0 10px 10px 0;
-    text-align: center;
 
     .title {
       top: 10px;
       font-size: 1.5em;
       .subtitle {
         font-size: 0.7em;
+      }
+    }
+
+    .size-select {
+      &> div {
+        float: right;
+      }
+      .dropdown {
+        width: 200px;
+      }
+      .size-label {
+        margin: 7px 20px 0 0;
       }
     }
   }
@@ -85,6 +96,10 @@ body {
   min-height: 522px;
 }
 
+.no-template {
+  font-size: 30px;
+  text-align: center;
+}
 
 .no_match_page_wrapper {
   text-align: center;
