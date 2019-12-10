@@ -6,11 +6,11 @@ import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED, CLEAR_BADGE, UPDATE_SIZE} 
 const DEFAULT_STATE = {
     badge: null,
     sizes: [
-        {value: "50x60", label: '5" by 6"'},
+        {value: "40x60", label: '4" by 6"'},
         {value: "40x50", label: '4" by 5"'},
         {value: "35x55", label: '3.5" by 5.5"'}
     ],
-    size: "40x50",
+    size: "40x60",
     loading: 0,
 }
 

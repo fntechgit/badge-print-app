@@ -57,6 +57,7 @@
     "react-rte-ref-fix": "^0.16.2",
     "react-select": "^2.4.4",
     "react-star-ratings": "^2.3.0",
+    "react-textfit": "^1.1.0",
     "react-tooltip": "^3.11.1",
     "redux": "^3.7.2",
     "redux-persist": "^5.10.0",
