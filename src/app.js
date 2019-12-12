@@ -6,7 +6,7 @@ import { AjaxLoader, Dropdown } from "openstack-uicore-foundation/lib/components
 import history from './history'
 import PrintPage from "./pages/print-page";
 import NoMatchPage from "./pages/no-match-page"
-import PrintProvider, { Print, NoPrint } from 'react-easy-print';
+import PrintProvider, { NoPrint } from 'react-easy-print';
 import {clearBadge, changeSize} from "./actions/base-actions";
 
 

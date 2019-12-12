@@ -4,9 +4,25 @@
     display: none;
   }
 
-  @page {
-    margin: 0.5cm;
+  .header {
+    display:none;
   }
+
+  html,
+  body {
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    margin: 0 !important;
+  }
+
+  .container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
 }
 
 body, h1, h2, h3, h4, h5, h6 {

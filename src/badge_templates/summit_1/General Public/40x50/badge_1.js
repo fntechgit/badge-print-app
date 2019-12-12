@@ -20,16 +20,16 @@ export default ({badge}) => {
             }
 
             <div id="name-on-badge" className="bdg-content">
-                <Textfit mode="single" max="35" className="badge-content">{badge.getFullName()}</Textfit>
+                <Textfit mode="single" max={35} className="badge-content">{badge.getFullName()}</Textfit>
             </div>
             <div id="irc-handle" className="bdg-content ">
-                <Textfit mode="single" max="35" className="badge-content">{badge.getIRC()}</Textfit>
+                <Textfit mode="single" max={35} className="badge-content">{badge.getIRC()}</Textfit>
             </div>
             <div id="company" className="bdg-content ">
-                <Textfit mode="single" max="35" className="badge-content">{badge.getCompany()}</Textfit>
+                <Textfit mode="single" max={35} className="badge-content">{badge.getCompany()}</Textfit>
             </div>
             <div id="twitter" className="bdg-content ">
-                <Textfit mode="single" max="35" className="badge-content">{badge.getTwitter()}</Textfit>
+                <Textfit mode="single" max={35} className="badge-content">{badge.getTwitter()}</Textfit>
             </div>
 
             {badge.hasQRCode() &&
