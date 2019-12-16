@@ -11,6 +11,7 @@ const DEFAULT_STATE = {
         {value: "35x55", label: '3.5" by 5.5"'}
     ],
     size: "40x60",
+    summitSlug: '',
     loading: 0,
 }
 
@@ -25,6 +26,8 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return {...state, loading: 0};
         break;
         case REQUEST_BADGE: {
+            let { summitSlug } = payload;
+            return {...state, summitSlug};
             return state
         }
         break;

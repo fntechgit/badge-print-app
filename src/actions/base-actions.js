@@ -60,22 +60,24 @@ export const errorHandler = (err, res) => (dispatch, state) => {
     }
 }
 
-export const getBadge = (summitId, ticketId, accessToken) => (dispatch, getState) => {
+export const getBadge = (summitSlug, ticketId, accessToken) => (dispatch, getState) => {
 
     let params = {
         access_token : accessToken,
         expand: 'ticket, ticket.order, ticket.owner, ticket.owner.member, features, type, type.access_levels'
     };
 
-    if (!summitId || !ticketId || !accessToken) return;
+    if (!summitSlug || !ticketId || !accessToken) return;
 
     dispatch(startLoading());
 
     return putRequest(
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitId}/tickets/${ticketId}/badge/current/print`,
-        errorHandler
+        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
+        {},
+        errorHandler,
+        {summitSlug}
     )(params)(dispatch)
         .then((payload) => {
             dispatch(stopLoading());

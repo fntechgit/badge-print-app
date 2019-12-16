@@ -66,7 +66,7 @@ class App extends React.PureComponent {
                             </div>
 
                             <Switch>
-                                <Route path="/summit/:summit_id/ticket/:ticket_id" component={PrintPage} />
+                                <Route path="/summit/:summit_slug/ticket/:ticket_id" component={PrintPage} />
                                 <Route component={NoMatchPage} />
                             </Switch>
 

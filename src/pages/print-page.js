@@ -13,21 +13,21 @@ class PrintPage extends React.Component {
     }
 
     componentDidMount() {
-        let summitId = this.props.match.params.summit_id;
+        let summitSlug = this.props.match.params.summit_slug;
         let ticketId = this.props.match.params.ticket_id;
 
         let accessToken = this.qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
 
-        this.props.getBadge(summitId, ticketId, accessToken);
+        this.props.getBadge(summitSlug, ticketId, accessToken);
     }
 
     render(){
-        let {badge, match, location, loading, size} = this.props;
+        let {badge, match, location, loading, size, summitSlug} = this.props;
         let accessToken = this.qs.parse(location.search, { ignoreQueryPrefix: true }).access_token;
 
         if (loading) return (<div>Loading badge</div>);
 
-        if (!match.params.summit_id || !match.params.ticket_id) {
+        if (!match.params.summit_slug || !match.params.ticket_id) {
             return (<ErrorPage message="Summit or Ticket missing in url" />);
         }
 
@@ -44,7 +44,7 @@ class PrintPage extends React.Component {
         return (
             <div className="container print-page-wrapper">
                 <div className="badge-wrapper">
-                    {badgeObj.renderTemplate(size)}
+                    {badgeObj.renderTemplate(size, summitSlug)}
                 </div>
             </div>
         );
