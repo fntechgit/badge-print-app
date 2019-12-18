@@ -13,33 +13,21 @@ export default ({badge}) => {
         <div id="badge-artboard" className="bdg-artboard">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
 
-            {badge.getAccessLevel('Headquarters') &&
-            <div id="icon-access-1" className="bdg-content icon-access">
-                <img className="bdg-image" src={access_level_1_img}/>
+            <div id="name-on-badge" className="bdg-content text-box text-box-1">
+                <Textfit mode="single" max={35} className="box-content">{badge.getFullName()}</Textfit>
             </div>
-            }
-
-            <div id="name-on-badge" className="bdg-content">
-                <Textfit mode="single" max={35} className="badge-content">{badge.getFullName()}</Textfit>
-            </div>
-            <div id="irc-handle" className="bdg-content ">
-                <Textfit mode="single" max={35} className="badge-content">{badge.getIRC()}</Textfit>
-            </div>
-            <div id="company" className="bdg-content ">
-                <Textfit mode="single" max={35} className="badge-content">{badge.getCompany()}</Textfit>
-            </div>
-            <div id="twitter" className="bdg-content ">
-                <Textfit mode="single" max={35} className="badge-content">{badge.getTwitter()}</Textfit>
+            <div id="company" className="bdg-content text-box text-box-2">
+                <Textfit mode="single" max={35} className="box-content">{badge.getCompany()}</Textfit>
             </div>
 
             {badge.hasQRCode() &&
-            <div id="qrcode" className="bdg-content ">
+            <div id="qrcode" className="bdg-content qrcode-box">
                 {badge.getQRCode()}
             </div>
             }
 
             {badge.getFeature('VIP Access') &&
-            <div id="icon-honorary-1" className="bdg-content icon-honorary">
+            <div id="icon-feature-1" className="bdg-content icon-feature">
                 <img className="bdg-image" src={feature_1_img}/>
             </div>
             }

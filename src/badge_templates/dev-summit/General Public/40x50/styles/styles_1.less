@@ -1,84 +1,33 @@
 /* -- general styles -- */
 
-#badge-artboard {
-	margin: 0;
+.bdg-artboard {
 	width: 102mm;
 	height: 255mm;
-	position: relative;
-	overflow: hidden;
 }
 
-.bdg-image {
-	display: block;
-	width:100% !important;
-}
-
-#badge-artboard img,
-.bdg-content {
-	position: absolute;
-	overflow: hidden;
-}
-
-#badge-artboard .badge-content {
-	white-space: nowrap;
-	margin: 0;
-	font-family: gothamnarrow-bold,arial,sans-serif;
-	font-weight: bold;
-	font-size: 5mm;
-	height: auto;
-	filter: alpha(opacity=100);
-	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-	opacity: 1;
-	letter-spacing: 0;
-	text-align: left;
-	color: #133f69;
-	text-transform: none;
-	padding-bottom: 0;
-	padding-top: 0;
-	mix-blend-mode: normal;
-	font-style: normal;
-	position: absolute;
-	left: 12mm;
-	bottom: 0;
+.bdg-artboard .box-content {
+	font-size: 8mm;
 	line-height: 8mm;
-	-webkit-print-color-adjust: exact;
+	left: 12mm;
 }
 
-#name-on-badge,
-#irc-handle,
-#company,
-#twitter {
+.text-box {
 	height: 11mm;
 	width: 82mm;
 	left: 10mm;
 }
 
-#name-on-badge {
-	top:45mm;
-}
+.text-box.text-box-1 {top:45mm;}
 
-#irc-handle {
-	top: 58mm;
-}
+.text-box.text-box-2 {top: 58mm;}
 
-#company {
-	top: 71mm;
-}
+.text-box.text-box-3 {top: 71mm;}
 
-#twitter {
-	top: 84mm;
-}
+.text-box.text-box-4 {top: 84mm;}
 
-#qrcode {
+.qrcode-box {
 	top: 99mm;
-	height: 25mm;
-	width: 25mm;
 	left: 11mm;
-}
-
-#qrcode canvas {
-	height: 25mm !important;
-	width: 25mm !important;
 }
 
 .icon-access,
@@ -87,44 +36,22 @@
 	width: 16mm;
 }
 
-.icon-access {
-	top: 8mm;
-}
+.icon-access {top: 8mm;}
 
-.icon-honorary {
-	top: 107mm;
-}
+.icon-honorary {top: 105mm;}
 
-#icon-access-1 {
-	left: 8mm;
-}
+#icon-access-1 {left: 8mm;}
 
-#icon-access-2 {
-	left: 28mm;
-}
+#icon-access-2 {left: 28mm;}
 
-#icon-access-3 {
-	left: 48mm;
-}
+#icon-access-3 {left: 48mm;}
 
-#icon-honorary-1 {
-	left: 40mm;
-}
+#icon-honorary-1 {left: 40mm;}
 
-#icon-honorary-2 {
-	left: 58mm;
-}
+#icon-honorary-2 {left: 58mm;}
 
-#icon-honorary-3 {
-	left: 78mm;
-}
+#icon-honorary-3 {left: 78mm;}
 
-/* -- screen only styles -- */
-@media screen {
-	#badge-artboard {
-		margin:0 auto;
-	}
-}
 
 /* -- print only styles -- */
 
@@ -132,11 +59,6 @@
 
 	@page {
 		size: 102mm 255mm portrait;
-		margin: 0;
 	}
 
-	/* this overrules bootstrap print text color */
-	.badge-content * {
-		color: #133f69 !important;
-	}
 }
