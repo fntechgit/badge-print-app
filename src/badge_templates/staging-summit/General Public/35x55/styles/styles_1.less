@@ -1,29 +1,29 @@
 /* -- general styles -- */
 
 #badge-artboard {
-	margin: 0;
-	width: 102mm;
-	height: 305mm;
-	position: relative;
-	overflow: hidden;
-}
+	margin:0 auto;
+	width:92mm; 
+	height:140mm;
+	position:relative;
+	overflow:hidden;
+} 
 
 .bdg-image {
-	display: block;
+	display:block;
 	width:100% !important;
-}
+} 
 
 #badge-artboard img,
 .bdg-content {
-	position: absolute;
+	position:absolute;
 	overflow: hidden;
 }
 
 #badge-artboard .badge-content {
 	white-space: nowrap;
 	margin: 0;
-	font-family: gothamnarrow-bold, arial, sans-serif;
-	font-weight: bold;
+	font-family: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
+	font-weight: normal;
 	font-size: 6mm;
 	height: auto;
 	filter: alpha(opacity=100);
@@ -31,49 +31,39 @@
 	opacity: 1;
 	letter-spacing: 0;
 	text-align: left;
-	color: #133f69;
+	color: #133F69;
 	text-transform: none;
 	padding-bottom: 0;
 	padding-top: 0;
 	mix-blend-mode: normal;
 	font-style: normal;
 	position: absolute;
-	left: 12mm;
+	left: 2.5mm;
 	bottom: 0;
 	line-height: 8mm;
 	-webkit-print-color-adjust: exact;
 }
 
 #name-on-badge,
-#irc-handle,
-#company,
-#twitter {
-	height: 11mm;
-	width: 81mm;
-	left: 11mm;
+#company {
+	height: 8mm;
+	width: 82mm;
+	left: 5mm;
 }
 
 #name-on-badge {
-	top: 57mm;
-}
-
-#irc-handle {
-	top: 71mm;
+	top: 62mm;
 }
 
 #company {
-	top: 84mm;
-}
-
-#twitter{
-	top: 96mm;
+	top: 78mm;
 }
 
 #qrcode {
-	top: 118mm;
+	top: 110mm;
 	height: 25mm;
 	width: 25mm;
-	left: 12mm;
+	left: 5mm;
 }
 
 #qrcode canvas {
@@ -81,39 +71,22 @@
 	width: 25mm !important;
 }
 
-.icon-access {
-	top: 12mm;
-	height: 17mm;
-	width: 17mm;
-}
-
-#icon-access-1 {
-	left: 8mm;
-}
-
-#icon-access-2 {
-	left: 28mm;
-}
-
-#icon-access-3 {
-	left: 48mm;
-}
-
-.icon-honorary {
-	top: 123mm;
+.icon-feature {
+	top: 115mm;
 	height: 15mm;
 	width: 15mm;
 }
-#icon-honorary-1 {
-	left: 40mm;
+
+#icon-feature-1 {
+	left: 36mm;
 }
 
-#icon-honorary-2 {
-	left: 58mm;
+#icon-feature-2 {
+	left: 54mm;		
 }
 
-#icon-honorary-3 {
-	left: 76mm;
+#icon-feature-3 {
+	left: 72mm;
 }
 
 
@@ -130,12 +103,13 @@
 @media print {
 
 	@page {
-		size: 102mm 305mm portrait;
+		size: 92mm 140mm portrait;
 		margin: 0;
 	}
 
 	/* this overrules bootstrap print text color */
 	.badge-content * {
-		color: #133f69 !important;
+		color: #133F69 !important;
 	}
+
 }
