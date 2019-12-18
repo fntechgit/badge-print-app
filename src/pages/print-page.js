@@ -4,6 +4,8 @@ import {getBadge} from "../actions/base-actions";
 import Badge from '../model/badge';
 import ErrorPage from './error-page'
 
+import '../styles/badge-common.less'
+
 
 class PrintPage extends React.Component {
 
