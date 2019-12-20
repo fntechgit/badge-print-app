@@ -1,4 +1,4 @@
-/* -- on-screen styles -- */
+/* -- default template styles -- */
 
 .default-label {
 	color: red;
@@ -8,129 +8,41 @@
 	text-align: center;
 }
 
-#badge-artboard {
-	margin: 0;
-	width: 102mm;
-	height: 305mm;
-	position: relative;
-	overflow: hidden;
+/* -- general styles -- */
+
+.bdg-artboard {
+	width:92mm; 
+	height:140mm;
 }
 
-.bdg-image {
-	display: block;
-	width:100% !important;
+.bdg-artboard .box-content {
+	font-family: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
+	font-weight: normal;
+	left: 2.5mm;
 }
 
-#badge-artboard img,
-.bdg-content {
-	position: absolute;
-	overflow: hidden;
+.text-box {
+	height: 8mm;
+	width: 82mm;
+	left: 5mm;
 }
 
-#badge-artboard .badge-content {
-	white-space: nowrap;
-	margin: 0;
-	font-family: gothamnarrow-bold, arial, sans-serif;
-	font-weight: bold;
-	font-size: 6mm;
-	height: auto;
-	filter: alpha(opacity=100);
-	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-	opacity: 1;
-	letter-spacing: 0;
-	text-align: left;
-	color: #133f69;
-	text-transform: none;
-	padding-bottom: 0;
-	padding-top: 0;
-	mix-blend-mode: normal;
-	font-style: normal;
-	position: absolute;
-	left: 12mm;
-	bottom: 0;
-	line-height: 8mm;
-	-webkit-print-color-adjust: exact;
+.text-box.text-box-1 {top: 62mm;}
+
+.text-box.text-box-2 {top: 78mm;}
+
+.qrcode-box {
+	top: 110mm;
+	left: 5mm;
 }
 
-#name-on-badge,
-#irc-handle,
-#company,
-#twitter {
-	height: 11mm;
-	width: 81mm;
-	left: 11mm;
-}
+.icon-feature {top: 115mm;}
 
-#name-on-badge {
-	top: 57mm;
-}
+#icon-feature-1 {left: 36mm;}
 
-#irc-handle {
-	top: 71mm;
-}
+#icon-feature-2 {left: 54mm;}
 
-#company {
-	top: 84mm;
-}
-
-#twitter{
-	top: 96mm;
-}
-
-#qrcode {
-	top: 118mm;
-	height: 25mm;
-	width: 25mm;
-	left: 12mm;
-}
-
-#qrcode canvas {
-	height: 25mm !important;
-	width: 25mm !important;
-}
-
-.icon-access {
-	top: 12mm;
-	height: 17mm;
-	width: 17mm;
-}
-
-#icon-access-1 {
-	left: 8mm;
-}
-
-#icon-access-2 {
-	left: 28mm;
-}
-
-#icon-access-3 {
-	left: 48mm;
-}
-
-.icon-honorary {
-	top: 123mm;
-	height: 15mm;
-	width: 15mm;
-}
-#icon-honorary-1 {
-	left: 40mm;
-}
-
-#icon-honorary-2 {
-	left: 58mm;
-}
-
-#icon-honorary-3 {
-	left: 76mm;
-}
-
-
-/* -- screen only styles -- */
-@media screen {
-	#badge-artboard {
-		margin:0 auto;
-	}
-}
+#icon-feature-3 {left: 72mm;}
 
 
 /* -- print only styles -- */
@@ -138,12 +50,7 @@
 @media print {
 
 	@page {
-		size: 102mm 305mm portrait;
-		margin: 0;
+		size: 92mm 140mm portrait;
 	}
 
-	/* this overrules bootstrap print text color */
-	.badge-content * {
-		color: #133f69 !important;
-	}
 }

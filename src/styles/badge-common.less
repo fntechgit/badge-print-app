@@ -1,0 +1,87 @@
+/* -- general styles -- */
+
+.bdg-artboard {
+	margin:0 auto;
+	position:relative;
+	overflow:hidden;
+} 
+
+.bdg-image {
+	display:block;
+	width:100% !important;
+} 
+
+.bdg-artboard img,
+.bdg-content {
+	position:absolute;
+	overflow: hidden;
+}
+
+.bdg-artboard .box-content {
+	white-space: nowrap;
+	margin: 0;
+	font-family: arial, sans-serif;
+	font-weight: normal;
+    font-size: 6mm;
+    line-height: 6mm;
+	height: auto;
+	filter: alpha(opacity=100);
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	opacity: 1;
+	letter-spacing: 0;
+	text-align: left;
+	color: #133F69;
+	text-transform: none;
+	padding-bottom: 0;
+	padding-top: 0;
+	mix-blend-mode: normal;
+	font-style: normal;
+	position: absolute;
+	bottom: 0;
+	-webkit-print-color-adjust: exact;
+}
+
+.qrcode-box {
+    height: 25mm;
+	width: 25mm;
+}
+
+.qrcode-box canvas {
+	height: 25mm !important;
+	width: 25mm !important;
+}
+
+.icon-access {
+	height: 17mm;
+	width: 17mm;
+}
+
+.icon-honorary,
+.icon-feature {
+	height: 15mm;
+	width: 15mm;
+}
+
+
+
+/* -- screen only styles -- */
+@media screen {
+	#badge-artboard {
+		margin:0 auto;
+	}
+}
+
+
+/* -- print only styles -- */
+
+@media print {
+
+	@page {
+		margin: 0;
+	}
+
+	/* this overrules bootstrap print text color */
+	.badge-content * {
+		color: #133f69 !important;
+	}
+}
