@@ -1,0 +1,89 @@
+/* -- general styles -- */
+
+#badge-artboard {
+	margin:0 auto;
+	width:92mm; 
+	height:140mm;
+	position:relative;
+	overflow:hidden;
+} 
+
+.bdg-image {
+	display:block;
+	width:100% !important;
+} 
+
+#badge-artboard img,
+.bdg-content {
+	position:absolute;
+	overflow: hidden;
+}
+
+#badge-artboard .badge-content {
+	white-space: nowrap;
+	margin: 0;
+	font-family: 'Cormorant Garamond Bold', 'Garamond', serif;
+	font-weight: normal;
+	font-size: 5.5mm;
+	height: auto;
+	filter: alpha(opacity=100);
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	opacity: 1;
+	letter-spacing: 0;
+	text-align: left;
+	color: #2d409a;
+	text-transform: none;
+	padding-bottom: 0;
+	padding-top: 0;
+	mix-blend-mode: normal;
+	font-style: normal;
+	position: absolute;
+	left: 0.5mm;
+	bottom: 0;
+	line-height: 8mm;
+	-webkit-print-color-adjust: exact;
+}
+
+#name-on-badge {
+	height: 8mm;
+	width: 75mm;
+	left: 9mm;
+	top: 55mm;
+}
+
+#qrcode {
+	top: 104mm;
+	height: 25mm;
+	width: 25mm;
+	right: 11mm;
+}
+
+#qrcode canvas {
+	height: 25mm !important;
+	width: 25mm !important;
+}
+
+
+/* -- screen only styles -- */
+@media screen {
+	#badge-artboard {
+		margin:0 auto;
+	}
+}
+
+
+/* -- print only styles -- */
+
+@media print {
+
+	@page {
+		size: 92mm 140mm portrait;
+		margin: 0;
+	}
+
+	/* this overrules bootstrap print text color */
+	.badge-content * {
+		color: #2d409a !important;
+	}
+
+}
