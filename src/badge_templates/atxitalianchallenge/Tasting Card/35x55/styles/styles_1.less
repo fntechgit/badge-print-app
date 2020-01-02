@@ -1,0 +1,65 @@
+/* -- general styles -- */
+
+.bdg-artboard {
+	width:92mm; 
+	height:140mm;
+} 
+
+.bdg-artboard .box-content {
+	font-family: 'Cormorant Garamond', 'Garamond', serif;
+	font-weight: normal;
+	font-size: 5.5mm;
+	left: 1mm;
+	bottom: 0;
+	line-height: 8mm!important;
+}
+
+.text-box {
+	height: 8mm;
+	width: 75mm;
+	left: 9mm;
+}
+
+.text-box.text-box-1 {
+	top: 55mm;
+	font-weight: bold;
+}
+
+.qrcode-box {
+	top: 102mm;
+	left: 53mm;
+	height: 25mm;
+	width: 25mm;
+}
+
+.qrcode-box canvas {
+	height: 25mm !important;
+	width: 25mm !important;
+	padding: 1mm;
+	background-color:#efe9d7;
+}
+
+
+/* -- screen only styles -- */
+@media screen {
+	.bdg-artboard {
+		margin:0 auto;
+	}
+}
+
+
+/* -- print only styles -- */
+
+@media print {
+
+	@page {
+		size: 92mm 140mm portrait;
+		margin: 0;
+	}
+
+	/* this overrules bootstrap print text color */
+	.badge-content * {
+		color: #2d409a !important;
+	}
+
+}
