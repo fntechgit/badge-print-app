@@ -1,44 +1,54 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {getBadge} from "../actions/base-actions";
+import history from '../history';
+import T from "i18n-react/dist/i18n-react";
+import {getBadge} from "../actions/badge-actions";
 import Badge from '../model/badge';
 import ErrorPage from './error-page'
 
 import '../styles/badge-common.less'
-
+import '../styles/print-page.less'
 
 class PrintPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.qs = require('query-string');
     }
 
     componentDidMount() {
         let summitSlug = this.props.match.params.summit_slug;
         let ticketId = this.props.match.params.ticket_id;
 
-        let accessToken = this.qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
-
-        this.props.getBadge(summitSlug, ticketId, accessToken);
+        this.props.getBadge(summitSlug, ticketId);
     }
 
-    render(){
-        let {badge, match, location, loading, size, summitSlug} = this.props;
-        let accessToken = this.qs.parse(location.search, { ignoreQueryPrefix: true }).access_token;
+    cancelPrint = (ev) => {
+        let summitSlug = this.props.match.params.summit_slug;
+        history.push(`/check-in/${summitSlug}`);
+    };
 
-        if (loading) return (<div>Loading badge</div>);
+    handlePrint = (ev) => {
+        let summitSlug = this.props.match.params.summit_slug;
+
+        window.print();
+        history.push(`/check-in/${summitSlug}/thank-you`);
+    };
+
+    render(){
+        let {badge, match, location, loading, summitSlug, accessToken, accessTokenQS} = this.props;
+
+        if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (!match.params.summit_slug || !match.params.ticket_id) {
-            return (<ErrorPage message="Summit or Ticket missing in url" />);
+            return (<ErrorPage message={T.translate("preview.summit_missing")} />);
         }
 
-        if (!accessToken) {
-            return (<ErrorPage message="Access Token missing in url" />);
+        if (!accessToken && !accessTokenQS) {
+            return (<ErrorPage message={T.translate("preview.token_missing")} />);
         }
 
         if (!badge && !loading) {
-            return (<ErrorPage message="Cannot retrieve badge." />);
+            return (<ErrorPage message={T.translate("preview.error_retrieving")} />);
         }
 
         let badgeObj = new Badge(badge);
@@ -46,7 +56,17 @@ class PrintPage extends React.Component {
         return (
             <div className="container print-page-wrapper">
                 <div className="badge-wrapper">
-                    {badgeObj.renderTemplate(size, summitSlug)}
+                    {badgeObj.renderTemplate(summitSlug)}
+                </div>
+                <div className="row print-buttons-wrapper">
+                    <div className="col-md-4 col-md-offset-4">
+                        <button className="btn btn-primary" onClick={this.handlePrint}>
+                            {T.translate("preview.confirm")}
+                        </button>
+                        <button className="btn btn-danger" onClick={this.cancelPrint}>
+                            {T.translate("preview.cancel")}
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -54,7 +74,8 @@ class PrintPage extends React.Component {
 }
 
 
-const mapStateToProps = ({ baseState }) => ({
+const mapStateToProps = ({ baseState, loggedUserState }) => ({
+    accessToken: loggedUserState.accessToken,
     ...baseState
 });
 
