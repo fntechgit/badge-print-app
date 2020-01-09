@@ -14,7 +14,7 @@ class Badge {
         const BadgeTemplate = React.lazy(
             () =>
                 import(`../badge_templates/${summitSlug}/${type.name}/badge_1.js`)
-                    .catch(() => import(`../badge_templates/default/Default/35x55/badge_1.js`))
+                    .catch(() => import(`../badge_templates/default/badge_1.js`))
         );
 
         const PrintableBadge = printableBadge(BadgeTemplate);

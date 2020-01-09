@@ -19,6 +19,8 @@ import FindTicketPage from '../pages/find-ticket-page';
 import PrintPage from '../pages/print-page';
 import ThankYouPage from '../pages/thank-you-page';
 import NoMatchPage from '../pages/no-match-page';
+import T from "i18n-react";
+import ErrorPage from "../pages/error-page";
 
 class SummitLayout extends React.Component {
 
@@ -31,27 +33,19 @@ class SummitLayout extends React.Component {
         }
     }
 
-    componentDidUpdate(newProps) {
-        let {summit, match} = newProps;
-        let oldSlug = this.props.match.params.summit_slug;
-        let newSlug = match.params.summit_slug;
-
-        if (!summit || !summit.id || oldSlug !== newSlug) {
-            this.props.getSummit(newSlug);
-        }
-    }
-
     render(){
         let { match, summit } = this.props;
         let summitSlug = match.params.summit_slug;
 
-        if (!summit.id || summitSlug !== summit.slug) return (<div/>);
+        if (!summit || !summit.id || summitSlug !== summit.slug) {
+            return (<ErrorPage message={T.translate("errors.summit_not_found")} />);
+        }
 
         return(
             <div>
                 <Switch>
                     <Route exact strict path={match.url} component={FindTicketPage} />
-                    <Route exact strict path={`${match.url}/tickets/:ticket_id`} component={PrintPage} />
+                    <Route exact strict path={`/check-in/:summit_slug/tickets/:ticket_id`} component={PrintPage} />
                     <Route path={`${match.url}/thank-you`} component={ThankYouPage} />
                     <Route component={NoMatchPage} />
                 </Switch>

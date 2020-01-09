@@ -15,8 +15,8 @@ class ThankYouPage extends React.Component {
     render(){
         return (
             <div className="container thank-you-page">
-                <div className="ty-title">{T.translate("general.thank_you")}!</div>
-                <div className="ty-subtitle">blah blah</div>
+                <div className="ty-title">{T.translate("thank_you.thank_you")}!</div>
+                <div className="ty-subtitle">{T.translate("thank_you.subtitle")}</div>
             </div>
         );
     }

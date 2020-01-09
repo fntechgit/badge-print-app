@@ -31,8 +31,8 @@ class PrimaryLayout extends React.Component {
                     <PrintProvider>
                         <NoPrint>
                             <Switch>
-                                <Route path={`${match.url}/:summit_slug`} component={SummitLayout} />
                                 <Route strict exact path={match.url} component={SelectSummitPage} />
+                                <Route path={`${match.url}/:summit_slug`} component={SummitLayout} />
                                 <Route component={NoMatchPage} />
                             </Switch>
                         </NoPrint>

@@ -14,37 +14,46 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import LoginPage from '../pages/login-page';
+import {connect} from "react-redux";
+import {setAccessTokenQS} from "../actions/base-actions";
 
 
 class AuthorizedRoute extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.qs = require('query-string');
+    }
+
+    componentWillMount() {
+        let accessToken = this.qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
+        this.props.setAccessTokenQS(accessToken);
+    }
+
     render() {
-        let { component: Component, isLoggedUser, backUrl, ...rest } = this.props;
+        let { component: Component, isLoggedUser, backUrl, accessTokenQS, loading, ...rest } = this.props;
 
         return (
             <Route {...rest} render={props => {
-                let { location } = this.props;
-                let currentBackUrl =  backUrl == null ? location.pathname :  backUrl ;
-
-                if(location.search != null && location.search != null){
-                    currentBackUrl += location.search
-                }
-
-                if(location.hash != null && location.hash != null){
-                    currentBackUrl += location.hash
-                }
-
-                if (isLoggedUser) {
+                if (isLoggedUser || accessTokenQS) {
                     return (<Component {...props} />);
                 } else {
                     return (<LoginPage {...props} />);
                 }
-
             }} />
         )
     }
 }
 
-export default AuthorizedRoute;
+const mapStateToProps = ({ loggedUserState, baseState }) => ({
+    isLoggedUser: loggedUserState.isLoggedUser,
+    backUrl: loggedUserState.backUrl,
+    member: loggedUserState.member,
+    ...baseState
+});
+
+export default connect(mapStateToProps, {
+    setAccessTokenQS
+})(AuthorizedRoute)
 
 

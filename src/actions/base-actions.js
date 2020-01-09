@@ -14,7 +14,11 @@ export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
 export const SET_SUMMIT          = 'SET_SUMMIT';
 export const REQUEST_SUMMIT      = 'REQUEST_SUMMIT';
 export const RECEIVE_SUMMIT      = 'RECEIVE_SUMMIT';
+export const SET_ACCESS_TOKEN_QS = 'SET_ACCESS_TOKEN_QS';
 
+export const setAccessTokenQS = (accessToken) => (dispatch) => {
+    dispatch(createAction(SET_ACCESS_TOKEN_QS)({accessToken}));
+};
 
 export const loadSummits = () => (dispatch, getState) => {
 
@@ -48,8 +52,13 @@ export const setSummit = (summit) => (dispatch, getState) => {
 
 export const getSummit = (summitSlug) => (dispatch, getState) => {
 
-    let { loggedUserState } = getState();
-    let { accessToken }     = loggedUserState;
+    let { loggedUserState, baseState } = getState();
+    let accessToken = baseState.accessTokenQS;
+
+    if (!accessToken) {
+        accessToken = loggedUserState.accessToken;
+    }
+
     dispatch(startLoading());
 
     let params = {
@@ -59,7 +68,7 @@ export const getSummit = (summitSlug) => (dispatch, getState) => {
     return getRequest(
         createAction(REQUEST_SUMMIT),
         createAction(RECEIVE_SUMMIT),
-        `${window.API_BASE_URL}/api/v2/summits/${summitSlug}`,
+        `${window.API_BASE_URL}/api/v1/summits/all/${summitSlug}`,
         authErrorHandler
     )(params)(dispatch).then(() => {
             dispatch(stopLoading());

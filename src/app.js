@@ -54,17 +54,14 @@ class App extends React.PureComponent {
     }
 
     render() {
-        let { loading, summit, isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl } = this.props;
-        let title = 'Badge Printing App';
-
-        if (summit) {
-            title = summit.name;
-        }
+        let { loading, summit, isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, accessTokenQS } = this.props;
+        const title = (summit) ? summit.name : T.translate("general.app_title");
 
         return (
             <Router history={history}>
                 <div>
                     <AjaxLoader show={ loading } size={ 120 }/>
+
                     {isLoggedUser &&
                     <OPSessionChecker
                         clientId={window.OAUTH2_CLIENT_ID}
@@ -75,20 +72,19 @@ class App extends React.PureComponent {
                     <div className="header">
                         <div className="header-title row">
                             <div className="col-md-12 title">
+                                <LanguageSelect language={language} />
                                 {title}
-                                <a className="logout pull-right" onClick={() => { initLogOut(); }}>
+                                {isLoggedUser &&
+                                <a className="logout pull-right" onClick={() => {initLogOut();}}>
                                     <i className="fa fa-sign-out" aria-hidden="true"></i>
                                 </a>
-                                <LanguageSelect language={language} />
-                            </div>
-                            <div className="col-md-2">
-
+                                }
                             </div>
                         </div>
                     </div>
 
                     <Switch>
-                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/check-in" component={PrimaryLayout} />
+                        <AuthorizedRoute path="/check-in" component={PrimaryLayout} />
                         <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                         <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
                         <Redirect to="/check-in" />

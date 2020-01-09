@@ -14,7 +14,15 @@ export const BADGE_RECEIVED      = 'BADGE_RECEIVED';
 export const BADGE_PRINTED       = 'BADGE_PRINTED';
 export const CLEAR_BADGE         = 'CLEAR_BADGE';
 
-export const getBadge = (summitSlug, ticketId, accessToken) => (dispatch, getState) => {
+export const getBadge = (summitSlug, ticketId) => (dispatch, getState) => {
+
+    let { loggedUserState, baseState } = getState();
+    let accessToken = baseState.accessTokenQS;
+
+    if (!accessToken) {
+        accessToken = loggedUserState.accessToken;
+        summitSlug = baseState.summit.slug;
+    }
 
     let params = {
         access_token : accessToken,

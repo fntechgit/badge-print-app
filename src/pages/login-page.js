@@ -1,6 +1,8 @@
 import React from 'react';
 import {doLogin, getBackURL, initLogOut} from "openstack-uicore-foundation/lib/methods";
 import {connect} from "react-redux";
+import T from "i18n-react/dist/i18n-react";
+
 
 class LoginPage extends React.Component {
 
@@ -12,15 +14,16 @@ class LoginPage extends React.Component {
         let {initLogOut, match} = this.props;
 
         return (
-            <div className="container">
-                <div className="login">
-                    You are not logged in. Please log in to continue:
-                    <br/><br/>
-                    <button className="btn btn-primary btn-lg" onClick={this.onClickLogin}>
-                        Log In
-                    </button>
+            <main id="page-wrap">
+                <div className="container">
+                    <div className="login-page">
+                        <div className="login-message">{T.translate("general.login_message")}</div>
+                        <button className="btn btn-primary btn-lg" onClick={this.onClickLogin}>
+                            Log In
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </main>
         );
     }
 }

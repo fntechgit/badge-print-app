@@ -33,7 +33,11 @@ class FindTicketPage extends React.Component {
             let qrCodeArray = qrCode.split(summit.qr_registry_field_delimiter);
 
             if (qrCodeArray.length < 2 || qrCodeArray[0] !== summit.ticket_qr_prefix) {
-                Swal.fire(T.translate("find_ticket.wrong_qr_title"), T.translate("find_ticket.wrong_qr_text"), "warning");
+                Swal.fire(
+                    T.translate("find_ticket.wrong_qr_title"),
+                    T.translate("find_ticket.wrong_qr_text"),
+                    "warning"
+                );
             } else {
                 history.push(`${match.url}/tickets/${qrCodeArray[1]}`);
             }
@@ -44,8 +48,8 @@ class FindTicketPage extends React.Component {
         this.setState({showQRreader: false});
 
         Swal.fire({
-            title: "Error",
-            text: "cannot read QR code, please try again",
+            title: T.translate("find_ticket.wrong_qr_title"),
+            text: T.translate("find_ticket.wrong_qr_text"),
             type: "warning",
         });
     };

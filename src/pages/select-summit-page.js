@@ -8,7 +8,10 @@ import T from "i18n-react/dist/i18n-react";
 class SelectSummitPage extends React.Component {
 
     componentDidMount () {
-        this.props.loadSummits();
+        let { isLoggedUser, accessTokenQS } = this.props;
+        if (isLoggedUser || accessTokenQS) {
+            this.props.loadSummits();
+        }
     }
 
     onSelectSummit = (ev) => {
@@ -41,7 +44,8 @@ class SelectSummitPage extends React.Component {
 }
 
 
-const mapStateToProps = ({ baseState }) => ({
+const mapStateToProps = ({ baseState, loggedUserState }) => ({
+    isLoggedUser: loggedUserState.isLoggedUser,
     ...baseState
 });
 

@@ -1,4 +1,6 @@
 import Swal from "sweetalert2";
+import T from "i18n-react/dist/i18n-react";
+
 import {
     getRequest,
     putRequest,
@@ -44,6 +46,7 @@ export const findTicketsByName = (firstName, lastName) => (dispatch, getState) =
     let { loggedUserState, baseState } = getState();
     let { accessToken } = loggedUserState;
     let { summit }      = baseState;
+    let name = `${firstName} ${lastName}`;
 
     dispatch(startLoading());
 
@@ -51,7 +54,7 @@ export const findTicketsByName = (firstName, lastName) => (dispatch, getState) =
         access_token : accessToken,
         page         : 1,
         per_page     : 20,
-        'filter[]'   : [`owner_name==${firstName} ${lastName}`],
+        'filter[]'   : [`owner_name==${name}`],
         expand       : 'owner,order,ticket_type,badge,promo_code'
     };
 
@@ -60,13 +63,16 @@ export const findTicketsByName = (firstName, lastName) => (dispatch, getState) =
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
         authErrorHandler
-    )(params)(dispatch).then((data) => {
-            dispatch(stopLoading());
-            if (data.response.length > 0) {
-                return data.response[0];
-            }
+    )(params)(dispatch).then((payload) => {
+        let {data} = payload.response;
+
+        dispatch(stopLoading());
+        if (data.length > 0) {
+            return data[0];
+        } else {
+            Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_name')} ${name}`, "warning");
         }
-    );
+    });
 };
 
 export const findTicketsByEmail = (email) => (dispatch, getState) => {
@@ -90,11 +96,14 @@ export const findTicketsByEmail = (email) => (dispatch, getState) => {
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
         authErrorHandler
-    )(params)(dispatch).then((data) => {
-            dispatch(stopLoading());
-            if (data.response.length > 0) {
-                return data.response[0];
-            }
+    )(params)(dispatch).then((payload) => {
+        let {data} = payload.response;
+
+        dispatch(stopLoading());
+        if (data.length > 0) {
+            return data[0];
+        } else {
+            Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_email')} ${email}`, "warning");
         }
-    );
+    });
 };

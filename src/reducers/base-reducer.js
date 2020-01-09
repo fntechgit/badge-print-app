@@ -3,7 +3,8 @@ import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-found
 import {
     RECEIVE_SUMMITS,
     RECEIVE_SUMMIT,
-    SET_SUMMIT
+    SET_SUMMIT,
+    SET_ACCESS_TOKEN_QS
 } from "../actions/base-actions";
 
 import {
@@ -19,6 +20,7 @@ const DEFAULT_STATE = {
     summit: null,
     badge: null,
     summitSlug: '',
+    accessTokenQS: null,
     loading: 0,
 }
 
@@ -28,6 +30,10 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
     switch(type){
         case LOGOUT_USER: {
             return DEFAULT_STATE;
+        }
+        break;
+        case SET_ACCESS_TOKEN_QS: {
+            return {...state, accessTokenQS: payload.accessToken};
         }
         break;
         case START_LOADING:
@@ -64,7 +70,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         }
         break;
         case CLEAR_BADGE: {
-            return {...state, badge: null};
+            return {...state, badge: null, loading: 0};
         }
         break;
         default:

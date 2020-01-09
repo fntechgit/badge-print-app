@@ -8,13 +8,16 @@
     "empty_list_schedule_events": "Please select a Day and a Location ...",
     "not_allowed"               : "You are not allowed here, please login with another user to access this page.",
     "not_found"                 : "Not Found!",
-    "entity_not_found"          : "The entity you are looking for was not found."
+    "no_tickets_email"          : "No Tickets found assigned to this email:",
+    "no_tickets_name"           : "No Tickets found assigned to this name:",
+    "summit_not_found"          : "Can't find a show with that slug. Please contact help-desk."
   },
   "general": {
+    "app_title"        : "Check In & Print Badge",
     "select_label"     : "To continue, please select a show",
     "select_show"      : "Select a show",
     "continue"         : "Continue",
-    "thank_you"        : "Thank you"
+    "login_message"    : "You must log in to continue. Please contact help-desk."
   },
   "find_ticket": {
     "welcome"           : "Welcome",
@@ -33,9 +36,16 @@
     "valid_name"        : "Please enter a valid name."
   },
   "thank-you": {
-
+    "thank_you"        : "Thank you",
+    "subtitle"         : "blah blah ipsum"
   },
   "preview": {
+    "confirm"           : "Confirm & Print",
+    "cancel"            : "Cancel",
+    "loading"           : "Loading badge...",
+    "summit_missing"    : "Show slug or Ticket missing in url. Please contact help-desk.",
+    "token_missing"     : "Access Token missing in url. Please contact help-desk.",
+    "error_retrieving"  : "Cannot retrieve badge. Please contact help-desk."
 
   }
 }
