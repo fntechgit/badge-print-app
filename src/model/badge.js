@@ -8,13 +8,12 @@ class Badge {
         this._badge  = badge;
     }
 
-    renderTemplate(size, summitSlug) {
+    renderTemplate(summitSlug) {
         const {type} = this._badge;
-        const canPrint = false;
 
         const BadgeTemplate = React.lazy(
             () =>
-                import(`../badge_templates/${summitSlug}/${type.name}/${size}/badge_1.js`)
+                import(`../badge_templates/${summitSlug}/${type.name}/badge_1.js`)
                     .catch(() => import(`../badge_templates/default/Default/35x55/badge_1.js`))
         );
 

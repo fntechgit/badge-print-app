@@ -1,16 +1,23 @@
 
-import { START_LOADING, STOP_LOADING } from "openstack-uicore-foundation/lib/actions";
-import {REQUEST_BADGE, BADGE_RECEIVED, BADGE_PRINTED, CLEAR_BADGE, UPDATE_SIZE} from "../actions/base-actions";
+import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+import {
+    RECEIVE_SUMMITS,
+    RECEIVE_SUMMIT,
+    SET_SUMMIT
+} from "../actions/base-actions";
+
+import {
+    REQUEST_BADGE,
+    BADGE_RECEIVED,
+    BADGE_PRINTED,
+    CLEAR_BADGE
+} from "../actions/badge-actions";
 
 
 const DEFAULT_STATE = {
+    allSummits: [],
+    summit: null,
     badge: null,
-    sizes: [
-        {value: "40x60", label: '4" by 6"'},
-        {value: "40x50", label: '4" by 5"'},
-        {value: "35x55", label: '3.5" by 5.5"'}
-    ],
-    size: "40x60",
     summitSlug: '',
     loading: 0,
 }
@@ -19,16 +26,31 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
     const { type, payload } = action
 
     switch(type){
+        case LOGOUT_USER: {
+            return DEFAULT_STATE;
+        }
+        break;
         case START_LOADING:
             return {...state, loading: 1};
         break;
         case STOP_LOADING:
             return {...state, loading: 0};
         break;
+        case RECEIVE_SUMMITS: {
+            return {...state, allSummits: payload.response.data};
+        }
+        break;
+        case RECEIVE_SUMMIT: {
+            return {...state, summit: payload.response};
+        }
+        break;
+        case SET_SUMMIT: {
+            return {...state, summit: payload.summit};
+        }
+        break;
         case REQUEST_BADGE: {
             let { summitSlug } = payload;
             return {...state, summitSlug};
-            return state
         }
         break;
         case BADGE_RECEIVED: {
@@ -43,11 +65,6 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         break;
         case CLEAR_BADGE: {
             return {...state, badge: null};
-        }
-        break;
-        case UPDATE_SIZE: {
-            let {size} = payload;
-            return {...state, size };
         }
         break;
         default:

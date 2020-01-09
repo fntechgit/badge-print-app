@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {getBadge} from "../actions/base-actions";
+import {getBadge} from "../actions/badge-actions";
 import Badge from '../model/badge';
 import ErrorPage from './error-page'
 
@@ -24,7 +24,7 @@ class PrintPage extends React.Component {
     }
 
     render(){
-        let {badge, match, location, loading, size, summitSlug} = this.props;
+        let {badge, match, location, loading, summitSlug} = this.props;
         let accessToken = this.qs.parse(location.search, { ignoreQueryPrefix: true }).access_token;
 
         if (loading) return (<div>Loading badge</div>);
@@ -46,7 +46,7 @@ class PrintPage extends React.Component {
         return (
             <div className="container print-page-wrapper">
                 <div className="badge-wrapper">
-                    {badgeObj.renderTemplate(size, summitSlug)}
+                    {badgeObj.renderTemplate(summitSlug)}
                 </div>
             </div>
         );

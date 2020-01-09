@@ -1,0 +1,41 @@
+{
+  "errors": {
+    "user_not_authz"            : "Hold on. Your user is not authorized!.",
+    "user_not_set"              : "Hold on. Can not get any valid user.",
+    "session_expired"           : "Hold on. Your session expired!.",
+    "empty_list"                : "there not are any item that match your criteria.",
+    "server_error"              : "There was a problem with our server, please contact admin.",
+    "empty_list_schedule_events": "Please select a Day and a Location ...",
+    "not_allowed"               : "You are not allowed here, please login with another user to access this page.",
+    "not_found"                 : "Not Found!",
+    "entity_not_found"          : "The entity you are looking for was not found."
+  },
+  "general": {
+    "select_label"     : "Para continuar, por favor selecciona un evento",
+    "select_show"      : "Selecciona un evento",
+    "continue"         : "Continuar",
+    "thank_you"        : "Gracias"
+  },
+  "find_ticket": {
+    "welcome"           : "Bienvenido",
+    "check_in"          : "Por favor registrate usando",
+    "qr_code_title"     : "Codigo QR",
+    "qr_code_btn"       : "Escanea el codigo",
+    "qr_code_cancel"    : "Cancelar",
+    "name_title"        : "Tu Nombre",
+    "first_name"        : "Nombre",
+    "last_name"         : "Apellido",
+    "email_title"       : "Tu Email",
+    "email"             : "Email",
+    "wrong_qr_title"    : "Error con el codigo QR",
+    "wrong_qr_text"     : "Por favor pide ayuda en mesa de entrada.",
+    "valid_email"       : "Por favor ingresa un email valido.",
+    "valid_name"        : "Por favor ingresa un nombre valido."
+  },
+  "thank-you": {
+
+  },
+  "preview": {
+
+  }
+}

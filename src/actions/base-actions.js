@@ -1,18 +1,71 @@
 import Swal from "sweetalert2";
 import {
+    getRequest,
     putRequest,
     createAction,
     stopLoading,
     startLoading,
-    showMessage
+    showMessage,
+    authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
-export const REQUEST_BADGE       = 'REQUEST_BADGE';
-export const BADGE_RECEIVED      = 'BADGE_RECEIVED';
-export const BADGE_PRINTED       = 'BADGE_PRINTED';
-export const CLEAR_BADGE         = 'CLEAR_BADGE';
-export const UPDATE_SIZE         = 'UPDATE_SIZE';
+export const REQUEST_SUMMITS     = 'REQUEST_SUMMITS';
+export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
+export const SET_SUMMIT          = 'SET_SUMMIT';
+export const REQUEST_SUMMIT      = 'REQUEST_SUMMIT';
+export const RECEIVE_SUMMIT      = 'RECEIVE_SUMMIT';
 
+
+export const loadSummits = () => (dispatch, getState) => {
+
+    let { loggedUserState } = getState();
+    let { accessToken }     = loggedUserState;
+
+    dispatch(startLoading());
+
+    let params = {
+        access_token : accessToken,
+        expand: 'none',
+        relations: 'none',
+        page: 1,
+        per_page: 100,
+    };
+
+    getRequest(
+        createAction(REQUEST_SUMMITS),
+        createAction(RECEIVE_SUMMITS),
+        `${window.API_BASE_URL}/api/v1/summits/all`,
+        authErrorHandler
+    )(params)(dispatch, getState).then(() => {
+            dispatch(stopLoading());
+        }
+    );
+};
+
+export const setSummit = (summit) => (dispatch, getState) => {
+    dispatch(createAction(SET_SUMMIT)({summit}));
+};
+
+export const getSummit = (summitSlug) => (dispatch, getState) => {
+
+    let { loggedUserState } = getState();
+    let { accessToken }     = loggedUserState;
+    dispatch(startLoading());
+
+    let params = {
+        access_token : accessToken,
+    };
+
+    return getRequest(
+        createAction(REQUEST_SUMMIT),
+        createAction(RECEIVE_SUMMIT),
+        `${window.API_BASE_URL}/api/v2/summits/${summitSlug}`,
+        authErrorHandler
+    )(params)(dispatch).then(() => {
+            dispatch(stopLoading());
+        }
+    );
+};
 
 export const errorHandler = (err, res) => (dispatch, state) => {
     let code = err.status;
@@ -58,41 +111,4 @@ export const errorHandler = (err, res) => (dispatch, state) => {
         default:
             Swal.fire("ERROR", T.translate("errors.server_error"), "error");
     }
-}
-
-export const getBadge = (summitSlug, ticketId, accessToken) => (dispatch, getState) => {
-
-    let params = {
-        access_token : accessToken,
-        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.member, features, type, type.access_levels'
-    };
-
-    if (!summitSlug || !ticketId || !accessToken) return;
-
-    dispatch(startLoading());
-
-    return putRequest(
-        createAction(REQUEST_BADGE),
-        createAction(BADGE_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
-        {},
-        errorHandler,
-        {summitSlug}
-    )(params)(dispatch)
-        .then((payload) => {
-            dispatch(stopLoading());
-        }
-    );
-};
-
-export const clearBadge = () => (dispatch) => {
-
-    dispatch(createAction(CLEAR_BADGE)({}));
-
-};
-
-export const changeSize = (size) => (dispatch) => {
-
-    dispatch(createAction(UPDATE_SIZE)({size}));
-
 };
