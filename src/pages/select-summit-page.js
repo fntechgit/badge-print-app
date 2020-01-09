@@ -7,9 +7,9 @@ import T from "i18n-react/dist/i18n-react";
 
 class SelectSummitPage extends React.Component {
 
-    componentDidMount () {
-        let { isLoggedUser, accessTokenQS } = this.props;
-        if (isLoggedUser || accessTokenQS) {
+    componentWillMount () {
+        let { isLoggedUser, accessTokenQS, allSummits } = this.props;
+        if ((isLoggedUser || accessTokenQS) && allSummits.length === 0) {
             this.props.loadSummits();
         }
     }
