@@ -14,9 +14,16 @@ import {
     CLEAR_BADGE
 } from "../actions/badge-actions";
 
+import {
+    REQUEST_TICKETS,
+    RECEIVE_TICKETS
+} from "../actions/ticket-actions";
+
 
 const DEFAULT_STATE = {
     allSummits: [],
+    allTickets: [],
+    searchTerm: '',
     summit: null,
     badge: null,
     summitSlug: '',
@@ -37,9 +44,11 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         }
         break;
         case START_LOADING:
+            console.log('now loading');
             return {...state, loading: 1};
         break;
         case STOP_LOADING:
+            console.log('stop loading');
             return {...state, loading: 0};
         break;
         case RECEIVE_SUMMITS: {
@@ -52,6 +61,14 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         break;
         case SET_SUMMIT: {
             return {...state, summit: payload.summit};
+        }
+        break;
+        case REQUEST_TICKETS: {
+            return {...state, searchTerm: payload.search_term};
+        }
+        break;
+        case RECEIVE_TICKETS: {
+            return {...state, allTickets: payload.response.data};
         }
         break;
         case REQUEST_BADGE: {
@@ -70,7 +87,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         }
         break;
         case CLEAR_BADGE: {
-            return {...state, badge: null, loading: 0};
+            return {...state, badge: null};
         }
         break;
         default:

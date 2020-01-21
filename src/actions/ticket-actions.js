@@ -55,23 +55,24 @@ export const findTicketsByName = (firstName, lastName) => (dispatch, getState) =
         page         : 1,
         per_page     : 20,
         'filter[]'   : [`owner_name==${name}`],
-        expand       : 'owner,order,ticket_type,badge,promo_code'
+        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code'
     };
 
     return getRequest(
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        authErrorHandler
+        authErrorHandler,
+        {search_term: name}
     )(params)(dispatch).then((payload) => {
         let {data} = payload.response;
-
         dispatch(stopLoading());
-        if (data.length > 0) {
-            return data[0];
-        } else {
+
+        if (data.length === 0) {
             Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_name')} ${name}`, "warning");
         }
+
+        return data;
     });
 };
 
@@ -88,22 +89,23 @@ export const findTicketsByEmail = (email) => (dispatch, getState) => {
         page         : 1,
         per_page     : 20,
         'filter[]'   : [`owner_email==${email}`],
-        expand       : 'owner,order,ticket_type,badge,promo_code'
+        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code'
     };
 
     return getRequest(
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        authErrorHandler
+        authErrorHandler,
+        {search_term: email}
     )(params)(dispatch).then((payload) => {
         let {data} = payload.response;
-
         dispatch(stopLoading());
-        if (data.length > 0) {
-            return data[0];
-        } else {
-            Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_email')} ${email}`, "warning");
+
+        if (data.length === 0) {
+            Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_name')} ${name}`, "warning");
         }
+
+        return data;
     });
 };

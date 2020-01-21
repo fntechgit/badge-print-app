@@ -47,5 +47,12 @@
     "token_missing"     : "Access Token missing in url. Please contact help-desk.",
     "error_retrieving"  : "Cannot retrieve badge. Please contact help-desk."
 
+  },
+  "select_ticket": {
+    "found_for"   : "tickets found for",
+    "choose_one"  : "Choose one to continue",
+    "ticket_no"   : "Ticket No",
+    "email"       : "Email",
+    "badge"       : "Badge"
   }
 }
