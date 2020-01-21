@@ -31,8 +31,8 @@ class Badge {
         let fullName = 'N/A';
 
         if (owner) {
-            if (owner.first_name && owner.surname) {
-                fullName = `${owner.first_name} ${owner.surname}`;
+            if (owner.first_name && owner.last_name) {
+                fullName = `${owner.first_name} ${owner.last_name}`;
             } else if (owner.member) {
                 fullName = `${owner.member.first_name} ${owner.member.last_name}`;
             }
