@@ -8,6 +8,7 @@ import {
     showMessage,
     authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
+import T from "i18n-react/dist/i18n-react";
 
 export const REQUEST_SUMMITS     = 'REQUEST_SUMMITS';
 export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
