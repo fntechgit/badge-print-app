@@ -62,7 +62,11 @@ class FindTicketPage extends React.Component {
         if (firstName && lastName) {
             findTicketsByName(firstName, lastName).then(
                 (data) => {
-                    history.push(`${match.url}/tickets/${data.number}`);
+                    if (data.length === 1) {
+                        history.push(`${match.url}/tickets/${data.number}`);
+                    } else if (data.length > 1) {
+                        history.push(`${match.url}/tickets`);
+                    }
                 }
             );
         } else {
@@ -77,7 +81,11 @@ class FindTicketPage extends React.Component {
         if (email && validator.isEmail(email)) {
             findTicketsByEmail(email).then(
                 (data) => {
-                    history.push(`${match.url}/tickets/${data.number}`);
+                    if (data.length === 1) {
+                        history.push(`${match.url}/tickets/${data.number}`);
+                    } else if (data.length > 1) {
+                        history.push(`${match.url}/tickets`);
+                    }
                 }
             );
         } else {

@@ -19,6 +19,8 @@ export const getBadge = (summitSlug, ticketId) => (dispatch, getState) => {
     let { loggedUserState, baseState } = getState();
     let accessToken = baseState.accessTokenQS;
 
+    dispatch(startLoading());
+
     if (!accessToken) {
         accessToken = loggedUserState.accessToken;
         summitSlug = baseState.summit.slug;
@@ -30,8 +32,6 @@ export const getBadge = (summitSlug, ticketId) => (dispatch, getState) => {
     };
 
     if (!summitSlug || !ticketId || !accessToken) return;
-
-    dispatch(startLoading());
 
     return putRequest(
         createAction(REQUEST_BADGE),
