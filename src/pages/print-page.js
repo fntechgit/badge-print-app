@@ -29,9 +29,15 @@ class PrintPage extends React.Component {
 
     handlePrint = (ev) => {
         let summitSlug = this.props.match.params.summit_slug;
-
-        window.print();
-        history.push(`/check-in/${summitSlug}/thank-you`);
+        let location = `/check-in/${summitSlug}/thank-you`;
+        // window.print overriden when running embedded
+        window.print(location)
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (!mql.matches) {
+                history.push(location);
+            }
+        });
     };
 
     render(){
