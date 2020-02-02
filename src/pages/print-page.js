@@ -30,13 +30,16 @@ class PrintPage extends React.Component {
     handlePrint = (ev) => {
         let summitSlug = this.props.match.params.summit_slug;
         let location = `/check-in/${summitSlug}/thank-you`;
-        // window.print overriden when running embedded
-        window.print(location)
+
+        // window.print overriden when running embedded and always returns true
+        let result = window.print(location)
+
         var mediaQueryList = window.matchMedia('print');
         mediaQueryList.addListener(function(mql) {
-            if (!mql.matches) {
-                history.push(location);
-            }
+
+            // !mql.matches means its after print event
+            // result === undefined means its running !embedded
+            if (!mql.matches && result === undefined) history.push(location)
         });
     };
 
