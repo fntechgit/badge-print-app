@@ -1,63 +1,59 @@
 /* -- on-screen styles -- */
 
-@media screen {
+#badge-artboard {
+  margin:0 auto;
+  width:578px;
+  height:1445px;
+  position:relative;
+  overflow:hidden;
+}
 
-  #badge-artboard {
-    margin:0 auto;
-    width:578px;
-    height:1445px;
-    position:relative;
-    overflow:hidden;
-  }
+.bdg-image {
+  display:block;
+  width:100% !important;
+}
 
-  .bdg-image {
-    display:block;
-    width:100% !important;
-  }
+#badge-artboard img,
+.bdg-content {
+  position:absolute;
+}
 
-  #badge-artboard img,
-  .bdg-content {
-    position:absolute;
-  }
+#badge-artboard p {
+  white-space: nowrap;
+  margin:0;
+  font-family:gothamnarrow-bold,arial,sans-serif;
+  font-weight:bold;
+  font-size:45px;
+  line-height:37px;
+  height:auto;
+  filter:alpha(opacity=100);
+  -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity:1;
+  letter-spacing:0.04em;
+  text-align:left;
+  color:#181818;
+  text-transform:none;
+  padding-bottom:0;
+  padding-top:0;
+  mix-blend-mode:normal;
+  font-style:normal;
+  position:static;
+}
 
-  #badge-artboard p {
-    white-space: nowrap;
-    margin:0;
-    font-family:gothamnarrow-bold,arial,sans-serif;
-    font-weight:bold;
-    font-size:45px;
-    line-height:37px;
-    height:auto;
-    filter:alpha(opacity=100);
-    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-    opacity:1;
-    letter-spacing:0.04em;
-    text-align:left;
-    color:#181818;
-    text-transform:none;
-    padding-bottom:0;
-    padding-top:0;
-    mix-blend-mode:normal;
-    font-style:normal;
-    position:static;
-  }
+#name-on-badge {
+  height:37px;
+  top:440px;
+  left:132px;
+}
 
-  #name-on-badge {
-    height:37px;
-    top:440px;
-    left:132px;
-  }
+#irc-handle {
+  height:37px;
+  top:510px;
+  left:132px;
+}
 
-  #irc-handle {
-    height:37px;
-    top:510px;
-    left:132px;
-  }
-
-  #irc-handle p {
-    font-size:28px;
-  }
-
+#irc-handle p {
+  font-size:28px;
 }
 
 /* -- printing styles -- */
@@ -66,71 +62,9 @@
 
   @page {
     size: 102mm 255mm portrait;
-    margin: 0mm;
   }
 
-  html,
-  body {
-    margin: 0mm;
+  .container {
+    width: 0px !important;
   }
-
-  #badge-artboard {
-    margin:0mm;
-    width:102mm;
-    height:255mm;
-    position:relative;
-    overflow:hidden;
-  }
-
-  .bdg-image {
-    display:block;
-    width:100% !important;
-  }
-
-  #badge-artboard img,
-  .bdg-content {
-    position:absolute;
-  }
-
-  #badge-artboard p {
-    white-space: nowrap;
-    margin:0;
-    font-family:gothamnarrow-bold,arial,sans-serif;
-    font-weight:bold;
-    font-size:22pt;
-    line-height:18.36pt;
-    height:auto;
-    filter:alpha(opacity=100);
-    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-    opacity:1;
-    letter-spacing:0.04em;
-    text-align:left;
-    color:#181818;
-    text-transform:none;
-    padding-bottom:0mm;
-    padding-top:0mm;
-    mix-blend-mode:normal;
-    font-style:normal;
-    position:static;
-  }
-
-  #name-on-badge {
-    height: 40px;
-    top: 280px;
-    left: 105px;
-    width: 415px;
-  }
-
-  #irc-handle {
-    top:510px;
-    height: 40px;
-    left: 105px;
-    width: 415px;
-  }
-
-  #irc-handle p {
-    font-size:16.0pt;
-  }
-
-
 }
