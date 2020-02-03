@@ -37,4 +37,3 @@ export default ({badge}) => {
     );
 }
 
-            <div className="default-label">DEFAULT BADGE</div>

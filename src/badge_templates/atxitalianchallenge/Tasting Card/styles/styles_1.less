@@ -1,6 +1,6 @@
 /* -- general styles -- */
 
-.bdg-artboard {
+#badge-artboard {
 	width:92mm; 
 	height:140mm;
 } 
@@ -40,22 +40,9 @@
 }
 
 
-/* -- screen only styles -- */
-@media screen {
-	.bdg-artboard {
-		margin:0 auto;
-	}
-}
-
-
 /* -- print only styles -- */
 
 @media print {
-
-	@page {
-		size: 92mm 140mm portrait;
-		margin: 0;
-	}
 
 	/* this overrules bootstrap print text color */
 	.badge-content * {
