@@ -63,21 +63,16 @@
 }
 
 
-
-/* -- screen only styles -- */
-@media screen {
-	#badge-artboard {
-		margin:0 auto;
-	}
-}
-
-
 /* -- print only styles -- */
 
 @media print {
 
 	@page {
 		margin: 0;
+	}
+
+	.container {
+		width: 0px !important;
 	}
 
 	/* this overrules bootstrap print text color */
