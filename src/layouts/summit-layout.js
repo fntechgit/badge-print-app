@@ -35,8 +35,10 @@ class SummitLayout extends React.Component {
     }
 
     render(){
-        let { match, summit } = this.props;
+        let { match, summit, loading } = this.props;
         let summitSlug = match.params.summit_slug;
+
+        if (!summit && loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (!summit || !summit.id || summitSlug !== summit.slug) {
             return (<ErrorPage message={T.translate("errors.summit_not_found")} />);
@@ -58,7 +60,8 @@ class SummitLayout extends React.Component {
 }
 
 const mapStateToProps = ({ baseState }) => ({
-    summit   : baseState.summit
+    summit  : baseState.summit,
+    loading : baseState.loading
 });
 
 export default connect (

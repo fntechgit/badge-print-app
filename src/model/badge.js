@@ -20,7 +20,7 @@ class Badge {
         const PrintableBadge = printableBadge(BadgeTemplate);
 
         return (
-            <React.Suspense fallback={<div>Loading Badge</div>}>
+            <React.Suspense fallback={<div></div>}>
                 <PrintableBadge badge={this} />
             </React.Suspense>
         );

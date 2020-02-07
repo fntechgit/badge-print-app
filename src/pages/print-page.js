@@ -48,8 +48,6 @@ class PrintPage extends React.Component {
 
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
-        console.log(loading);
-
         if (!match.params.summit_slug || !match.params.ticket_id) {
             return (<ErrorPage message={T.translate("preview.summit_missing")} />);
         }
