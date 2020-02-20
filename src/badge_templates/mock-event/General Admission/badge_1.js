@@ -1,3 +1,4 @@
+//mock-event General Admission badge template
 import React from 'react';
 import { Textfit } from 'react-textfit';
 
@@ -27,19 +28,19 @@ export default ({badge}) => {
             }
 
             {badge.getFeature('Expo') &&
-            <div id="icon-feature" className="bdg-content icon-feature">
+            <div id="icon-feature-1" className="bdg-content icon-feature">
                 <img className="bdg-image" src={feature_1_img}/>
             </div>
             }
 
             {badge.getFeature('Media') &&
-            <div id="icon-feature" className="bdg-content icon-feature">
+            <div id="icon-feature-2" className="bdg-content icon-feature">
                 <img className="bdg-image" src={feature_2_img}/>
             </div>
             }
 
             {badge.getFeature('Speaker') &&
-            <div id="icon-feature" className="bdg-content icon-feature">
+            <div id="icon-feature-3" className="bdg-content icon-feature">
                 <img className="bdg-image" src={feature_3_img}/>
             </div>
             }
