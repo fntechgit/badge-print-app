@@ -19,6 +19,10 @@ import {
     RECEIVE_TICKETS
 } from "../actions/ticket-actions";
 
+import {
+    REQUEST_QRCODE,
+    RECEIVE_QRCODE
+} from "../actions/qrcode-actions";
 
 const DEFAULT_STATE = {
     allSummits: [],
@@ -71,6 +75,13 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return {...state, allTickets: payload.response.data};
         }
         break;
+        case REQUEST_QRCODE: {
+            return state;
+        }
+        break;
+        case RECEIVE_QRCODE: {
+            return state;
+        }
         case REQUEST_BADGE: {
             let { summitSlug } = payload;
             return {...state, summitSlug};

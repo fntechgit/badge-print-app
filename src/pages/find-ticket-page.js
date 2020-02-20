@@ -6,6 +6,7 @@ import QrReader from 'react-qr-reader'
 import Swal from "sweetalert2";
 import validator from 'validator';
 import {getTicket, findTicketsByName, findTicketsByEmail} from "../actions/ticket-actions";
+import {scanQRCode} from "../actions/qrcode-actions";
 
 import "../styles/find-ticket-page.less"
 
@@ -93,8 +94,20 @@ class FindTicketPage extends React.Component {
         }
     };
 
+    handleScanQRCode = () => {
+        const { scanQRCode } = this.props;
+
+        scanQRCode().then(
+            (data) => {
+                this.handleScan(data);
+            }
+        );
+    };
+    
     render(){
         const { showQRreader, error } = this.state;
+
+        const embedded = window.embedded !== undefined;
 
         return (
             <div className="container find-tix-page">
@@ -112,7 +125,7 @@ class FindTicketPage extends React.Component {
                             {T.translate("find_ticket.qr_code_title")}
                         </div>
                         <div className="find-tix-form qr-window">
-                            {showQRreader &&
+                            {!embedded && showQRreader &&
                             <QrReader
                                 delay={300}
                                 onError={this.handleError}
@@ -122,14 +135,19 @@ class FindTicketPage extends React.Component {
                             }
                         </div>
                         <div className="find-tix-button">
-                            {!showQRreader &&
+                            {!embedded && !showQRreader &&
                             <button className="btn btn-primary" onClick={this.toggleScanner}>
                                 {T.translate("find_ticket.qr_code_btn")}
                             </button>
                             }
-                            {showQRreader &&
+                            {!embedded && showQRreader &&
                             <button className="btn btn-danger" onClick={this.toggleScanner}>
                                 {T.translate("find_ticket.qr_code_cancel")}
+                            </button>
+                            }
+                            {embedded &&
+                            <button className="btn btn-primary" onClick={this.handleScanQRCode}>
+                                {T.translate("find_ticket.qr_code_btn")}
                             </button>
                             }
                         </div>
@@ -203,4 +221,5 @@ export default connect(mapStateToProps, {
     getTicket,
     findTicketsByName,
     findTicketsByEmail,
+    scanQRCode,
 })(FindTicketPage)
