@@ -53,11 +53,11 @@ class Badge {
     }
 
     getCompany() {
-        const {order} = this._badge.ticket;
+        const {owner} = this._badge.ticket;
         let company = 'N/A';
 
-        if (order) {
-            company = order.company;
+        if (owner.company) {
+            company = owner.company;
         }
 
         return company;
