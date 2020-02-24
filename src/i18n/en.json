@@ -36,8 +36,8 @@
     "valid_name"        : "Please enter a valid name."
   },
   "thank-you": {
-    "thank_you"        : "Thank you",
-    "subtitle"         : "blah blah ipsum"
+    "thank_you"        : "Thank you. Your badge has been sent to the printer.",
+    "subtitle"         : "If you have any problems please contact a support agent."
   },
   "preview": {
     "confirm"           : "Confirm & Print",
