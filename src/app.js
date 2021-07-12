@@ -17,6 +17,7 @@ import LanguageSelect from './components/language-select'
 // move all env var to global scope so ui core has access to this
 window.IDP_BASE_URL        = process.env['IDP_BASE_URL'];
 window.API_BASE_URL        = process.env['API_BASE_URL'];
+window.OAUTH2_FLOW         = process.env['OAUTH2_FLOW'];
 window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];

@@ -8,6 +8,7 @@ import {
     stopLoading,
     startLoading,
     showMessage,
+    getAccessToken,
     authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
@@ -16,10 +17,11 @@ export const RECEIVE_TICKETS     = 'RECEIVE_TICKETS';
 export const REQUEST_TICKET      = 'REQUEST_TICKET';
 export const RECEIVE_TICKET      = 'RECEIVE_TICKET';
 
-export const getTicket = (ticketId) => (dispatch, getState) => {
+export const getTicket = (ticketId) => async (dispatch, getState) => {
 
-    let { loggedUserState, baseState } = getState();
-    let { accessToken }     = loggedUserState;
+    const accessToken = await getAccessToken();
+
+    let { baseState } = getState();
     let { summit }   = baseState;
 
     dispatch(startLoading());
@@ -41,11 +43,13 @@ export const getTicket = (ticketId) => (dispatch, getState) => {
 };
 
 
-export const findTicketsByName = (firstName, lastName) => (dispatch, getState) => {
+export const findTicketsByName = (firstName, lastName) => async (dispatch, getState) => {
 
-    let { loggedUserState, baseState } = getState();
-    let { accessToken } = loggedUserState;
-    let { summit }      = baseState;
+    const accessToken = await getAccessToken();
+
+    let { baseState } = getState();
+    let { summit } = baseState;
+
     let name = `${firstName} ${lastName}`;
 
     dispatch(startLoading());
@@ -76,11 +80,12 @@ export const findTicketsByName = (firstName, lastName) => (dispatch, getState) =
     });
 };
 
-export const findTicketsByEmail = (email) => (dispatch, getState) => {
+export const findTicketsByEmail = (email) => async (dispatch, getState) => {
 
-    let { loggedUserState, baseState } = getState();
-    let { accessToken } = loggedUserState;
-    let { summit }      = baseState;
+    const accessToken = await getAccessToken();
+
+    let { baseState } = getState();
+    let { summit } = baseState;
 
     dispatch(startLoading());
 

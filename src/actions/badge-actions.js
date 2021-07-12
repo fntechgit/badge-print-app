@@ -4,6 +4,7 @@ import {
     createAction,
     stopLoading,
     startLoading,
+    getAccessToken,
     authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
@@ -14,15 +15,15 @@ export const BADGE_RECEIVED      = 'BADGE_RECEIVED';
 export const BADGE_PRINTED       = 'BADGE_PRINTED';
 export const CLEAR_BADGE         = 'CLEAR_BADGE';
 
-export const getBadge = (summitSlug, ticketId) => (dispatch, getState) => {
+export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => {
 
-    let { loggedUserState, baseState } = getState();
+    let { baseState } = getState();
     let accessToken = baseState.accessTokenQS;
 
     dispatch(startLoading());
 
     if (!accessToken) {
-        accessToken = loggedUserState.accessToken;
+        accessToken = await getAccessToken();
         summitSlug = baseState.summit.slug;
     }
 

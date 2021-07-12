@@ -6,6 +6,7 @@ import {
     stopLoading,
     startLoading,
     showMessage,
+    getAccessToken,
     authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 import T from "i18n-react/dist/i18n-react";
@@ -21,10 +22,9 @@ export const setAccessTokenQS = (accessToken) => (dispatch) => {
     dispatch(createAction(SET_ACCESS_TOKEN_QS)({accessToken}));
 };
 
-export const loadSummits = () => (dispatch, getState) => {
+export const loadSummits = () => async (dispatch, getState) => {
 
-    let { loggedUserState } = getState();
-    let { accessToken }     = loggedUserState;
+    const accessToken = await getAccessToken();
 
     dispatch(startLoading());
 
@@ -51,13 +51,13 @@ export const setSummit = (summit) => (dispatch, getState) => {
     dispatch(createAction(SET_SUMMIT)({summit}));
 };
 
-export const getSummit = (summitSlug) => (dispatch, getState) => {
+export const getSummit = (summitSlug) => async (dispatch, getState) => {
 
-    let { loggedUserState, baseState } = getState();
+    let { baseState } = getState();
     let accessToken = baseState.accessTokenQS;
 
     if (!accessToken) {
-        accessToken = loggedUserState.accessToken;
+        accessToken = await getAccessToken();
     }
 
     dispatch(startLoading());
