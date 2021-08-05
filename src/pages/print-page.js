@@ -77,7 +77,10 @@ class PrintPage extends React.Component {
         );
     }
 }
+const mapStateToProps = ({ baseState }) => ({
+    ...baseState
+});
 
-export default connect(null, {
+export default connect(mapStateToProps, {
     getBadge,
 })(PrintPage)
