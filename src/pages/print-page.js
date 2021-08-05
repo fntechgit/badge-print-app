@@ -44,16 +44,12 @@ class PrintPage extends React.Component {
     };
 
     render(){
-        let {badge, match, location, loading, summitSlug, accessToken, accessTokenQS} = this.props;
+        let {badge, match, location, loading, summitSlug} = this.props;
 
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (!match.params.summit_slug || !match.params.ticket_id) {
             return (<ErrorPage message={T.translate("preview.summit_missing")} />);
-        }
-
-        if (!accessToken && !accessTokenQS) {
-            return (<ErrorPage message={T.translate("preview.token_missing")} />);
         }
 
         if (!badge && !loading) {
@@ -82,12 +78,6 @@ class PrintPage extends React.Component {
     }
 }
 
-
-const mapStateToProps = ({ baseState, loggedUserState }) => ({
-    accessToken: loggedUserState.accessToken,
-    ...baseState
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
     getBadge,
 })(PrintPage)
