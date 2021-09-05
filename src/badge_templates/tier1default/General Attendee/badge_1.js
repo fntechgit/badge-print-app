@@ -3,10 +3,6 @@ import { Textfit } from 'react-textfit';
 
 import './styles/styles_1.less';
 
-import access_level_1_img from './images/access_level_1.png';
-import feature_1_img from './images/feature_1.png';
-
-
 export default ({badge}) => {
     return (
     <>
