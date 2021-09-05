@@ -26,6 +26,36 @@ class Badge {
         );
     }
 
+    getFirstName() {
+        const {owner} = this._badge.ticket;
+        let firstName = 'N/A';
+
+        if (owner) {
+            if (owner.first_name) {
+                firstName = owner.first_name;
+            } else if (owner.member) {
+                firstName = owner.member.first_name;
+            }
+        }
+
+        return firstName;
+    }
+
+    getLastName() {
+        const {owner} = this._badge.ticket;
+        let lastName = 'N/A';
+
+        if (owner) {
+            if (owner.last_name) {
+                lastName = owner.last_name;
+            } else if (owner.member) {
+                lastName = owner.member.last_name;
+            }
+        }
+
+        return lastName;
+    }
+
     getFullName() {
         const {owner} = this._badge.ticket;
         let fullName = 'N/A';
@@ -78,13 +108,13 @@ class Badge {
         return this._badge.qr_code;
     }
 
-    getQRCode() {
+    getQRCode(settings) {
         var QRCode = require('qrcode.react');
         const {qr_code} = this._badge;
         let qr = null;
 
         if (qr_code) {
-            qr = <QRCode value={qr_code} />
+            qr = <QRCode value={qr_code} {...settings} />
         }
 
         return qr;
@@ -110,12 +140,6 @@ class Badge {
         }
 
         return feature;
-    }
-
-    getQRCode() {
-        var QRCode = require('qrcode.react');
-
-        return <QRCode value={this._badge.qr_code} />
     }
 
 }
