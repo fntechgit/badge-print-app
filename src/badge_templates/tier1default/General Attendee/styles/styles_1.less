@@ -1,10 +1,5 @@
 /* -- general styles -- */
 
-#page-wrap .container div {
-	color: #1e2860 !important;
-}
-
-
 @media screen {
 	#badge-artboard {
 		border: thin solid #1e2860;
@@ -13,14 +8,15 @@
 
 @media print {
 	/* this overrules bootstrap print text color */
-	.badge-content * {
-		color: #1e2860 !important;
+	*, ::after, ::before {
+			color: #1e2860 !important;
 	}
 }
 
 #badge-artboard {
 	width: 92mm; 
 	height: 140mm;
+	img { height: 100%; }
 }
 
 @font-face {
@@ -37,6 +33,7 @@
 }
 
 .text-box {
+	color: #1e2860 !important;
 	position: absolute;
 	top: 0px;
 	left: 50%;

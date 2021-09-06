@@ -61,19 +61,20 @@
 		margin: 0;
 	}
 
-	/* container width affect badge positioning on print; removing it */
-	.container {
-		width: 0px !important;
-	}
-
 	/* this overrules bootstrap print text color */
-	.badge-content * {
+	*, ::after, ::before {
 		color: #133f69 !important;
 	}
 
-	.qrcode-box canvas {
-		padding: 1mm;
-		background-color:#ffffff!important;
+	/* this prevents adding extra blank page */
+  html, body {
+    height: 100%; 
+    overflow: hidden;
+  }
+
+	/* container width affect badge positioning on print; removing it */
+	.container {
+		width: 0px !important;
 	}
 
 }
