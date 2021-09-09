@@ -57,8 +57,8 @@ class FindTicketPage extends React.Component {
 
     handleFindByName = () => {
         const { match, findTicketsByName } = this.props;
-        const firstName = this.firstName.value;
-        const lastName = this.lastName.value;
+        const firstName = this.firstName.value.trim();
+        const lastName = this.lastName.value.trim();
 
         if (firstName && lastName) {
             findTicketsByName(firstName, lastName).then(
@@ -162,6 +162,8 @@ class FindTicketPage extends React.Component {
                                     <input
                                         className={`form-control input ${error === 'name' && 'error'}`}
                                         id="first_name"
+                                        type="text"
+                                        spellcheck="false"
                                         placeholder={T.translate("find_ticket.first_name")}
                                         ref={el => this.firstName = el}
                                         onChange={() => this.setState({error: ''})}
@@ -169,6 +171,8 @@ class FindTicketPage extends React.Component {
                                     <input
                                         className={`form-control input ${error === 'name' && 'error'}`}
                                         id="last_name"
+                                        type="text"
+                                        spellcheck="false"
                                         placeholder={T.translate("find_ticket.last_name")}
                                         ref={el => this.lastName = el}
                                         onChange={() => this.setState({error: ''})}
@@ -191,6 +195,7 @@ class FindTicketPage extends React.Component {
                                     <input
                                         className={`form-control input ${error === 'email' && 'error'}`}
                                         id="email"
+                                        type="email"
                                         placeholder={T.translate("find_ticket.email")}
                                         ref={el => this.email = el}
                                         onChange={() => this.setState({error: ''})}
