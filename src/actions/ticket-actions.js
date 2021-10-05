@@ -58,7 +58,7 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
         access_token : accessToken,
         page         : 1,
         per_page     : 20,
-        'filter[]'   : [`owner_name==${name}`,`is_active==1`],
+        'filter[]'   : [`owner_name==${name}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
         expand       : 'owner,order,ticket_type,badge,badge.type,promo_code'
     };
 
@@ -93,7 +93,7 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
         access_token : accessToken,
         page         : 1,
         per_page     : 20,
-        'filter[]'   : [`owner_email==${email}`,`is_active==1`],
+        'filter[]'   : [`owner_email==${email}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
         expand       : 'owner,order,ticket_type,badge,badge.type,promo_code'
     };
 
