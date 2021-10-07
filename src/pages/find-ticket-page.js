@@ -162,7 +162,7 @@ class FindTicketPage extends React.Component {
                                         className={`form-control input ${error === 'name' && 'error'}`}
                                         id="first_name"
                                         type="text"
-                                        spellcheck="false"
+                                        spellCheck="false"
                                         placeholder={T.translate("find_ticket.first_name")}
                                         ref={el => this.firstName = el}
                                         onChange={() => this.setState({error: ''})}
@@ -171,7 +171,7 @@ class FindTicketPage extends React.Component {
                                         className={`form-control input ${error === 'name' && 'error'}`}
                                         id="last_name"
                                         type="text"
-                                        spellcheck="false"
+                                        spellCheck="false"
                                         placeholder={T.translate("find_ticket.last_name")}
                                         ref={el => this.lastName = el}
                                         onChange={() => this.setState({error: ''})}
