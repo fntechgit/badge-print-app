@@ -75,13 +75,6 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return {...state, allTickets: payload.response.data};
         }
         break;
-        case REQUEST_QRCODE: {
-            return state;
-        }
-        break;
-        case RECEIVE_QRCODE: {
-            return state;
-        }
         case REQUEST_BADGE: {
             let { summitSlug } = payload;
             return {...state, summitSlug};
@@ -90,11 +83,6 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         case BADGE_RECEIVED: {
             let badge = {...payload.response};
             return {...state, badge: badge};
-        }
-        break;
-        case BADGE_PRINTED: {
-
-            return state
         }
         break;
         case CLEAR_BADGE: {

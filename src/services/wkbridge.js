@@ -30,7 +30,7 @@ export const exec = (
     const deferred = new DeferredPromise();
     execCallbacks[execId] = { deferred: deferred };
 
-    window.webkit.messageHandlers.execute.postMessage({execId: execId, command: command})
+    window.webkit.messageHandlers.execute.postMessage({execId: execId, command: command, params: params})
 
     try {
         const res = await deferred;

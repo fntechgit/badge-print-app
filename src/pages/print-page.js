@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import history from '../history';
 import T from "i18n-react/dist/i18n-react";
-import {getBadge} from "../actions/badge-actions";
+import { getBadge, incrementBadgePrintCount, printBadge } from "../actions/badge-actions";
 import Badge from '../model/badge';
 import ErrorPage from './error-page'
 
@@ -13,6 +13,10 @@ class PrintPage extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            embedded: window.embedded !== undefined,
+        };
     }
 
     componentDidMount() {
@@ -28,24 +32,40 @@ class PrintPage extends React.Component {
     };
 
     handlePrint = (ev) => {
+        let { embedded } = this.state;
+        let { history, incrementBadgePrintCount, printBadge } = this.props;
+
+        let ticketId = this.props.match.params.ticket_id;
         let summitSlug = this.props.match.params.summit_slug;
+
         let location = `/check-in/${summitSlug}/thank-you`;
 
-        var result;
-        var mediaQueryList = window.matchMedia('print');
-        mediaQueryList.addListener(function(mql) {
+        let callback = () => {
+            incrementBadgePrintCount(summitSlug, ticketId);
+            history.push(location);
+        };
 
-            // !mql.matches means its after print event
-            // result === undefined means its running !embedded
-            if (!mql.matches && result === undefined) history.push(location)
-        });
-
-        // window.print overriden when running embedded and always returns true
-        result = window.print(location)
+        if (embedded) {
+            let element = document.getElementById('badge-artboard');
+            let payload = { height: element.clientHeight, width: element.clientWidth };
+            printBadge(payload).then(
+                (data) => {
+                    callback()
+                }
+            );
+        } else {
+            window.onafterprint = function() {
+                // on focus event will occur after print dialog is resolved
+                window.onfocus = function() {
+                    callback();
+                }
+            }
+            window.print();
+        };
     };
 
     render(){
-        let {badge, match, location, loading, summitSlug} = this.props;
+        let { badge, match, location, loading, summitSlug } = this.props;
 
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
@@ -84,4 +104,6 @@ const mapStateToProps = ({ baseState }) => ({
 
 export default connect(mapStateToProps, {
     getBadge,
+    incrementBadgePrintCount,
+    printBadge
 })(PrintPage)

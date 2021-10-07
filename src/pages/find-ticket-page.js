@@ -16,6 +16,7 @@ class FindTicketPage extends React.Component {
         super(props);
 
         this.state = {
+            embedded    : window.embedded !== undefined,
             showQRreader: false,
             error       : ''
         };
@@ -105,9 +106,7 @@ class FindTicketPage extends React.Component {
     };
     
     render(){
-        const { showQRreader, error } = this.state;
-
-        const embedded = window.embedded !== undefined;
+        const { embedded, showQRreader, error } = this.state;
 
         return (
             <div className="container find-tix-page">
