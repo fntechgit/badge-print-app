@@ -54,12 +54,9 @@ class PrintPage extends React.Component {
                 }
             );
         } else {
-            window.onafterprint = function() {
-                // on focus event will occur after print dialog is resolved
-                window.onfocus = function() {
-                    callback();
-                }
-            }
+            window.addEventListener('afterprint', (event) => {
+                window.addEventListener('focus', callback, { once: true });
+            }, { once: true });
             window.print();
         };
     };
