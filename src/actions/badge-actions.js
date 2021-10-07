@@ -44,7 +44,6 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
         `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
-        {},
         errorHandler,
         {summitSlug}
     )(params)(dispatch)
