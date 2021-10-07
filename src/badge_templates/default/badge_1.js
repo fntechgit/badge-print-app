@@ -22,7 +22,7 @@ export default ({badge}) => {
 
             {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content qrcode-box">
-                {badge.getQRCode()}
+                {badge.getQRCode({ size: 90 })}
             </div>
             }
 
