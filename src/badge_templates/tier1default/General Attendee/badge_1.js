@@ -20,7 +20,7 @@ export default ({badge}) => {
                 <span className="badge-title project-lead-title">{badge.getFeature('Project Lead Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 {badge.getFeature('OCP Future Tech Symposium Title') &&
-                <span className="badge-title">{badge.getFeature('OCP Future Tech Symposium Title').template_content.replace(/<[^>]+>/g, '')}</span>
+                <span className="badge-title symposium-title">{badge.getFeature('OCP Future Tech Symposium Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 {badge.getFeature('Incubation Committee Title') &&
                 <span className="badge-title incubation-committee-title">{badge.getFeature('Incubation Committee Title').template_content.replace(/<[^>]+>/g, '')}</span>
