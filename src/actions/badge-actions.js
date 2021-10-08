@@ -98,5 +98,4 @@ export const printBadge = (params) => (dispatch) => {
 export const clearBadge = () => (dispatch) => {
 
     dispatch(createAction(CLEAR_BADGE)({}));
-
 };
