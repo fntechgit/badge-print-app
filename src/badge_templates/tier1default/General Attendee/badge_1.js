@@ -14,16 +14,16 @@ export default ({badge}) => {
                 <span className="first-name" contentEditable>{badge.getFirstName()}</span>
                 <span className="last-name" contentEditable>{badge.getLastName()}</span>
                 {badge.getFeature('Board Member Title') &&
-                <span className="badge-title">{badge.getFeature('Board Member Title').template_content.replace(/<[^>]+>/g, '')}</span>
+                <span className="badge-title board-member-title">{badge.getFeature('Board Member Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 {badge.getFeature('Project Lead Title') &&
-                <span className="badge-title">{badge.getFeature('Project Lead Title').template_content.replace(/<[^>]+>/g, '')}</span>
+                <span className="badge-title project-lead-title">{badge.getFeature('Project Lead Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 {badge.getFeature('OCP Future Tech Symposium Title') &&
                 <span className="badge-title">{badge.getFeature('OCP Future Tech Symposium Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 {badge.getFeature('Incubation Committee Title') &&
-                <span className="badge-title">{badge.getFeature('Incubation Committee Title').template_content.replace(/<[^>]+>/g, '')}</span>
+                <span className="badge-title incubation-committee-title">{badge.getFeature('Incubation Committee Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 <span className="company" contentEditable>{badge.getCompany()}</span>
             </div>
