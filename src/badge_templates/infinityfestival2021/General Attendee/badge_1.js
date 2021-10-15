@@ -29,6 +29,28 @@ export default ({badge}) => {
                 {badge.getQRCode({ fgColor: '#000', size: 80 })}
             </div>
             }
+            <div className="icon-features">
+                {badge.getFeature('Media') &&
+                <div id="icon-feature-media" className="icon-feature">
+                    <img className="bdg-image" src={badge.getFeature('Media').image}/>
+                </div>
+                }
+                {badge.getFeature('Partners') &&
+                <div id="icon-feature-partners" className="icon-feature">
+                    <img className="bdg-image" src={badge.getFeature('Partners').image}/>
+                </div>
+                }
+                {badge.getFeature('Speaker') &&
+                <div id="icon-feature-speaker" className="icon-feature">
+                    <img className="bdg-image" src={badge.getFeature('Speaker').image}/>
+                </div>
+                }
+                {badge.getFeature('Student') &&
+                <div id="icon-feature-student" className="icon-feature">
+                    <img className="bdg-image" src={badge.getFeature('Student').image}/>
+                </div>
+                }
+            </div>
         </div>
     </>
     );
