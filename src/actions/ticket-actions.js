@@ -73,7 +73,7 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
         dispatch(stopLoading());
 
         if (data.length === 0) {
-            Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_name')} ${name}`, "warning");
+            Swal.fire(T.translate('errors.not_found'), T.translate('errors.no_tickets_name'), "warning");
         }
 
         return data;
@@ -108,7 +108,7 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
         dispatch(stopLoading());
 
         if (data.length === 0) {
-            Swal.fire(T.translate('errors.not_found'), `${T.translate('errors.no_tickets_name')} ${name}`, "warning");
+            Swal.fire(T.translate('errors.not_found'), T.translate('errors.no_tickets_email'), "warning");
         }
 
         return data;

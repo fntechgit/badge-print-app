@@ -7,9 +7,9 @@
     "server_error"              : "There was a problem with our server, please contact admin.",
     "empty_list_schedule_events": "Please select a Day and a Location ...",
     "not_allowed"               : "You are not allowed here, please login with another user to access this page.",
-    "not_found"                 : "Not Found!",
-    "no_tickets_email"          : "No Tickets found assigned to this email:",
-    "no_tickets_name"           : "No Tickets found assigned to this name:",
+    "not_found"                 : "Badge not found",
+    "no_tickets_name"           : "Please check the spelling of the name<br>entered and try again.",
+    "no_tickets_email"          : "Please check the spelling of the email<br>entered and try again.",
     "summit_not_found"          : "Can't find a show with that slug. Please contact help-desk."
   },
   "general": {
