@@ -142,6 +142,24 @@ class Badge {
         return feature;
     }
 
+    getExtraQuestionValue(extraQuestionName) {
+        const { owner: { extra_questions } } = this._badge.ticket;
+        let extraQuestionValue = null;
+
+        if (extra_questions) {
+            let extraQuestion = extra_questions.find(eq => eq.question.name == extraQuestionName);
+            if (extraQuestion) {
+                if (extraQuestion.question && extraQuestion.question.values) {
+                    let extraQuestionAnswer = extraQuestion.question.values.find(v => v.id == extraQuestion.value)
+                    if (extraQuestionAnswer) extraQuestionValue = extraQuestionAnswer.value;
+                } else {
+                    extraQuestionValue = extraQuestion.value;
+                }
+            }
+        }
+
+        return extraQuestionValue;
+    }
 }
 
 export default Badge;

@@ -35,7 +35,7 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
 
     let params = {
         access_token : accessToken,
-        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.member, features, type, type.access_levels'
+        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels'
     };
 
     if (!summitSlug || !ticketId || !accessToken) return;
