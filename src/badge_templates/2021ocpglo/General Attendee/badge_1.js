@@ -5,6 +5,16 @@ import './styles/styles_1.less';
 
 import background_img from './images/background_1.png';
 
+const shirtSize = {
+    'Unisex XS': '.',
+    'Unisex S': '..',
+    'Unisex M': '...',
+    'Unisex L': '....',
+    'Unisex XL': '....-',
+    'Unisex 2XL': '....--',
+    'Unisex 3XL': '....---',
+}
+
 export default ({badge}) => {
     return (
     <>
@@ -52,6 +62,7 @@ export default ({badge}) => {
                 <img className="bdg-image" src={badge.getFeature('Media Icon').image}/>
             </div>
             }
+            <div id="t-shirt-size" className="bdg-content">{ shirtSize[badge.getExtraQuestionValue('T-shirt Size')] }</div>
         </div>
     </>
     );
