@@ -73,7 +73,7 @@ class PrintPage extends React.Component {
         }
 
         if (!badge && !loading) {
-            return (<ErrorPage message={T.translate("preview.error_retrieving")} />);
+            return (<ErrorPage title={T.translate("preview.error_retrieving")} message={T.translate("preview.contact_help")} />);
         }
 
         let badgeObj = new Badge(badge);

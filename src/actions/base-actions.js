@@ -113,12 +113,13 @@ export const errorHandler = (err, res) => (dispatch, state) => {
                 msg += value + '<br>';
             }
             Swal.fire("Validation error", msg, "warning");
-            dispatch({
-                type: VALIDATE,
-                payload: {errors: err.response.body.errors}
-            });
             break;
         default:
             Swal.fire("ERROR", T.translate("errors.server_error"), "error");
     }
+};
+
+export const noThrowErrorHandler = (err, res) => (dispatch, state) => {
+
+    dispatch(stopLoading());
 };
