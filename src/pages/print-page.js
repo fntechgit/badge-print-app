@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import history from '../history';
 import T from "i18n-react/dist/i18n-react";
-import { getBadge, incrementBadgePrintCount, printBadge } from "../actions/badge-actions";
+import { getBadge, incrementBadgePrintCount, printBadge, clearBadge } from "../actions/badge-actions";
 import Badge from '../model/badge';
 import ErrorPage from './error-page'
 
@@ -27,13 +27,14 @@ class PrintPage extends React.Component {
     }
 
     cancelPrint = (ev) => {
-        let summitSlug = this.props.match.params.summit_slug;
-        history.push(`/check-in/${summitSlug}`);
+        this.props.clearBadge().then(() => {
+            history.push(`/check-in/${this.props.match.params.summit_slug}`);
+        })
     };
 
     handlePrint = (ev) => {
         let { embedded } = this.state;
-        let { history, incrementBadgePrintCount, printBadge } = this.props;
+        let { history, incrementBadgePrintCount, printBadge, clearBadge } = this.props;
 
         let ticketId = this.props.match.params.ticket_id;
         let summitSlug = this.props.match.params.summit_slug;
@@ -41,8 +42,9 @@ class PrintPage extends React.Component {
         let location = `/check-in/${summitSlug}/thank-you`;
 
         let callback = () => {
-            incrementBadgePrintCount(summitSlug, ticketId);
-            history.push(location);
+            incrementBadgePrintCount(summitSlug, ticketId)
+                .then(() => clearBadge()
+                    .then(() =>  history.push(location)));
         };
 
         if (embedded) {
@@ -102,5 +104,6 @@ const mapStateToProps = ({ baseState }) => ({
 export default connect(mapStateToProps, {
     getBadge,
     incrementBadgePrintCount,
-    printBadge
+    printBadge,
+    clearBadge
 })(PrintPage)

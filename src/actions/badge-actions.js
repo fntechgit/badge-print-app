@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import {
     getRequest,
     putRequest,
@@ -6,7 +5,6 @@ import {
     stopLoading,
     startLoading,
     getAccessToken,
-    authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
 import { exec } from "../services/wkbridge";
@@ -78,6 +76,7 @@ export const incrementBadgePrintCount = (summitSlug, ticketId) => async (dispatc
         {summitSlug}
     )(params)(dispatch)
         .then((payload) => {
+
         }
     );
 };
@@ -94,8 +93,6 @@ export const printBadge = (params) => (dispatch) => {
     });
 };
 
-
-export const clearBadge = () => (dispatch) => {
-
-    dispatch(createAction(CLEAR_BADGE)({}));
-};
+export const clearBadge = () => (dispatch) => Promise.resolve().then(() => {
+    return dispatch(createAction(CLEAR_BADGE)({}));
+});
