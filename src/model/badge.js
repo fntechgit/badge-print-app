@@ -147,10 +147,10 @@ class Badge {
         let extraQuestionValue = null;
 
         if (extra_questions) {
-            let extraQuestion = extra_questions.find(eq => eq.question.name == extraQuestionName);
+            const extraQuestion = extra_questions.find(eq => eq.question.name == extraQuestionName);
             if (extraQuestion) {
                 if (extraQuestion.question && extraQuestion.question.values) {
-                    let extraQuestionAnswer = extraQuestion.question.values.find(v => v.id == extraQuestion.value)
+                    const extraQuestionAnswer = extraQuestion.question.values.find(v => v.id == extraQuestion.value)
                     if (extraQuestionAnswer) extraQuestionValue = extraQuestionAnswer.value;
                 } else {
                     extraQuestionValue = extraQuestion.value;
