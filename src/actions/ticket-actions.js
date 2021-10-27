@@ -35,7 +35,8 @@ export const getTicket = (ticketId) => async (dispatch, getState) => {
         createAction(REQUEST_TICKET),
         createAction(RECEIVE_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}`,
-        authErrorHandler
+        authErrorHandler,
+        {search_term: ticketId}
     )(params)(dispatch).then((data) => {
             dispatch(stopLoading());
         }

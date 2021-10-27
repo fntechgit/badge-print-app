@@ -9,7 +9,7 @@ import {
 
 import { exec } from "../services/wkbridge";
 
-import { errorHandler } from './base-actions';
+import { errorHandler, noThrowErrorHandler } from './base-actions';
 
 export const REQUEST_BADGE                        = 'REQUEST_BADGE';
 export const BADGE_RECEIVED                       = 'BADGE_RECEIVED';
@@ -42,7 +42,7 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
         `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
-        errorHandler,
+        noThrowErrorHandler,
         {summitSlug}
     )(params)(dispatch)
         .then((payload) => {
@@ -72,8 +72,7 @@ export const incrementBadgePrintCount = (summitSlug, ticketId) => async (dispatc
         createAction(BADGE_PRINT_COUNT_INCREMENT_RECEIVED),
         `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
         {},
-        errorHandler,
-        {summitSlug}
+        errorHandler
     )(params)(dispatch)
         .then((payload) => {
 
