@@ -86,7 +86,11 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         }
         break;
         case CLEAR_BADGE: {
-            return {...state, badge: null};
+            return {...state,
+                badge: null,
+                searchTerm:'',
+                allTickets: [],
+            };
         }
         break;
         default:
