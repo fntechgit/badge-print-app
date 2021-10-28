@@ -4,7 +4,7 @@ import history from '../history';
 import T from "i18n-react/dist/i18n-react";
 import { getBadge, incrementBadgePrintCount, printBadge, clearBadge } from "../actions/badge-actions";
 import Badge from '../model/badge';
-import ErrorPage from './error-page'
+import ErrorPage from './error-page';
 
 import '../styles/badge-common.less'
 import '../styles/print-page.less'

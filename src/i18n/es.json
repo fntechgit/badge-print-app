@@ -7,9 +7,6 @@
     "server_error"              : "There was a problem with our server, please contact admin.",
     "empty_list_schedule_events": "Please select a Day and a Location ...",
     "not_allowed"               : "You are not allowed here, please login with another user to access this page.",
-    "not_found"                 : "Badge not found",
-    "no_tickets_name"           : "Please check the spelling of the name<br>entered and try again.",
-    "no_tickets_email"          : "Please check the spelling of the email<br>entered and try again.",
     "summit_not_found"          : "Can't find a show with that slug. Please contact help-desk."
   },
   "general": {
@@ -34,7 +31,10 @@
     "wrong_qr_title"    : "Error con el codigo QR",
     "wrong_qr_text"     : "Por favor pide ayuda en mesa de entrada.",
     "valid_email"       : "Por favor ingresa un email valido.",
-    "valid_name"        : "Por favor ingresa un nombre valido."
+    "valid_name"        : "Por favor ingresa un nombre valido.",
+    "not_found"         : "Ticket no encontrado",
+    "not_found_message" : "No se pudo encontrar el ticket usando _{search_term}_ \nPor favor contacta a un miembro del staff si piensas que esto es incorrecto.",
+    "try_again"         : "Vuelve y prueba de nuevo"
   },
   "thank_you": {
     "thank_you"        : "Muchas gracias. Tu credencial está siendo impresa.",
