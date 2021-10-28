@@ -42,24 +42,24 @@ export default ({badge}) => {
                 {badge.getQRCode({ fgColor: '#1e2860', size: 80 })}
             </div>
             }
-            {badge.getFeature('Expo Icon') &&
+            {badge.getFeature('Expo') &&
             <div id="icon-feature-expo" className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Expo Icon').image}/>
+                <img className="bdg-image" src={badge.getFeature('Expo').image}/>
             </div>
             }
-            {badge.getFeature('Speaker Icon') && !badge.getFeature('Keynote Icon') &&
+            {badge.getFeature('Speaker') && !badge.getFeature('Keynote') &&
             <div id="icon-feature-speaker" className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Speaker Icon').image}/>
+                <img className="bdg-image" src={badge.getFeature('Speaker').image}/>
             </div>
             }
-            {badge.getFeature('Keynote Icon') &&
+            {badge.getFeature('Keynote') &&
             <div id="icon-feature-keynote" className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Keynote Icon').image}/>
+                <img className="bdg-image" src={badge.getFeature('Keynote').image}/>
             </div>
             }
-            {badge.getFeature('Media Icon') &&
+            {badge.getFeature('Media') &&
             <div id="icon-feature-media" className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Media Icon').image}/>
+                <img className="bdg-image" src={badge.getFeature('Media').image}/>
             </div>
             }
             <div id="t-shirt-size" className="bdg-content">{ shirtSize[badge.getExtraQuestionValue('T-shirt Size')] }</div>
