@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import validator from 'validator';
 import {getTicket, findTicketsByName, findTicketsByEmail} from "../actions/ticket-actions";
 import {scanQRCode} from "../actions/qrcode-actions";
+import ErrorPage from './error-page';
 
 import "../styles/find-ticket-page.less"
 
@@ -18,7 +19,8 @@ class FindTicketPage extends React.Component {
         this.state = {
             embedded    : window.embedded !== undefined,
             showQRreader: false,
-            error       : ''
+            notFound    : null,
+            error       : '',
         };
 
     }
@@ -68,6 +70,8 @@ class FindTicketPage extends React.Component {
                         history.push(`${match.url}/tickets/${data[0].number}`);
                     } else if (data.length > 1) {
                         history.push(`${match.url}/tickets`);
+                    } else {
+                        this.setState({notFound: true});
                     }
                 }
             );
@@ -87,6 +91,8 @@ class FindTicketPage extends React.Component {
                         history.push(`${match.url}/tickets/${data[0].number}`);
                     } else if (data.length > 1) {
                         history.push(`${match.url}/tickets`);
+                    } else {
+                        this.setState({notFound: true});
                     }
                 }
             );
@@ -106,7 +112,18 @@ class FindTicketPage extends React.Component {
     };
     
     render(){
-        const { embedded, showQRreader, error } = this.state;
+        const { embedded, showQRreader, error, notFound } = this.state;
+        const { searchTerm } = this.props;
+
+        if (notFound) {
+            return (
+                <ErrorPage
+                    title={T.translate("find_ticket.not_found")}
+                    message={T.translate("find_ticket.not_found_message", {search_term: searchTerm})}
+                    linkText={T.translate("find_ticket.try_again")}
+                />
+            );
+        }
 
         return (
             <div className="container find-tix-page">

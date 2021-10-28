@@ -7,9 +7,6 @@
     "server_error"              : "There was a problem with our server, please contact admin.",
     "empty_list_schedule_events": "Please select a Day and a Location ...",
     "not_allowed"               : "You are not allowed here, please login with another user to access this page.",
-    "not_found"                 : "Badge not found",
-    "no_tickets_name"           : "Please check the spelling of the name<br>entered and try again.",
-    "no_tickets_email"          : "Please check the spelling of the email<br>entered and try again.",
     "summit_not_found"          : "Can't find a show with that slug. Please contact help-desk."
   },
   "general": {
@@ -33,7 +30,10 @@
     "wrong_qr_title"    : "Problem with your QR code",
     "wrong_qr_text"     : "Please contact helpdesk.",
     "valid_email"       : "Please enter a valid email address.",
-    "valid_name"        : "Please enter a valid name."
+    "valid_name"        : "Please enter a valid name.",
+    "not_found"         : "Ticket not found",
+    "not_found_message" : "No ticket was found using _{search_term}_ \nPlease see a staff member for assistance if you feel this is incorrect.",
+    "try_again"         : "Go back and try again"
   },
   "thank_you": {
     "thank_you"        : "Thank you. Your badge has been sent to the printer.",

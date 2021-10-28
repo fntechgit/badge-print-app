@@ -72,11 +72,6 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
     )(params)(dispatch).then((payload) => {
         let {data} = payload.response;
         dispatch(stopLoading());
-
-        if (data.length === 0) {
-            Swal.fire(T.translate('errors.not_found'), T.translate('errors.no_tickets_name'), "warning");
-        }
-
         return data;
     });
 };
@@ -107,11 +102,6 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
     )(params)(dispatch).then((payload) => {
         let {data} = payload.response;
         dispatch(stopLoading());
-
-        if (data.length === 0) {
-            Swal.fire(T.translate('errors.not_found'), T.translate('errors.no_tickets_email'), "warning");
-        }
-
         return data;
     });
 };
