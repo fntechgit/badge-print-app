@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import T from "i18n-react/dist/i18n-react";
 
 import {
