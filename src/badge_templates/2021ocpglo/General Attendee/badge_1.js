@@ -16,6 +16,7 @@ const shirtSize = {
 }
 
 export default ({badge}) => {
+    console.log(badge.getFeature('Incubation Committee Title'))
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">
@@ -42,9 +43,9 @@ export default ({badge}) => {
                 {badge.getQRCode({ fgColor: '#1e2860', size: 80 })}
             </div>
             }
-            {badge.getFeature('Expo') &&
+            {badge.getFeature('Expo Sponsor Staff') &&
             <div id="icon-feature-expo" className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Expo').image}/>
+                <img className="bdg-image" src={badge.getFeature('Expo Sponsor Staff').image}/>
             </div>
             }
             {badge.getFeature('Speaker') && !badge.getFeature('Keynote') &&
