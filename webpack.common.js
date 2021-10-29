@@ -2,6 +2,7 @@ const HtmlWebpackPlugin         = require('html-webpack-plugin');
 const { CleanWebpackPlugin }    = require('clean-webpack-plugin');
 const Dotenv                    = require('dotenv-webpack');
 const MiniCssExtractPlugin      = require("mini-css-extract-plugin");
+const path                      = require('path');
 
 module.exports = {
     entry: "./src/index.js",
@@ -14,6 +15,11 @@ module.exports = {
         new Dotenv()
     ],
     node: {fs: 'empty'},
+    resolve: {
+        alias: {
+            fonts: path.resolve(__dirname, 'src/styles/fonts')
+        }
+    },
     module: {
         rules: [
             {
@@ -49,11 +55,11 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                use: "url-loader?limit=10000&minetype=application/font-woff&name=fonts/[name].[ext]"
+                use: "url-loader?limit=10000&minetype=application/font-woff&name=fonts/[folder]/[name].[ext]"
             },
             {
                 test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                use: "file-loader?name=fonts/[name].[ext]"
+                use: "file-loader?name=fonts/[folder]/[name].[ext]"
             },
             {
                 test: /\.jpg|\.png|\.gif$/,
