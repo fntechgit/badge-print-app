@@ -1,0 +1,86 @@
+/* -- general styles -- */
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 4196414, 2021-10-20T22:05:43-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: HelveticaNeueLTStd-Lt by Linotype
+ * URL: https://www.myfonts.com/fonts/linotype/neue-helvetica/pro-45-light-189171/
+ * 
+ * Webfont: HelveticaNeueLTStd-Bd by Linotype
+ * URL: https://www.myfonts.com/fonts/linotype/neue-helvetica/pro-75-bold-189171/
+ * 
+ * 
+ * Webfonts copyright: Copyright &amp;#x00A9; 2014 Monotype Imaging Inc. All rights reserved.
+ * 
+ * © 2021 MyFonts Inc
+*/
+  
+@font-face {
+  font-family: "HelveticaNeueLTStd-Lt";
+  src: url('~fonts/HelveticaNeueLTStdLt/font.woff2') format('woff2'), url('~fonts//HelveticaNeueLTStdLt/font.woff') format('woff');
+}
+
+@font-face {
+  font-family: "HelveticaNeueLTStd-Bd";
+  src: url('~fonts/HelveticaNeueLTStdBd/font.woff2') format('woff2'), url('~fonts/HelveticaNeueLTStdBd/font.woff') format('woff');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #1e2860;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #1e2860 !important;
+	}
+}
+
+#badge-artboard {
+	width: 92mm; 
+	height: 140mm;
+	img { height: 100%; }
+}
+
+.text-box {
+	font-family: "HelveticaNeueLTStd-Bd";
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	padding: 0 8mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	text-align: left;
+	div {
+		color: #000 !important;
+	}
+	.first-name, .last-name {
+		font-size: 40px;
+		font-weight: bold;
+		line-height: 0.94;
+		letter-spacing: -0.025em;
+		text-transform: uppercase;
+	}
+	.company {
+		font-family: "HelveticaNeueLTStd-Lt";
+		font-size: 24px;
+		letter-spacing: -0.025em;
+	}
+}
+
+.qrcode-box {
+	top: 14mm;
+	right: 5.4mm;
+}

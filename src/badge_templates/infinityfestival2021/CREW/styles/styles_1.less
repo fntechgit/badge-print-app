@@ -1,0 +1,58 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "FranklinGothicURW-Med";
+  src: url('~fonts/Franklin Gothic Medium/FranklinGothic-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "FranklinGothicURW-Boo";
+  src: url('~fonts/Franklin Gothic Book/FranklinGothic-Book.ttf') format('truetype');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #1e2860;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #1e2860 !important;
+	}
+}
+
+#badge-artboard {
+	width: 92mm; 
+	height: 140mm;
+	img { height: 100%; }
+}
+
+.text-box {
+	position: absolute;
+	top: 260px;
+	width: 100%;
+	padding: 0 5mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;
+	div {
+		color: #000 !important;
+	}
+	.first-name {
+		font-family: FranklinGothicURW-Med;
+		font-size: 36pt;
+		line-height: 0.8;
+		letter-spacing: 0.07em;
+	}
+	.last-name {
+		font-family: FranklinGothicURW-Boo;
+		font-size: 26pt;
+		line-height: 0.8;
+		letter-spacing: 0.07em;
+		margin: 9px 0 10px;
+	}
+}
