@@ -43,7 +43,7 @@ class FindTicketPage extends React.Component {
                     "warning"
                 );
             } else {
-                history.push(`${match.url}/tickets/${qrCodeArray[1]}`);
+                location.replace(`${match.url}/tickets/${qrCodeArray[1]}`);
             }
         }
     };
@@ -67,9 +67,9 @@ class FindTicketPage extends React.Component {
             findTicketsByName(firstName, lastName).then(
                 (data) => {
                     if (data.length === 1) {
-                        history.push(`${match.url}/tickets/${data[0].number}`);
+                        location.replace(`${match.url}/tickets/${data[0].number}`);
                     } else if (data.length > 1) {
-                        history.push(`${match.url}/tickets`);
+                        location.replace(`${match.url}/tickets`);
                     } else {
                         this.setState({notFound: true});
                     }
@@ -88,9 +88,9 @@ class FindTicketPage extends React.Component {
             findTicketsByEmail(email).then(
                 (data) => {
                     if (data.length === 1) {
-                        history.push(`${match.url}/tickets/${data[0].number}`);
+                        location.replace(`${match.url}/tickets/${data[0].number}`);
                     } else if (data.length > 1) {
-                        history.push(`${match.url}/tickets`);
+                        location.replace(`${match.url}/tickets`);
                     } else {
                         this.setState({notFound: true});
                     }
