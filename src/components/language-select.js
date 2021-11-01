@@ -12,9 +12,7 @@
  **/
 
 import React from 'react'
-import T from 'i18n-react/dist/i18n-react'
 import ReactFlagsSelect from 'react-flags-select';
-import 'react-flags-select/css/react-flags-select.css';
 
 
 export default class LanguageSelect extends React.Component {
@@ -40,7 +38,7 @@ export default class LanguageSelect extends React.Component {
     }
 
     render() {
-        let {language} = this.props;
+        const {language} = this.props;
         let defaultLang = 'US';
 
         switch(language) {
@@ -56,10 +54,11 @@ export default class LanguageSelect extends React.Component {
         return (
             <div className="language-select">
                 <ReactFlagsSelect
-                    defaultCountry={defaultLang}
+                    selected={defaultLang}
                     countries={["US", "ES"]}
-                    customLabels={{"US": "EN","ES": "ES"}}
                     onSelect={this.handleChange}
+                    showOptionLabel={false}
+                    showSelectedLabel={false}
                 />
             </div>
         );
