@@ -3,7 +3,7 @@ import { Textfit } from 'react-textfit';
 
 import './styles/styles_1.less';
 
-import background_img from './images/background.png';
+import background_img from './images/crew95x140.png';
 
 
 function useForceUpdate(){
