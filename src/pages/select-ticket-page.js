@@ -11,7 +11,7 @@ class SelectTicketPage extends React.Component {
 
     onSelectTicket = (ticketId) => {
         const {match} = this.props;
-        location.replace(`${match.url}/${ticketId}`);
+        history.push(`${match.url}/${ticketId}`);
     };
 
     onCancel = () => {
