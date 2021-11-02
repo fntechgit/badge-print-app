@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from "react-redux";
-import history from '../history';
 
 class ErrorPage extends React.Component {
 
