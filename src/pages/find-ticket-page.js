@@ -17,10 +17,10 @@ class FindTicketPage extends React.Component {
         super(props);
 
         this.state = {
-            embedded    : window.embedded !== undefined,
-            showQRreader: false,
-            notFound    : null,
-            error       : '',
+            embedded      : window.embedded !== undefined,
+            showQRreader  : false,
+            showErrorPage : false,
+            error         : '',
         };
 
     }
@@ -71,7 +71,7 @@ class FindTicketPage extends React.Component {
                     } else if (data.length > 1) {
                         history.push(`${match.url}/tickets`);
                     } else {
-                        this.setState({notFound: true});
+                        this.setState({showErrorPage: true})
                     }
                 }
             );
@@ -92,7 +92,7 @@ class FindTicketPage extends React.Component {
                     } else if (data.length > 1) {
                         history.push(`${match.url}/tickets`);
                     } else {
-                        this.setState({notFound: true});
+                        this.setState({showErrorPage: true})
                     }
                 }
             );
@@ -112,15 +112,16 @@ class FindTicketPage extends React.Component {
     };
     
     render(){
-        const { embedded, showQRreader, error, notFound } = this.state;
+        const { embedded, showQRreader, showErrorPage, error } = this.state;
         const { searchTerm } = this.props;
 
-        if (notFound) {
+        if (showErrorPage) {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.not_found")}
                     message={T.translate("find_ticket.not_found_message", {search_term: searchTerm})}
                     linkText={T.translate("find_ticket.try_again")}
+                    onLinkClick={() => this.setState({showErrorPage: false})}
                 />
             );
         }

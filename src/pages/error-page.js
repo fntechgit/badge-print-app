@@ -3,6 +3,13 @@ import {connect} from "react-redux";
 
 class ErrorPage extends React.Component {
 
+    onLinkClick = (e) => {
+        if (this.props.onLinkClick) {
+            e.preventDefault();
+            this.props.onLinkClick();
+        }
+    }
+
     render(){
         const { summit } = this.props;
         const title = this.props.title || "There's been an error";
@@ -15,7 +22,7 @@ class ErrorPage extends React.Component {
                 <h1>{title}</h1>
                 <p>{message}</p>
                 <br/>
-                <a className="go-back" href={`/check-in/${path}`}>{linkText}</a>
+                <a href={`/check-in/${path}`} className="go-back" onClick={this.onLinkClick}>{linkText}</a>
             </div>
         );
     }
