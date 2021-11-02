@@ -63,17 +63,23 @@ class PrintPage extends React.Component {
         };
     };
 
+    goToFindTicketPage = () => {
+        const { summitSlug } = this.props;
+        const path = summitSlug || ''
+        history.push(`/check-in/${path}`);
+    };
+
     render(){
         let { badge, match, location, loading, summitSlug } = this.props;
 
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (!match.params.summit_slug || !match.params.ticket_id) {
-            return (<ErrorPage message={T.translate("preview.summit_missing")} />);
+            return (<ErrorPage message={T.translate("preview.summit_missing")} onLinkClick={this.goToFindTicketPage} />);
         }
 
         if (!badge && !loading) {
-            return (<ErrorPage title={T.translate("preview.error_retrieving")} message={T.translate("preview.contact_help")} />);
+            return (<ErrorPage title={T.translate("preview.error_retrieving")} message={T.translate("preview.contact_help")} onLinkClick={this.goToFindTicketPage} />);
         }
 
         let badgeObj = new Badge(badge);
