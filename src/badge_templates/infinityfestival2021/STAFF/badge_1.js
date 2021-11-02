@@ -4,7 +4,7 @@ import { Textfit } from 'react-textfit';
 import './styles/styles_1.less';
 
 // we use an extra pixel in image width, hack to help borderless printing
-import background_img from './images/staff95X140.png';
+import background_img from './images/staff95x140.png';
 
 
 function useForceUpdate(){
