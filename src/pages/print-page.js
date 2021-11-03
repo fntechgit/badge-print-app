@@ -52,12 +52,12 @@ class PrintPage extends React.Component {
             let payload = { height: element.clientHeight, width: element.clientWidth };
             printBadge(payload).then(
                 (data) => {
-                    callback()
+                    callback();
                 }
             );
         } else {
             window.addEventListener('afterprint', (event) => {
-                window.addEventListener('focus', callback, { once: true });
+                callback();
             }, { once: true });
             window.print();
         };
