@@ -16,7 +16,6 @@ const shirtSize = {
 }
 
 export default ({badge}) => {
-    console.log(badge.getFeature('Incubation Committee Title'))
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">
