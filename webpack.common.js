@@ -50,8 +50,7 @@ module.exports = {
             },
             {
                 test: /\.scss/,
-                exclude: /\.module\.scss/,
-                use: [MiniCssExtractPlugin.loader, "css-loader", 'sass-loader']
+                use: [MiniCssExtractPlugin.loader, "css-loader", 'sass-loader'],
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

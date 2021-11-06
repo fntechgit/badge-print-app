@@ -30,7 +30,7 @@ export const loadSummits = () => async (dispatch, getState) => {
 
     let params = {
         access_token : accessToken,
-        expand: 'none',
+        expand: 'order_extra_questions.values',
         relations: 'none',
         page: 1,
         per_page: 100,
@@ -64,6 +64,7 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
 
     let params = {
         access_token : accessToken,
+        expand: 'order_extra_questions.values',
     };
 
     return getRequest(
