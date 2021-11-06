@@ -3,7 +3,8 @@ import { Textfit } from 'react-textfit';
 
 import './styles/styles_1.less';
 
-import background_img from './images/staff92x140.png';
+// we use an extra pixel in image width, hack to help borderless printing
+import background_img from './images/staff95x140.png';
 
 export default ({badge}) => {
     return (

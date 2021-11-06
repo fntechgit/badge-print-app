@@ -3,7 +3,8 @@ import { Textfit } from 'react-textfit';
 
 import './styles/styles_1.less';
 
-import background_img from './images/background_1.png';
+// we use an extra pixel in image width, hack to help borderless printing
+import background_img from './images/general95x140.png';
 
 const shirtSize = {
     'Unisex XS': '.',
