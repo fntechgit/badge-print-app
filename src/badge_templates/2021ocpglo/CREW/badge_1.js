@@ -21,7 +21,7 @@ export default ({badge}) => {
     <>
         <div id="badge-artboard" className="bdg-artboard">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
-            <div className="text-box">
+            <div className="content-wrapper">
                 <Textfit mode="single" max={48} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={35} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
             </div>
