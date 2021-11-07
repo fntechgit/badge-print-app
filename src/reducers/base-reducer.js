@@ -10,19 +10,17 @@ import {
 import {
     REQUEST_BADGE,
     BADGE_RECEIVED,
-    BADGE_PRINTED,
     CLEAR_BADGE
 } from "../actions/badge-actions";
 
 import {
     REQUEST_TICKETS,
-    RECEIVE_TICKETS
+    RECEIVE_TICKETS,
+    SET_SELECTED_TICKET,
+    CLEAR_SELECTED_TICKET,
+    TICKET_UPDATED,
 } from "../actions/ticket-actions";
 
-import {
-    REQUEST_QRCODE,
-    RECEIVE_QRCODE
-} from "../actions/qrcode-actions";
 
 const DEFAULT_STATE = {
     allSummits: [],
@@ -33,6 +31,7 @@ const DEFAULT_STATE = {
     summitSlug: '',
     accessTokenQS: null,
     loading: 0,
+    selectedTicket:null,
 }
 
 const baseReducer = (state = DEFAULT_STATE, action) => {
@@ -87,12 +86,28 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         break;
         case CLEAR_BADGE: {
             return {...state,
+                selectedTicket: null,
                 badge: null,
                 searchTerm:'',
                 allTickets: [],
             };
         }
         break;
+        case SET_SELECTED_TICKET:{
+            return {...state, selectedTicket: payload}
+        }
+        break;
+        case TICKET_UPDATED:{
+            return {...state, }
+        }
+        case CLEAR_SELECTED_TICKET:{
+            return {...state,
+                selectedTicket: null,
+                badge: null,
+                searchTerm:'',
+                allTickets: [],}
+        }
+            break;
         default:
             return state;
         break;

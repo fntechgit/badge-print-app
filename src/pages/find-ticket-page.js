@@ -5,10 +5,10 @@ import history from '../history';
 import QrReader from 'react-qr-reader'
 import Swal from "sweetalert2";
 import validator from 'validator';
-import {getTicket, findTicketsByName, findTicketsByEmail} from "../actions/ticket-actions";
+import {getTicket, findTicketsByName, findTicketsByEmail, setSelectedTicket} from "../actions/ticket-actions";
 import {scanQRCode} from "../actions/qrcode-actions";
 import ErrorPage from './error-page';
-
+import {ATTENDEE_STATUS_INCOMPLETE} from '../utils/constants';
 import "../styles/find-ticket-page.less"
 
 class FindTicketPage extends React.Component {
@@ -31,7 +31,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleScan = (qrCode) => {
-        const { summit, match } = this.props;
+        const { summit, match, getTicket } = this.props;
         if (qrCode) {
             this.setState({showQRreader: false});
             let qrCodeArray = qrCode.split(summit.qr_registry_field_delimiter);
@@ -42,9 +42,17 @@ class FindTicketPage extends React.Component {
                     T.translate("find_ticket.wrong_qr_text"),
                     "warning"
                 );
-            } else {
-                history.push(`${match.url}/tickets/${qrCodeArray[1]}`);
+                return;
             }
+            let ticketNumber = qrCodeArray[1];
+            getTicket(ticketNumber).then((ticket) => {
+                if(ticket.owner.status === 'Incomplete') {
+                    history.push(`/check-in/${summit.slug}/extra-questions`);
+                    return;
+                }
+                history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+            })
+
         }
     };
 
@@ -59,7 +67,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleFindByName = () => {
-        const { match, findTicketsByName } = this.props;
+        const { summit, findTicketsByName } = this.props;
         const firstName = this.firstName.value.trim();
         const lastName = this.lastName.value.trim();
 
@@ -67,38 +75,56 @@ class FindTicketPage extends React.Component {
             findTicketsByName(firstName, lastName).then(
                 (data) => {
                     if (data.length === 1) {
-                        history.push(`${match.url}/tickets/${data[0].number}`);
+                        let ticket = data[0];
+                        if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                            setSelectedTicket(ticket).then(() => {
+                                history.push(`/check-in/${summit.slug}/extra-questions`);
+                            })
+                        }
+                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
-                        history.push(`${match.url}/tickets`);
+                        history.push(`/check-in/${summit.slug}/tickets`);
                     } else {
                         this.setState({showErrorPage: true})
                     }
                 }
             );
-        } else {
-            this.setState({error: 'name'});
+            return;
         }
+
+        this.setState({error: 'name'});
+
     };
 
     handleFindByEmail = () => {
-        const { match, findTicketsByEmail } = this.props;
+        const { summit, findTicketsByEmail, setSelectedTicket } = this.props;
         const email = this.email.value;
 
         if (email && validator.isEmail(email)) {
             findTicketsByEmail(email).then(
                 (data) => {
                     if (data.length === 1) {
-                        history.push(`${match.url}/tickets/${data[0].number}`);
+                        let ticket = data[0];
+
+                        if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+
+                            setSelectedTicket(ticket).then(() => {
+                                history.push(`/check-in/${summit.slug}/extra-questions`);
+                            })
+                        }
+                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
-                        history.push(`${match.url}/tickets`);
+                        history.push(`/check-in/${summit.slug}tickets`);
                     } else {
                         this.setState({showErrorPage: true})
                     }
                 }
             );
-        } else {
-            this.setState({error: 'email'});
+            return;
         }
+
+        this.setState({error: 'email'});
+
     };
 
     handleScanQRCode = () => {
@@ -244,4 +270,5 @@ export default connect(mapStateToProps, {
     findTicketsByName,
     findTicketsByEmail,
     scanQRCode,
+    setSelectedTicket,
 })(FindTicketPage)

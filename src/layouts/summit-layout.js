@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { getSummit }  from '../actions/base-actions';
 import FindTicketPage from '../pages/find-ticket-page';
+import ExtraQuestionsPage from '../pages/extra-questions-page';
 import SelectTicketPage from '../pages/select-ticket-page';
 import PrintPage from '../pages/print-page';
 import ThankYouPage from '../pages/thank-you-page';
@@ -48,6 +49,7 @@ class SummitLayout extends React.Component {
             <div>
                 <Switch>
                     <Route exact strict path={match.url} component={FindTicketPage} />
+                    <Route exact strict path={`/check-in/:summit_slug/extra-questions`} component={ExtraQuestionsPage} />
                     <Route exact strict path={`/check-in/:summit_slug/tickets`} component={SelectTicketPage} />
                     <Route exact strict path={`/check-in/:summit_slug/tickets/:ticket_id`} component={PrintPage} />
                     <Route path={`${match.url}/thank-you`} component={ThankYouPage} />

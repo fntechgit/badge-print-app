@@ -1,22 +1,29 @@
 import React from 'react';
 import history from '../history'
-import { Dropdown } from 'openstack-uicore-foundation/lib/components'
 import {connect} from "react-redux";
 import {loadSummits, setSummit} from "../actions/base-actions";
-import T from "i18n-react/dist/i18n-react";
-
+import {ATTENDEE_STATUS_INCOMPLETE} from '../utils/constants';
+import {setSelectedTicket} from '../actions/ticket-actions';
+import {clearBadge} from "../actions/badge-actions";
 import "../styles/select-ticket-page.less"
+import T from "i18n-react/dist/i18n-react";
 
 class SelectTicketPage extends React.Component {
 
     onSelectTicket = (ticketId) => {
-        const {match} = this.props;
-        history.push(`${match.url}/${ticketId}`);
+        const { allTickets, summit, setSelectedTicket} = this.props;
+        const ticket = allTickets.find((t) => t.id === ticketId);
+        if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+            setSelectedTicket(ticket).then(() => {
+                history.push(`/check-in/${summit.slug}/extra-questions`);
+            })
+        }
+        history.push(`/check-in/${summit.slug}/tickets/${ticketId}`);
     };
 
     onCancel = () => {
-        const {summit} = this.props;
-        history.push(`/check-in/${summit.slug}`)
+        const {summit, clearBadge} = this.props;
+        clearBadge().then(() => history.push(`/check-in/${summit.slug}`));
     };
 
     render(){
@@ -80,4 +87,6 @@ const mapStateToProps = ({ baseState, loggedUserState }) => ({
 export default connect(mapStateToProps, {
     loadSummits,
     setSummit,
+    setSelectedTicket,
+    clearBadge,
 })(SelectTicketPage)
