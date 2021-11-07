@@ -138,7 +138,7 @@ export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async 
         access_token: accessToken,
         expand: 'owner, owner.extra_questions'
     };
-    debugger;
+
     return putRequest(
         null,
         createAction(TICKET_UPDATED),
