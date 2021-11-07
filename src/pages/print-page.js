@@ -17,50 +17,52 @@ class PrintPage extends React.Component {
         this.state = {
             embedded: window.embedded !== undefined,
         };
+        this.afterPrintCallback = this.afterPrintCallback.bind(this);
     }
+
+    afterPrintCallback ()  {
+        let { history, incrementBadgePrintCount, clearBadge, match } = this.props;
+        const ticketId = match.params.ticket_id;
+        const summitSlug = match.params.summit_slug;
+        const location = `/check-in/${summitSlug}/thank-you`;
+        incrementBadgePrintCount(summitSlug, ticketId)
+            .then(() => clearBadge()
+                .then(() =>  history.push(location)));
+    };
 
     componentDidMount() {
-        let summitSlug = this.props.match.params.summit_slug;
-        let ticketId = this.props.match.params.ticket_id;
-
-        this.props.getBadge(summitSlug, ticketId);
+        let { getBadge, match, incrementBadgePrintCount } = this.props;
+        let { embedded } = this.state;
+        let summitSlug = match.params.summit_slug;
+        let ticketId = match.params.ticket_id;
+        getBadge(summitSlug, ticketId).then(() => {
+            if(!embedded) {
+                incrementBadgePrintCount(summitSlug, ticketId);
+            }
+        });
     }
 
-    cancelPrint = (ev) => {
+    cancelPrint = () => {
         this.props.clearBadge().then(() => {
             history.push(`/check-in/${this.props.match.params.summit_slug}`);
         })
     };
 
-    handlePrint = (ev) => {
+    handlePrint = () => {
         let { embedded } = this.state;
-        let { history, incrementBadgePrintCount, printBadge, clearBadge } = this.props;
-
-        let ticketId = this.props.match.params.ticket_id;
-        let summitSlug = this.props.match.params.summit_slug;
-
-        let location = `/check-in/${summitSlug}/thank-you`;
-
-        let callback = () => {
-            incrementBadgePrintCount(summitSlug, ticketId)
-                .then(() => clearBadge()
-                    .then(() =>  history.push(location)));
-        };
+        let { printBadge } = this.props;
 
         if (embedded) {
             let element = document.getElementById('badge-artboard');
             let payload = { height: element.clientHeight, width: element.clientWidth };
             printBadge(payload).then(
-                (data) => {
-                    callback();
+                () => {
+                    this.afterPrintCallback();
                 }
             );
-        } else {
-            window.addEventListener('afterprint', (event) => {
-                callback();
-            }, { once: true });
-            window.print();
-        };
+            return;
+        }
+        window.print();
     };
 
     goToFindTicketPage = () => {
@@ -70,7 +72,7 @@ class PrintPage extends React.Component {
     };
 
     render(){
-        let { badge, match, location, loading, summitSlug } = this.props;
+        let { badge, match, loading, summitSlug } = this.props;
 
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
