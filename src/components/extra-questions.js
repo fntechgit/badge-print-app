@@ -17,9 +17,9 @@ const ExtraQuestions = ({ question, handleChange, getAnswer }) => {
     switch (question.type) {
         case 'Text':
             return (
-                <div key={question.id} className={`${styles.questionWrapper} columns`}>
-                    <div className="column is-one-third" style={{ paddingTop: '10px' }}><RawHTML>{htmlLabel}</RawHTML></div>
-                    <div className="column is-two-thirds">
+                <div key={question.id} className={`${styles.questionWrapper} row`}>
+                    <div className="col-md-4"><RawHTML>{htmlLabel}</RawHTML></div>
+                    <div className="col-md-8">
                         <Input
                             id={question.id}
                             value={getAnswer(question)}
@@ -32,9 +32,9 @@ const ExtraQuestions = ({ question, handleChange, getAnswer }) => {
             );
         case 'TextArea':
             return (
-                <div key={question.id} className={`${styles.questionWrapper} columns`}>
-                    <div className="column is-one-third" style={{ paddingTop: '10px' }}><RawHTML>{htmlLabel}</RawHTML></div>
-                    <div className="column is-two-thirds">
+                <div key={question.id} className={`${styles.questionWrapper} row`}>
+                    <div className="col-md-4"><RawHTML>{htmlLabel}</RawHTML></div>
+                    <div className="col-md-8">
                         <textarea
                             id={question.id}
                             value={getAnswer(question)}
@@ -48,12 +48,12 @@ const ExtraQuestions = ({ question, handleChange, getAnswer }) => {
             );
         case 'CheckBox':
             return (
-                <div key={question.id} className={`${styles.questionWrapper} columns`}>
-                    <div className="column is-1">
+                <div key={question.id} className={`${styles.questionWrapper} row`}>
+                    <div className="col-md-1">
                         <input type="checkbox" id={`${question.id}`} checked={(getAnswer(question) === "true")}
                             onChange={handleChange} />
                     </div>
-                    <div className="column is-11">
+                    <div className="col-md-11">
                         <RawHTML className={styles.questionCheckbox}>{htmlLabel}</RawHTML>
                     </div>
                 </div>
@@ -62,9 +62,9 @@ const ExtraQuestions = ({ question, handleChange, getAnswer }) => {
         case 'ComboBox':
             questionValues = questionValues.map(val => ({ ...val, value: val.id }));
             return (
-                <div key={question.id} className={`${styles.questionWrapper} columns`}>
-                    <div className="column is-one-third"><RawHTML>{htmlLabel}</RawHTML></div>
-                    <div className="column is-two-thirds">
+                <div key={question.id} className={`${styles.questionWrapper} row`}>
+                    <div className="col-md-4"><RawHTML>{htmlLabel}</RawHTML></div>
+                    <div className="col-md-8">
                         <Dropdown
                             id={question.id}
                             overrideCSS={true}
@@ -79,9 +79,9 @@ const ExtraQuestions = ({ question, handleChange, getAnswer }) => {
             questionValues = questionValues.map(val => ({ ...val, value: val.id }));
             const answerValue = getAnswer(question) ? getAnswer(question).split(',').map(ansVal => parseInt(ansVal)) : [];
             return (
-                <div key={question.id} className={`${styles.questionWrapper} columns`}>
-                    <div className="column is-one-third"><RawHTML>{htmlLabel}</RawHTML></div>
-                    <div className="column is-two-thirds">
+                <div key={question.id} className={`${styles.questionWrapper} row`}>
+                    <div className="col-md-4"><RawHTML>{htmlLabel}</RawHTML></div>
+                    <div className="col-md-8">
                         <CheckboxList
                             id={`${question.id}`}
                             value={answerValue}
@@ -94,9 +94,9 @@ const ExtraQuestions = ({ question, handleChange, getAnswer }) => {
         case 'RadioButtonList':
             questionValues = questionValues.map(val => ({ ...val, value: val.id }));
             return (
-                <div key={question.id} className={`${styles.questionWrapper} columns`}>
-                    <div className="column is-one-third"><RawHTML>{htmlLabel}</RawHTML></div>
-                    <div className="column is-two-thirds">
+                <div key={question.id} className={`${styles.questionWrapper} row`}>
+                    <div className="col-md-4"><RawHTML>{htmlLabel}</RawHTML></div>
+                    <div className="col-md-8">
                         <RadioList
                             id={`${question.id}`}
                             value={getAnswer(question)}

@@ -1,13 +1,9 @@
 .question-wrapper {
-  margin: 15px 0;
-  display: flex;
-  align-content: center;
-  align-items: baseline;
+  margin: 35px 0;
 }
 
 .button-save {
-  float: right;
-  margin-top: 20px;
+  margin: 30px 15px;
 }
 
 .disclaimer {
@@ -24,7 +20,8 @@
 .form {
   margin-bottom: 30px;
   .input-row {
-    margin: 15px 0;
+    margin-top: 35px;
+    margin-bottom: 35px;
 
     .input-field {
       display: flex;

@@ -76,24 +76,24 @@ export const ExtraQuestionsPage = ({summit, saveExtraQuestions, selectedTicket, 
 
 	return (
 		<>
-				<div className="columns">
-						<div className="column px-6 py-6 mb-6 is-half is-offset-one-quarter">
+				<div className="container">
+						<div className="col-md-8 col-md-offset-2">
 								<h2>Attendee Information</h2>
 								<div className={styles.form}>
-										<div className={`columns is-mobile ${styles.inputRow}`}>
-												<div className='column is-one-third'>Ticket assigned to email</div>
-												<div className='column is-two-thirds'>
+										<div className={`row ${styles.inputRow}`}>
+												<div className='col-md-4'>Ticket assigned to email</div>
+												<div className='col-md-8'>
 														{owner.email}
 												</div>
 										</div>
-										<div className={`columns is-mobile ${styles.inputRow}`}>
-												<div className='column is-one-third'>First Name</div>
-												<div className='column is-two-thirds'>
+										<div className={`row ${styles.inputRow}`}>
+												<div className='col-md-4'>First Name *</div>
+												<div className='col-md-8'>
 														{selectedTicket.owner.first_name ?
 															selectedTicket.owner.first_name
 																:
 																<input
-																		className={`${styles.input} ${styles.isMedium}`}
+																		className={`form-control ${styles.input} ${styles.isMedium}`}
 																		type="text"
 																		placeholder="First Name"
 																		onChange={e => setOwner({ ...owner, first_name: e.target.value })}
@@ -101,14 +101,14 @@ export const ExtraQuestionsPage = ({summit, saveExtraQuestions, selectedTicket, 
 														}
 												</div>
 										</div>
-										<div className={`columns is-mobile ${styles.inputRow}`}>
-												<div className='column is-one-third'>Last Name</div>
-												<div className='column is-two-thirds'>
+										<div className={`row ${styles.inputRow}`}>
+												<div className='col-md-4'>Last Name *</div>
+												<div className='col-md-8'>
 														{selectedTicket.owner.last_name ?
 															selectedTicket.owner.last_name
 																:
 																<input
-																		className={`${styles.input} ${styles.isMedium}`}
+																		className={`form-control`}
 																		type="text"
 																		placeholder="Last Name"
 																		onChange={e => setOwner({ ...owner, last_name: e.target.value })}
@@ -116,14 +116,14 @@ export const ExtraQuestionsPage = ({summit, saveExtraQuestions, selectedTicket, 
 														}
 												</div>
 										</div>
-										<div className={`columns is-mobile ${styles.inputRow}`}>
-												<div className='column is-one-third'>Company</div>
-												<div className='column is-two-thirds'>
+										<div className={`row ${styles.inputRow}`}>
+												<div className='col-md-4'>Company *</div>
+												<div className='col-md-8'>
 														{selectedTicket.owner.company ?
 															selectedTicket.owner.company
 																:
 																<input
-																		className={`${styles.input} ${styles.isMedium}`}
+																		className={`form-control`}
 																		type="text"
 																		placeholder="Company"
 																		onChange={e => setOwner({ ...owner, company: e.target.value })}
@@ -133,38 +133,42 @@ export const ExtraQuestionsPage = ({summit, saveExtraQuestions, selectedTicket, 
 										</div>
 								</div>
 								<h2>Additional Information</h2>
-								<span>
-										These extra questions are required before enter the event.
-								</span>
+								<h5>
+										These extra questions are required before entering the event.
+								</h5>
 								<div>
 										{answers.length === extraQuestions.length && extraQuestions.map(question => {
 												return <ExtraQuestions key={question.id} question={question} handleChange={handleChange} getAnswer={getAnswer} />
 										})}
 								</div>
-								<div className={`columns ${styles.disclaimer}`}>
-										<div className="column is-12">
+								<div className={`row ${styles.disclaimer}`}>
+										<div className="col-md-12">
 												<input type="checkbox" checked={disclaimer} onChange={toggleDisclaimer} />
 												<b>{summit.registration_disclaimer_mandatory ? '*' : ''}</b>
 												<span dangerouslySetInnerHTML={{ __html: summit.registration_disclaimer_content }} />
 										</div>
 								</div>
-								<button
-										className={`${styles.buttonSave} button is-large`}
-										disabled={
-												!checkAttendeeInformation() ||
-												!checkMandatoryDisclaimer() ||
-												!mandatoryQuestionsAnswered()}
-										onClick={() => saveExtraQuestions(answers, owner, disclaimer).then(() => {
-											history.push(`/check-in/${summit.slug}/tickets/${selectedTicket.number}`)
-										})}
-								>
-										Save and Continue
-								</button>
-								<button className={`${styles.buttonSave} button is-large`}
-										onClick={() => clearSelectedTicket().then( () => {
-											history.push(`/check-in/${summit.slug}/`)
-										})}
-								>Cancel</button>
+								<div className="row">
+										<div className="col-md-12 text-center">
+											<button className={`${styles.buttonSave} btn btn-primary`}
+													onClick={() => clearSelectedTicket().then( () => {
+														history.push(`/check-in/${summit.slug}/`)
+													})}
+											>Cancel</button>
+											<button
+													className={`${styles.buttonSave} btn btn-primary`}
+													disabled={
+															!checkAttendeeInformation() ||
+															!checkMandatoryDisclaimer() ||
+															!mandatoryQuestionsAnswered()}
+													onClick={() => saveExtraQuestions(answers, owner, disclaimer).then(() => {
+														history.push(`/check-in/${summit.slug}/tickets/${selectedTicket.number}`)
+													})}
+											>
+													Save and Continue
+											</button>
+										</div>
+								</div>
 						</div>
 				</div>
 		</>
