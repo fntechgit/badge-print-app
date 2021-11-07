@@ -18,7 +18,8 @@ class SelectTicketPage extends React.Component {
                 history.push(`/check-in/${summit.slug}/extra-questions`);
             })
         }
-        history.push(`/check-in/${summit.slug}/tickets/${ticketId}`);
+        else
+            history.push(`/check-in/${summit.slug}/tickets/${ticketId}`);
     };
 
     onCancel = () => {

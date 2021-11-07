@@ -81,7 +81,8 @@ class FindTicketPage extends React.Component {
                                 history.push(`/check-in/${summit.slug}/extra-questions`);
                             })
                         }
-                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                        else
+                            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
                         history.push(`/check-in/${summit.slug}/tickets`);
                     } else {
@@ -107,12 +108,12 @@ class FindTicketPage extends React.Component {
                         let ticket = data[0];
 
                         if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-
                             setSelectedTicket(ticket).then(() => {
                                 history.push(`/check-in/${summit.slug}/extra-questions`);
                             })
                         }
-                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                        else
+                            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
                         history.push(`/check-in/${summit.slug}tickets`);
                     } else {
