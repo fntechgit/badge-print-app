@@ -36,9 +36,10 @@ export const getTicket = (ticketId) => async (dispatch, getState) => {
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}`,
         authErrorHandler,
         {search_term: ticketId}
-    )(params)(dispatch).then((data) => {
+    )(params)(dispatch).then((payload) => {
+            let {response} = payload;
             dispatch(stopLoading());
-            return data;
+            return response;
         }
     );
 };
