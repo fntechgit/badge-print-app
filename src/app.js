@@ -51,7 +51,7 @@ class App extends React.PureComponent {
     }
 
     componentDidMount() {
-        //this.props.clearBadge();
+        this.props.clearBadge();
     }
 
     render() {

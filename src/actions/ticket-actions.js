@@ -1,4 +1,4 @@
-import T from "i18n-react/dist/i18n-react";
+import Swal from "sweetalert2";
 
 import {
     getRequest,
@@ -6,15 +6,16 @@ import {
     createAction,
     stopLoading,
     startLoading,
-    showMessage,
     getAccessToken,
     authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
 export const REQUEST_TICKET         = 'REQUEST_TICKET';
-export const RECEIVE_TICKET         = 'RECEIVE_TICKET';
 export const REQUEST_TICKETS        = 'REQUEST_TICKETS';
 export const RECEIVE_TICKETS        = 'RECEIVE_TICKETS';
+export const SET_SELECTED_TICKET    = 'SET_SELECTED_TICKET';
+export const CLEAR_SELECTED_TICKET    = 'CLEAR_SELECTED_TICKET';
+export const TICKET_UPDATED  = 'TICKET_UPDATED';
 
 export const getTicket = (ticketId) => async (dispatch, getState) => {
 
@@ -26,21 +27,29 @@ export const getTicket = (ticketId) => async (dispatch, getState) => {
 
     const params = {
         access_token : accessToken,
-        expand: 'badge, badge.features, promo_code, ticket_type, owner, owner.member'
+        expand: 'badge, badge.features, promo_code, ticket_type, owner, owner.member, owner.extra_questions'
     };
 
     return getRequest(
         createAction(REQUEST_TICKET),
-        createAction(RECEIVE_TICKET),
+        createAction(SET_SELECTED_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}`,
         authErrorHandler,
         {search_term: ticketId}
     )(params)(dispatch).then((data) => {
             dispatch(stopLoading());
+            return data;
         }
     );
 };
 
+export const setSelectedTicket = (ticket) => (dispatch) => Promise.resolve().then(() => {
+    return dispatch(createAction(SET_SELECTED_TICKET)(ticket));
+})
+
+export const clearSelectedTicket = () => (dispatch) => Promise.resolve().then(() => {
+    return dispatch(createAction(CLEAR_SELECTED_TICKET)());
+})
 
 export const findTicketsByName = (firstName, lastName) => async (dispatch, getState) => {
 
@@ -57,7 +66,7 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
         page         : 1,
         per_page     : 20,
         'filter[]'   : [`owner_name=@${name}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
-        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code'
+        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions'
     };
 
     return getRequest(
@@ -86,7 +95,7 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
         page         : 1,
         per_page     : 20,
         'filter[]'   : [`owner_email==${email}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
-        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code'
+        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions'
     };
 
     return getRequest(
@@ -102,12 +111,13 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
     });
 };
 
-
 export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async (dispatch, getState) => {
 
     const accessToken = await getAccessToken();
 
-    const { baseState: { allTickets } } = getState();
+    const { baseState: { selectedTicket } } = getState();
+
+    if(!selectedTicket) return Promise.fail();
 
     const extraQuestionsAnswers = extra_questions.map(q => {
         return { question_id: q.id, answer: `${q.value}` }
@@ -128,18 +138,20 @@ export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async 
         access_token: accessToken,
         expand: 'owner, owner.extra_questions'
     };
-
+    debugger;
     return putRequest(
         null,
-        null,
-        `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/${allTickets[0].id}`,
+        createAction(TICKET_UPDATED),
+        `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/${selectedTicket.id}`,
         normalizedEntity,
         authErrorHandler
-    )(params)(dispatch).then(() => {
-        //Swal.fire('Success', "Extra questions saved successfully", "success");
+    )(params)(dispatch).then((payload) => {
+        Swal.fire('Success', "Extra questions saved successfully", "success");
+        dispatch(stopLoading());
+        return payload;
     }).catch(e => {
         dispatch(stopLoading());
-        //Swal.fire('Error', "Error saving your questions. Please retry.", "warning");
+        Swal.fire('Error', "Error saving your questions. Please retry.", "warning");
         return (e);
     });
 };

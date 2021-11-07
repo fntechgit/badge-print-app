@@ -14,6 +14,7 @@
     "select_label"     : "To continue, please select a show",
     "select_show"      : "Select a show",
     "continue"         : "Continue",
+    "cancel"           : "Cancel",
     "login_message"    : "You must log in to continue. Please contact help-desk."
   },
   "find_ticket": {

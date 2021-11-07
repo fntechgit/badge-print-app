@@ -1,0 +1,1 @@
+export const ATTENDEE_STATUS_INCOMPLETE = 'Incomplete';

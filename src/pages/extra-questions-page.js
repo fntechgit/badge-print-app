@@ -1,38 +1,24 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import history from '../history';
-
 import ExtraQuestions from '../components/extra-questions'
-
-import { saveExtraQuestions } from '../actions/ticket-actions'
-
+import { saveExtraQuestions, clearSelectedTicket } from '../actions/ticket-actions'
 import styles from '../styles/extra-questions.module.scss'
 
-export const ExtraQuestionsPage = ({match, summit, allTickets, saveExtraQuestions}) => {
-
-	if (allTickets.length == 0) {
-			//history.push(`/check-in/${match.params.summit_slug}`);
-			return null;
-	}
-
-	const ticket = allTickets.length > 0 ? allTickets[allTickets.length - 1] : null;
-
-	if (!ticket){
-			//history.push(`/check-in/${match.params.summit_slug}`);
-			return null;
-	}
+export const ExtraQuestionsPage = ({summit, saveExtraQuestions, selectedTicket, clearSelectedTicket}) => {
 
 	const extraQuestions = summit.order_extra_questions.sort((a, b) => (a.order > b.order) ? 1 : -1);
-	const userAnswers = ticket ? ticket.owner.extra_questions : [];
+	const userAnswers = selectedTicket ? selectedTicket.owner.extra_questions : [];
+
 	const [owner, setOwner] = useState({
-			email: ticket?.owner.email || '',
-			first_name: ticket?.owner.first_name || '',
-			last_name: ticket?.owner.last_name || '',
-			company: ticket?.owner.company || '',
+			email: selectedTicket?.owner.email || '',
+			first_name: selectedTicket?.owner.first_name || '',
+			last_name: selectedTicket?.owner.last_name || '',
+			company: selectedTicket?.owner.company || '',
 	});
 
 	// calculate state initial values
-	const [disclaimer, setDisclaimer] = useState(ticket?.owner?.disclaimer_accepted || false);
+	const [disclaimer, setDisclaimer] = useState(selectedTicket?.owner?.disclaimer_accepted || false);
 	const [answers, setAnswers] = useState(extraQuestions.map(question => {
 			const userAnswer = userAnswers.filter(a => a.question_id === question.id);
 			let newAnswer = { name: question.name, id: question.id, value: '' };
@@ -86,6 +72,8 @@ export const ExtraQuestionsPage = ({match, summit, allTickets, saveExtraQuestion
 
 	const getAnswer = (question) => answers.find(a => a.id === question.id).value;
 
+	if(!selectedTicket) return null;
+
 	return (
 		<>
 				<div className="columns">
@@ -101,8 +89,8 @@ export const ExtraQuestionsPage = ({match, summit, allTickets, saveExtraQuestion
 										<div className={`columns is-mobile ${styles.inputRow}`}>
 												<div className='column is-one-third'>First Name</div>
 												<div className='column is-two-thirds'>
-														{ticket.owner.first_name ?
-																owner.first_name
+														{selectedTicket.owner.first_name ?
+															selectedTicket.owner.first_name
 																:
 																<input
 																		className={`${styles.input} ${styles.isMedium}`}
@@ -116,8 +104,8 @@ export const ExtraQuestionsPage = ({match, summit, allTickets, saveExtraQuestion
 										<div className={`columns is-mobile ${styles.inputRow}`}>
 												<div className='column is-one-third'>Last Name</div>
 												<div className='column is-two-thirds'>
-														{ticket.owner.last_name ?
-																owner.last_name
+														{selectedTicket.owner.last_name ?
+															selectedTicket.owner.last_name
 																:
 																<input
 																		className={`${styles.input} ${styles.isMedium}`}
@@ -131,8 +119,8 @@ export const ExtraQuestionsPage = ({match, summit, allTickets, saveExtraQuestion
 										<div className={`columns is-mobile ${styles.inputRow}`}>
 												<div className='column is-one-third'>Company</div>
 												<div className='column is-two-thirds'>
-														{ticket.owner.company ?
-																owner.company
+														{selectedTicket.owner.company ?
+															selectedTicket.owner.company
 																:
 																<input
 																		className={`${styles.input} ${styles.isMedium}`}
@@ -166,10 +154,17 @@ export const ExtraQuestionsPage = ({match, summit, allTickets, saveExtraQuestion
 												!checkAttendeeInformation() ||
 												!checkMandatoryDisclaimer() ||
 												!mandatoryQuestionsAnswered()}
-										onClick={() => saveExtraQuestions(answers, owner, disclaimer)}
+										onClick={() => saveExtraQuestions(answers, owner, disclaimer).then(() => {
+											history.push(`/check-in/${summit.slug}/tickets/${selectedTicket.number}`)
+										})}
 								>
 										Save and Continue
 								</button>
+								<button className={`${styles.buttonSave} button is-large`}
+										onClick={() => clearSelectedTicket().then( () => {
+											history.push(`/check-in/${summit.slug}/`)
+										})}
+								>Cancel</button>
 						</div>
 				</div>
 		</>
@@ -182,5 +177,6 @@ const mapStateToProps = ({ baseState }) => ({
 });
 
 export default connect(mapStateToProps, {
-	saveExtraQuestions
+	saveExtraQuestions,
+	clearSelectedTicket,
 })(ExtraQuestionsPage)
