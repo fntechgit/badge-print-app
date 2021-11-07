@@ -15,7 +15,7 @@ export default ({badge}) => {
                 <span className="first-name" contentEditable>{badge.getFirstName()}</span>
                 <span className="last-name" contentEditable>{badge.getLastName()}</span>
                 <span className="badge-title ocp-staff">OCP Staff</span>
-                <span className="company" contentEditable>{badge.getCompany()}</span>
+                <span className="title" contentEditable>{badge.getCompany()}</span>
             </div>
         </div>
     </>
