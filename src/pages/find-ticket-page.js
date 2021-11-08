@@ -115,7 +115,7 @@ class FindTicketPage extends React.Component {
                         else
                             history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
-                        history.push(`/check-in/${summit.slug}tickets`);
+                        history.push(`/check-in/${summit.slug}/tickets`);
                     } else {
                         this.setState({showErrorPage: true})
                     }
