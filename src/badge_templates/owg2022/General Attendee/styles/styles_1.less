@@ -1,0 +1,72 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "IBMPlexSans-Medium";
+  src: url('~fonts/IBMPlexSans Medium/IBMPlexSans-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "IBMPlexSans-Regular";
+  src: url('~fonts/IBMPlexSans Regular/IBMPlexSans-Regular.ttf') format('truetype');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #1e2860;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #1e2860 !important;
+	}
+}
+
+#badge-artboard {
+	width: 94mm; 
+	height: 280mm;
+	img { height: 140mm }
+}
+
+.bdg-artboard {
+	font-family: IBMPlexSans-Regular;
+}
+
+.text-box {
+	position: absolute;
+	top: 63px;
+	width: 100%;
+	padding: 0 5mm;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #21285a !important;
+	text-align: center;
+	.first-name {
+		font-size: 26pt;
+		line-height: 1.13;
+		margin: 8px 0 10px;
+		text-transform: uppercase;
+	}
+	.last-name {
+		font-family: IBMPlexSans-Medium;
+		font-size: 36pt;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+	.company {
+		margin-top: 30px;
+		font-size: 20pt;
+		&::before{
+			content: "";
+			display: block;
+			background-color: #21285a !important;
+			height: 1.33px;
+			width: 200px;
+			position: relative;
+			top: -15px;
+		}
+	}
+}
+
