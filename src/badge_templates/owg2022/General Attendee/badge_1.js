@@ -13,8 +13,8 @@ export default ({badge}) => {
         <div id="badge-artboard" className="bdg-artboard">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
             <div className="text-box">
-                <span className="last-name" contentEditable>{badge.getLastName()}</span>
-                <span className="first-name" contentEditable>{badge.getFirstName()}</span>
+                <span className="last-name" contentEditable>{badge.getFirstName()}</span>
+                <span className="first-name" contentEditable>{badge.getLastName()}</span>
                 <span className="company" contentEditable>{badge.getCompany()}</span>
             </div>
             <img className="bdg-image" src={info_img}/>
