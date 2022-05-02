@@ -7,7 +7,8 @@ import {
     stopLoading,
     startLoading,
     getAccessToken,
-    authErrorHandler
+    authErrorHandler,
+    defaultErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
 export const REQUEST_TICKET            = 'REQUEST_TICKET';
@@ -16,6 +17,8 @@ export const RECEIVE_TICKETS           = 'RECEIVE_TICKETS';
 export const SET_SELECTED_TICKET       = 'SET_SELECTED_TICKET';
 export const CLEAR_SELECTED_TICKET     = 'CLEAR_SELECTED_TICKET';
 export const TICKET_UPDATED            = 'TICKET_UPDATED';
+
+const DefaultPageSize = 100;
 
 export const getTicket = (ticketId) => async (dispatch, getState) => {
 
@@ -112,8 +115,14 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
     });
 };
 
-// TODO get all pages
-export const getTickets = ({ filters, fields, expand, relations }) => async (dispatch, getState) => {
+export const getAllTickets = ({
+    filters = [],
+    fields,
+    expand,
+    relations,
+    page = 1,
+    perPage = 5,
+}) => async (dispatch, getState) => {
 
     let { baseState: { accessTokenQS: accessToken } } = getState();
 
@@ -125,8 +134,8 @@ export const getTickets = ({ filters, fields, expand, relations }) => async (dis
 
     const params = {
         access_token: accessToken,
-        page: 1,
-        per_page: 100,
+        page: page,
+        per_page: perPage,
     };
 
     if (filters) params['filter[]'] = filters;
@@ -140,11 +149,73 @@ export const getTickets = ({ filters, fields, expand, relations }) => async (dis
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        authErrorHandler
+        defaultErrorHandler,
+        { search_term: filters.toString() }
+    )(params)(dispatch).then((payload) => {
+        const { response: { last_page } } = payload;
+        const allPages = Array.from({ length: last_page}, (_, i) => i + 1);
+        const dispatchCalls = allPages.map(p =>
+            dispatch(
+                getTickets({ filters, fields, expand, relations, page: p, perPage, dispatchLoader: false })
+            )
+        );
+        return Promise.all([...dispatchCalls]).then(allTickets => {
+            dispatch(stopLoading());
+            return allTickets.flat();
+        }).catch(e => {
+            dispatch(stopLoading())
+            return Promise.reject(e);
+        });
+    }).catch(e => {
+        dispatch(stopLoading())
+        return Promise.reject(e);
+    });
+}
+
+export const getTickets = ({
+    filters = [],
+    fields,
+    expand,
+    relations,
+    page = 1,
+    perPage = DefaultPageSize,
+    dispatchLoader = true
+}) => async (dispatch, getState) => {
+
+    let { baseState: { accessTokenQS: accessToken } } = getState();
+
+    if (!accessToken) {
+        accessToken = await getAccessToken();
+    }
+
+    if (dispatchLoader) dispatch(startLoading());
+
+    const params = {
+        access_token: accessToken,
+        page: page,
+        per_page: perPage,
+    };
+
+    if (filters) params['filter[]'] = filters;
+    if (fields) params['fields'] = fields;
+    if (expand) params['expand'] = expand;
+    if (relations) params['relations'] = relations;
+    
+    const { baseState: { summit } } = getState();
+
+    return getRequest(
+        createAction(REQUEST_TICKETS),
+        createAction(RECEIVE_TICKETS),
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
+        defaultErrorHandler,
+        { search_term: filters.toString() }
     )(params)(dispatch).then((payload) => {
         const { data } = payload.response;
-        dispatch(stopLoading());
+        if (dispatchLoader) dispatch(stopLoading());
         return data;
+    }).catch(e => {
+        if (dispatchLoader) dispatch(stopLoading())
+        return Promise.reject(e);
     });
 };
 

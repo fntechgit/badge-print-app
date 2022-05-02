@@ -57,7 +57,9 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         case REQUEST_TICKETS:
             return { ...state, searchTerm: payload.search_term };
         case RECEIVE_TICKETS:
-            return { ...state, allTickets: payload.response.data };
+            const newAllTickets = [...state.allTickets];
+            newAllTickets.push(...payload.response.data);
+            return { ...state, allTickets: newAllTickets };
         case REQUEST_BADGE:
             const { summitSlug } = payload;
             return { ...state, summitSlug };

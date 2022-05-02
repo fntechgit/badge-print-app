@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import history from '../history';
 import T from 'i18n-react/dist/i18n-react';
 import { getBadge, incrementBadgePrintCount, clearBadge, printBadge } from '../actions/badge-actions';
-import { getTickets } from '../actions/ticket-actions';
+import { getAllTickets } from '../actions/ticket-actions';
 import Timeout from '../components/Timeout';
 import Badge from '../model/badge';
 import ErrorPage from './error-page';
@@ -65,7 +65,7 @@ class PrintPage extends React.Component {
             this.initializePrintJob(comaSeparatedTicketIds.split(','));
         } else if (filters) {
             const filters = parsedQueryString['filter[]'];
-            this.props.getTickets({ filters, fields: 'id', relations: 'none' })
+            this.props.getAllTickets({ filters, fields: 'id', relations: 'none' })
                 .then((tickets) => this.initializePrintJob(tickets.map(ticket => ticket.id.toString())));
         }
     }
@@ -268,7 +268,7 @@ const mapStateToProps = ({ baseState }) => ({
 });
 
 export default connect(mapStateToProps, {
-    getTickets,
+    getAllTickets,
     getBadge,
     incrementBadgePrintCount,
     printBadge,
