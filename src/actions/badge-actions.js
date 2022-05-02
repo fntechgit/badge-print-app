@@ -21,7 +21,7 @@ export const CLEAR_BADGE                          = 'CLEAR_BADGE';
 
 export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => {
 
-    let { baseState } = getState();
+    const { baseState } = getState();
     let accessToken = baseState.accessTokenQS;
 
     dispatch(startLoading());
@@ -31,8 +31,8 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
         summitSlug = baseState.summit.slug;
     }
 
-    let params = {
-        access_token : accessToken,
+    const params = {
+        access_token: accessToken,
         expand: 'ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels'
     };
 
@@ -51,9 +51,9 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
     );
 };
 
-export const incrementBadgePrintCount = (summitSlug, ticketId) => async (dispatch, getState) => {
+export const incrementBadgePrintCount = (summitSlug, ticketId, checkIn = true) => async (dispatch, getState) => {
 
-    let { baseState } = getState();
+    const { baseState } = getState();
     let accessToken = baseState.accessTokenQS;
 
     if (!accessToken) {
@@ -61,8 +61,9 @@ export const incrementBadgePrintCount = (summitSlug, ticketId) => async (dispatc
         summitSlug = baseState.summit.slug;
     }
 
-    let params = {
-        access_token : accessToken
+    const params = {
+        access_token: accessToken,
+        check_in: checkIn
     };
 
     if (!summitSlug || !ticketId || !accessToken) return;
@@ -73,11 +74,7 @@ export const incrementBadgePrintCount = (summitSlug, ticketId) => async (dispatc
         `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
         {},
         errorHandler
-    )(params)(dispatch)
-        .then((payload) => {
-
-        }
-    );
+    )(params)(dispatch);
 };
 
 export const printBadge = (params) => (dispatch) => {
@@ -87,8 +84,7 @@ export const printBadge = (params) => (dispatch) => {
         createAction(BADGE_PRINTED),
         'print'
     )(params)(dispatch).then((payload) => {
-        let { data } = payload.response;
-        return data;
+        return payload.respons.data;
     });
 };
 

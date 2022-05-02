@@ -10,12 +10,12 @@ import {
     authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
-export const REQUEST_TICKET         = 'REQUEST_TICKET';
-export const REQUEST_TICKETS        = 'REQUEST_TICKETS';
-export const RECEIVE_TICKETS        = 'RECEIVE_TICKETS';
-export const SET_SELECTED_TICKET    = 'SET_SELECTED_TICKET';
-export const CLEAR_SELECTED_TICKET    = 'CLEAR_SELECTED_TICKET';
-export const TICKET_UPDATED  = 'TICKET_UPDATED';
+export const REQUEST_TICKET            = 'REQUEST_TICKET';
+export const REQUEST_TICKETS           = 'REQUEST_TICKETS';
+export const RECEIVE_TICKETS           = 'RECEIVE_TICKETS';
+export const SET_SELECTED_TICKET       = 'SET_SELECTED_TICKET';
+export const CLEAR_SELECTED_TICKET     = 'CLEAR_SELECTED_TICKET';
+export const TICKET_UPDATED            = 'TICKET_UPDATED';
 
 export const getTicket = (ticketId) => async (dispatch, getState) => {
 
@@ -112,13 +112,45 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
     });
 };
 
+// TODO get all pages
+export const getTickets = ({ filters, fields, expand, relations }) => async (dispatch, getState) => {
+
+    const accessToken = await getAccessToken();
+
+    dispatch(startLoading());
+
+    const params = {
+        access_token: accessToken,
+        page: 1,
+        per_page: 100,
+    };
+
+    if (filters) params['filter[]'] = filters;
+    if (fields) params['fields'] = fields;
+    if (expand) params['expand'] = expand;
+    if (relations) params['relations'] = relations;
+    
+    const { baseState: { summit } } = getState();
+
+    return getRequest(
+        createAction(REQUEST_TICKETS),
+        createAction(RECEIVE_TICKETS),
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
+        authErrorHandler
+    )(params)(dispatch).then((payload) => {
+        const { data } = payload.response;
+        dispatch(stopLoading());
+        return data;
+    });
+};
+
 export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async (dispatch, getState) => {
 
     const accessToken = await getAccessToken();
 
     const { baseState: { selectedTicket } } = getState();
 
-    if(!selectedTicket) return Promise.fail();
+    if (!selectedTicket) return Promise.fail();
 
     const extraQuestionsAnswers = extra_questions.map(q => {
         return { question_id: q.id, answer: `${q.value}` }
