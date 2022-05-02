@@ -115,7 +115,11 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
 // TODO get all pages
 export const getTickets = ({ filters, fields, expand, relations }) => async (dispatch, getState) => {
 
-    const accessToken = await getAccessToken();
+    let { baseState: { accessTokenQS: accessToken } } = getState();
+
+    if (!accessToken) {
+        accessToken = await getAccessToken();
+    }
 
     dispatch(startLoading());
 
