@@ -12,7 +12,9 @@ module.exports = {
             title: 'Badge Print App',
             template: './src/index.ejs'
         }),
-        new Dotenv()
+        new Dotenv({
+            expand: true
+        })
     ],
     node: {fs: 'empty'},
     resolve: {
