@@ -1,5 +1,6 @@
-import React from 'react'
-import printableBadge from '../components/printable-badge'
+import React from 'react';
+import { QRCodeSVG } from 'qrcode.react';
+import printableBadge from '../components/printable-badge';
 
 
 class Badge {
@@ -109,12 +110,11 @@ class Badge {
     }
 
     getQRCode(settings) {
-        var QRCode = require('qrcode.react');
         const {qr_code} = this._badge;
         let qr = null;
 
         if (qr_code) {
-            qr = <QRCode value={qr_code} {...settings} />
+            qr = <QRCodeSVG value={qr_code} {...settings} />
         }
 
         return qr;
