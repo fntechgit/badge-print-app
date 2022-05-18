@@ -5,9 +5,6 @@ import '../shared/styles/styles_1.less';
 
 import background_img from '../shared/images/general92x140.png';
 import info_img from '../shared/images/info.png';
-import contributor from '../shared/images/contributor.png';
-import board from '../shared/images/board.png';
-import speaker from '../shared/images/speaker.png';
 
 const useForceUpdate = () => {
     const [value, setValue] = useState(0);
@@ -88,9 +85,6 @@ export default ({ badge }) => {
                 }
             </div>
             <div className="features">
-                <img src={contributor}/>
-                <img src={board}/>
-                <img src={speaker}/>
                 {badge.getFeature('Contributor') &&
                     <img src={badge.getFeature('Contributor').image}/>
                 }
