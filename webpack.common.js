@@ -63,12 +63,8 @@ module.exports = {
                 use: "file-loader?name=fonts/[folder]/[name].[ext]"
             },
             {
-                test: /\.jpg|\.png|\.gif$/,
+                test: /\.jpg|\.png|\.svg|\.gif$/,
                 use: "file-loader?name=images/[path][name].[ext]"
-            },
-            {
-                test: /\.svg/,
-                use: "file-loader?name=svg/[path][name].[ext]!svgo-loader"
             },
             {
                 test: /\.yaml$/,
