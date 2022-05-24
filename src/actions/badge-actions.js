@@ -62,8 +62,7 @@ export const incrementBadgePrintCount = (summitSlug, ticketId, checkIn = true) =
     }
 
     const params = {
-        access_token: accessToken,
-        check_in: checkIn
+        access_token: accessToken
     };
 
     if (!summitSlug || !ticketId || !accessToken) return;
@@ -72,7 +71,7 @@ export const incrementBadgePrintCount = (summitSlug, ticketId, checkIn = true) =
         createAction(REQUEST_BADGE_PRINT_COUNT_INCREMENT),
         createAction(BADGE_PRINT_COUNT_INCREMENT_RECEIVED),
         `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
-        {},
+        { check_in: checkIn },
         errorHandler
     )(params)(dispatch);
 };
