@@ -49,25 +49,27 @@ class PrintPage extends React.Component {
 
     componentWillMount = () => {
         const qs = require('query-string');
-        const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true, parseBooleans: true });
+        const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true});
         const checkIn = parsedQueryString['check_in'];
 
         const { summit_slug: summitSlug, ticket_id: ticketId } = this.props.match.params;
         const newState = { ...this.state };
         newState.summitSlug = summitSlug;
         if (ticketId) newState.ticketId = ticketId;
-        if (checkIn) newState.willCheckIn = checkIn;
-        this.setState(newState);
-
+        console.log(`PrintPage::componentWillMount checkIn ${checkIn}`);
+        if (checkIn) newState.willCheckIn = (checkIn === 'true');
         const comaSeparatedTicketIds = parsedQueryString['ids'];
         const filters = parsedQueryString['filter[]'];
-        if (comaSeparatedTicketIds) {
-            this.initializePrintJob(comaSeparatedTicketIds.split(','));
-        } else if (filters) {
-            const filters = parsedQueryString['filter[]'];
-            this.props.getAllTickets({ filters, fields: 'id', relations: 'none' })
-                .then((tickets) => this.initializePrintJob(tickets.map(ticket => ticket.id.toString())));
-        }
+
+        this.setState(newState, () => {
+            if (comaSeparatedTicketIds) {
+                this.initializePrintJob(comaSeparatedTicketIds.split(','));
+            } else if (filters) {
+                const filters = parsedQueryString['filter[]'];
+                this.props.getAllTickets({ filters, fields: 'id', relations: 'none' })
+                    .then((tickets) => this.initializePrintJob(tickets.map(ticket => ticket.id.toString())));
+            }
+        });
     }
 
     componentDidMount = () => {
@@ -119,6 +121,7 @@ class PrintPage extends React.Component {
 
     incrementPrintCount = () => {
         const { summitSlug, ticketId, willCheckIn } = this.state;
+        console.log(`PrintPage::incrementPrintCount summitSlug ${summitSlug} ticketId ${ticketId} ${willCheckIn}`);
         return this.props.incrementBadgePrintCount(summitSlug, ticketId, willCheckIn);
     };
 
