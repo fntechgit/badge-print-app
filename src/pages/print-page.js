@@ -49,7 +49,7 @@ class PrintPage extends React.Component {
 
     componentWillMount = () => {
         const qs = require('query-string');
-        const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+        const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true, parseBooleans: true });
         const checkIn = parsedQueryString['check_in'];
 
         const { summit_slug: summitSlug, ticket_id: ticketId } = this.props.match.params;
