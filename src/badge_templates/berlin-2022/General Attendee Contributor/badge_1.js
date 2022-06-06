@@ -13,6 +13,10 @@ const useForceUpdate = () => {
 
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
+    var irc = badge.getExtraQuestionValue('IRC nic:');
+    if (irc == '') irc = badge.getIRC();
+    var twitter = badge.getExtraQuestionValue('Twitter handle:');
+    if (twitter == '') twitter = badge.getTwitter();
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">
@@ -38,7 +42,7 @@ export default ({ badge }) => {
                         </Textfit>
                     </>
                 }
-                { badge.getIRC() != 'N/A' &&
+                { irc != 'N/A' &&
                     <>
                         <span className="title">IRC</span>
                         <Textfit
@@ -49,7 +53,7 @@ export default ({ badge }) => {
                             contentEditable
                             suppressContentEditableWarning={true}
                         >
-                            {badge.getIRC()}
+                            {irc}
                         </Textfit>
                     </>
                 }
@@ -68,7 +72,7 @@ export default ({ badge }) => {
                         </Textfit>
                     </>
                 }
-                { badge.getTwitter() != 'N/A' &&
+                { twitter != 'N/A' &&
                     <>
                         <span className="title">TWITTER</span>
                         <Textfit
@@ -79,7 +83,7 @@ export default ({ badge }) => {
                             contentEditable
                             suppressContentEditableWarning={true}
                         >
-                            {badge.getTwitter()}
+                            {twitter}
                         </Textfit>
                     </>
                 }
