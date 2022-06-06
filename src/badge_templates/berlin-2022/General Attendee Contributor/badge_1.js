@@ -14,9 +14,9 @@ const useForceUpdate = () => {
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     var irc = badge.getExtraQuestionValue('IRC nic:');
-    if (irc == '') irc = badge.getIRC();
+    if (!irc) irc = badge.getIRC();
     var twitter = badge.getExtraQuestionValue('Twitter handle:');
-    if (twitter == '') twitter = badge.getTwitter();
+    if (!twitter) twitter = badge.getTwitter();
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">
