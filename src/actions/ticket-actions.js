@@ -120,6 +120,7 @@ export const getAllTickets = ({
     fields,
     expand,
     relations,
+    order,
     page = 1,
     perPage = 5,
 }) => async (dispatch, getState) => {
@@ -142,6 +143,7 @@ export const getAllTickets = ({
     if (fields) params['fields'] = fields;
     if (expand) params['expand'] = expand;
     if (relations) params['relations'] = relations;
+    if (order) params['order'] = order;
     
     const { baseState: { summit } } = getState();
 
@@ -177,6 +179,7 @@ export const getTickets = ({
     fields,
     expand,
     relations,
+    order,
     page = 1,
     perPage = DefaultPageSize,
     dispatchLoader = true
@@ -200,6 +203,7 @@ export const getTickets = ({
     if (fields) params['fields'] = fields;
     if (expand) params['expand'] = expand;
     if (relations) params['relations'] = relations;
+    if (order) params['order'] = order;
     
     const { baseState: { summit } } = getState();
 

@@ -60,13 +60,14 @@ class PrintPage extends React.Component {
         if (checkIn) newState.willCheckIn = (checkIn === 'true');
         const comaSeparatedTicketIds = parsedQueryString['ids'];
         const filters = parsedQueryString['filter[]'];
+        const order = parsedQueryString['order'];
 
         this.setState(newState, () => {
             if (comaSeparatedTicketIds) {
                 this.initializePrintJob(comaSeparatedTicketIds.split(','));
             } else if (filters) {
                 const filters = parsedQueryString['filter[]'];
-                this.props.getAllTickets({ filters, fields: 'id', relations: 'none' })
+                this.props.getAllTickets({ filters, fields: 'id', relations: 'none', order })
                     .then((tickets) => this.initializePrintJob(tickets.map(ticket => ticket.id.toString())));
             }
         });
