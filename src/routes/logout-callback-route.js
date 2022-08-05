@@ -10,30 +10,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-import URI from "urijs"
-import React from 'react'
-import { withRouter } from 'react-router-dom'
+import URI from 'urijs';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class LogOutCallbackRoute extends React.Component {
 
-    constructor(props){
-        super(props);
-        // control variable to avoid double api call
-    }
-
     render() {
-        let storedState = window.localStorage.getItem('post_logout_state');
+        const storedState = window.localStorage.getItem('post_logout_state');
         window.localStorage.removeItem('post_logout_state');
         console.log(`retrieved state ${storedState}`);
-        let { doLogout, location, history } = this.props;
-        let query = URI.parseQuery(location.search);
-        if(!query.hasOwnProperty("state"))
+        const { doLogout, location, history } = this.props;
+        const query = URI.parseQuery(location.search);
+        if (!query.hasOwnProperty("state"))
             return (<p>Invalid Method</p>);
-        if(query["state"] != storedState)
+        if (query["state"] != storedState)
             return (<p>Invalid State</p>);
 
         doLogout();
-        history.push("/");
+        history.push('/');
         return null;
     }
 }

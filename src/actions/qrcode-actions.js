@@ -9,7 +9,6 @@ export const REQUEST_QRCODE = 'REQUEST_QRCODE';
 export const RECEIVE_QRCODE = 'RECEIVE_QRCODE';
 
 export const scanQRCode = () => (dispatch) => {
-
     return exec(
         createAction(REQUEST_QRCODE),
         createAction(RECEIVE_QRCODE),
