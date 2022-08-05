@@ -28,7 +28,7 @@ const DEFAULT_STATE = {
     searchTerm: '',
     summit: null,
     badge: null,
-    summitSlug: '',
+    badgeViewType: null,
     accessTokenQS: null,
     loading: 0,
     selectedTicket: null
@@ -61,15 +61,16 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             newAllTickets.push(...payload.response.data);
             return { ...state, allTickets: newAllTickets };
         case REQUEST_BADGE:
-            const { summitSlug } = payload;
-            return { ...state, summitSlug };
+            const { viewType } = payload;
+            return { ...state, badgeViewType: viewType };
         case BADGE_RECEIVED:
             const badge = { ...payload.response };
-            return { ...state, badge: badge };
+            return { ...state, badge };
         case CLEAR_BADGE:
             return {...state,
                 selectedTicket: null,
                 badge: null,
+                badgeViewType: null,
                 searchTerm: '',
                 allTickets: []
             };

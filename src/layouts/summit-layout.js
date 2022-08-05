@@ -54,6 +54,7 @@ class SummitLayout extends React.Component {
                     <Route exact strict path={`/check-in/:summit_slug/tickets`} component={PrintPage} />
                     <Route exact strict path={`/check-in/:summit_slug/tickets/`} component={PrintPage} />
                     <Route exact strict path={`/check-in/:summit_slug/tickets/:ticket_id`} component={PrintPage} />
+                    <Route exact strict path={`/check-in/:summit_slug/tickets/:ticket_id/views/:view_type`} component={PrintPage} />
                     <Route path={`${match.url}/thank-you`} component={ThankYouPage} />
                     <Route component={NoMatchPage} />
                 </Switch>

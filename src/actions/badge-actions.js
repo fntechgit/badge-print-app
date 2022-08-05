@@ -19,7 +19,11 @@ export const PRINT_BADGE                          = 'PRINT_BADGE';
 export const BADGE_PRINTED                        = 'BADGE_PRINTED';
 export const CLEAR_BADGE                          = 'CLEAR_BADGE';
 
-export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => {
+export const getBadge = (
+    summitSlug,
+    ticketId,
+    { viewType = null } = {}
+) => async (dispatch, getState) => {
 
     const { baseState } = getState();
     let accessToken = baseState.accessTokenQS;
@@ -33,17 +37,19 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
 
     const params = {
         access_token: accessToken,
-        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels'
+        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels, type.allowed_view_types'
     };
 
     if (!summitSlug || !ticketId || !accessToken) return;
 
+    const viewPath = viewType ? `/${viewType}` : '';
+
     return getRequest(
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
+        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current${viewPath}/print`,
         noThrowErrorHandler,
-        {summitSlug}
+        { viewType }
     )(params)(dispatch)
         .then((payload) => {
             dispatch(stopLoading());
@@ -51,7 +57,11 @@ export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => 
     );
 };
 
-export const incrementBadgePrintCount = (summitSlug, ticketId, checkIn = true) => async (dispatch, getState) => {
+export const incrementBadgePrintCount = (
+    summitSlug,
+    ticketId,
+    { viewType = null, checkIn = true } = {}
+) => async (dispatch, getState) => {
 
     const { baseState } = getState();
     let accessToken = baseState.accessTokenQS;
@@ -67,10 +77,12 @@ export const incrementBadgePrintCount = (summitSlug, ticketId, checkIn = true) =
 
     if (!summitSlug || !ticketId || !accessToken) return;
 
+    const viewPath = viewType ? `/${viewType}` : '';
+
     return putRequest(
         createAction(REQUEST_BADGE_PRINT_COUNT_INCREMENT),
         createAction(BADGE_PRINT_COUNT_INCREMENT_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
+        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current${viewPath}/print`,
         { check_in: checkIn },
         errorHandler
     )(params)(dispatch);
