@@ -82,6 +82,9 @@ export const incrementBadgePrintCount = (
         console.log(e);
     }
 
+    const params = {
+        access_token: accessToken
+    };
     const viewPath = viewType ? `/${viewType}` : '';
 
     return putRequest(
