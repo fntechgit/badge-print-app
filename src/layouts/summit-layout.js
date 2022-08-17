@@ -27,17 +27,17 @@ import ErrorPage from "../pages/error-page";
 class SummitLayout extends React.Component {
 
     componentDidMount() {
-        let {summit, match} = this.props;
-        let summitSlug = match.params.summit_slug;
+        const { summit, match } = this.props;
+        const summitSlug = match.params.summit_slug;
 
         if (!summit || !summit.id || summitSlug !== summit.slug) {
             this.props.getSummit(summitSlug);
         }
     }
 
-    render(){
-        let { match, summit, loading } = this.props;
-        let summitSlug = match.params.summit_slug;
+    render() {
+        const { match, summit, loading } = this.props;
+        const summitSlug = match.params.summit_slug;
 
         if (!summit && loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
@@ -51,8 +51,7 @@ class SummitLayout extends React.Component {
                     <Route exact strict path={match.url} component={FindTicketPage} />
                     <Route exact strict path={`/check-in/:summit_slug/extra-questions`} component={ExtraQuestionsPage} />
                     <Route exact strict path={`/check-in/:summit_slug/select-ticket`} component={SelectTicketPage} />
-                    <Route exact strict path={`/check-in/:summit_slug/tickets`} component={PrintPage} />
-                    <Route exact strict path={`/check-in/:summit_slug/tickets/`} component={PrintPage} />
+                    <Route exact path={`/check-in/:summit_slug/tickets`} component={PrintPage} />
                     <Route exact strict path={`/check-in/:summit_slug/tickets/:ticket_id`} component={PrintPage} />
                     <Route exact strict path={`/check-in/:summit_slug/tickets/:ticket_id/views/:view_type`} component={PrintPage} />
                     <Route path={`${match.url}/thank-you`} component={ThankYouPage} />
@@ -65,15 +64,10 @@ class SummitLayout extends React.Component {
 }
 
 const mapStateToProps = ({ baseState }) => ({
-    summit  : baseState.summit,
-    loading : baseState.loading
+    summit: baseState.summit,
+    loading: baseState.loading
 });
 
-export default connect (
-    mapStateToProps,
-    {
-        getSummit,
-    }
-)(SummitLayout);
-
-
+export default connect(mapStateToProps, {
+    getSummit,
+})(SummitLayout);

@@ -23,7 +23,12 @@ export const setAccessTokenQS = (accessToken) => (dispatch) => {
 
 export const loadSummits = () => async (dispatch, getState) => {
 
-    const accessToken = await getAccessToken();
+    let accessToken;
+    try {
+        accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
+    }
 
     dispatch(startLoading());
 
@@ -35,14 +40,13 @@ export const loadSummits = () => async (dispatch, getState) => {
         per_page: 100,
     };
 
-    getRequest(
+    return getRequest(
         createAction(REQUEST_SUMMITS),
         createAction(RECEIVE_SUMMITS),
         `${window.API_BASE_URL}/api/v1/summits/all`,
         authErrorHandler
-    )(params)(dispatch, getState).then(() => {
-            dispatch(stopLoading());
-        }
+    )(params)(dispatch).then(() => 
+        dispatch(stopLoading())
     );
 };
 
@@ -52,17 +56,18 @@ export const setSummit = (summit) => (dispatch, getState) => {
 
 export const getSummit = (summitSlug) => async (dispatch, getState) => {
 
-    let { baseState } = getState();
-    let accessToken = baseState.accessTokenQS;
+    let { baseState: { accessTokenQS: accessToken } } = getState();
 
-    if (!accessToken) {
+    try {
         accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
     }
 
     dispatch(startLoading());
 
-    let params = {
-        access_token : accessToken,
+    const params = {
+        access_token: accessToken,
         expand: 'order_extra_questions,order_extra_questions.values',
     };
 
@@ -71,55 +76,7 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
         createAction(RECEIVE_SUMMIT),
         `${window.API_BASE_URL}/api/v1/summits/all/${summitSlug}`,
         authErrorHandler
-    )(params)(dispatch).then(() => {
-            dispatch(stopLoading());
-        }
+    )(params)(dispatch).then(() =>
+        dispatch(stopLoading())
     );
-};
-
-export const errorHandler = (err, res) => (dispatch, state) => {
-    let code = err.status;
-    let msg = '';
-
-    dispatch(stopLoading());
-
-    switch (code) {
-        case 401:
-        case 403:
-            let error_message = {
-                title: 'ERROR',
-                html: "Access Token Expired. Go back to the app and try printing again.",
-                type: 'error'
-            };
-
-            dispatch(showMessage( error_message ));
-            break;
-        case 404:
-            msg = "";
-
-            if (err.response.body && err.response.body.message) msg = err.response.body.message;
-            else if (err.response.error && err.response.error.message) msg = err.response.error.message;
-            else msg = err.message;
-
-            Swal.fire("Not Found", msg, "warning");
-
-            break;
-        case 412:
-            for (var [key, value] of Object.entries(err.response.body.errors)) {
-                if (isNaN(key)) {
-                    msg += key + ': ';
-                }
-
-                msg += value + '<br>';
-            }
-            Swal.fire("Validation error", msg, "warning");
-            break;
-        default:
-            Swal.fire("ERROR", T.translate("errors.server_error"), "error");
-    }
-};
-
-export const noThrowErrorHandler = (err, res) => (dispatch, state) => {
-
-    dispatch(stopLoading());
 };

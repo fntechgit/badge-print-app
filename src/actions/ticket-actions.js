@@ -7,8 +7,7 @@ import {
     stopLoading,
     startLoading,
     getAccessToken,
-    authErrorHandler,
-    defaultErrorHandler
+    authErrorHandler
 } from "openstack-uicore-foundation/lib/methods";
 
 export const REQUEST_TICKET            = 'REQUEST_TICKET';
@@ -22,9 +21,14 @@ const DefaultPageSize = 100;
 
 export const getTicket = (ticketId) => async (dispatch, getState) => {
 
-    const accessToken = await getAccessToken();
-
     const { baseState: { summit } } = getState();
+
+    let accessToken;
+    try {
+        accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
+    }
 
     dispatch(startLoading());
 
@@ -38,11 +42,10 @@ export const getTicket = (ticketId) => async (dispatch, getState) => {
         createAction(SET_SELECTED_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}`,
         authErrorHandler,
-        {search_term: ticketId}
+        { search_term: ticketId }
     )(params)(dispatch).then((payload) => {
-            let {response} = payload;
             dispatch(stopLoading());
-            return response;
+            return payload.response;
         }
     );
 };
@@ -57,9 +60,14 @@ export const clearSelectedTicket = () => (dispatch) => Promise.resolve().then(()
 
 export const findTicketsByName = (firstName, lastName) => async (dispatch, getState) => {
 
-    const accessToken = await getAccessToken();
-
     const { baseState: { summit } } = getState();
+
+    let accessToken;
+    try {
+        accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
+    }
 
     dispatch(startLoading());
 
@@ -78,19 +86,23 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
         authErrorHandler,
-        {search_term: name}
+        { search_term: name }
     )(params)(dispatch).then((payload) => {
-        let {data} = payload.response;
         dispatch(stopLoading());
-        return data;
+        return payload.response.data;
     });
 };
 
 export const findTicketsByEmail = (email) => async (dispatch, getState) => {
 
-    const accessToken = await getAccessToken();
-
     const { baseState: { summit } } = getState();
+
+    let accessToken;
+    try {
+        accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
+    }
 
     dispatch(startLoading());
 
@@ -107,11 +119,10 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
         authErrorHandler,
-        {search_term: email}
+        { search_term: email }
     )(params)(dispatch).then((payload) => {
-        let {data} = payload.response;
         dispatch(stopLoading());
-        return data;
+        return payload.response.data;
     });
 };
 
@@ -125,10 +136,17 @@ export const getAllTickets = ({
     perPage = 5,
 }) => async (dispatch, getState) => {
 
-    let { baseState: { accessTokenQS: accessToken } } = getState();
+    let {
+        baseState: {
+            accessTokenQS: accessToken,
+            summit
+        }
+    } = getState();
 
-    if (!accessToken) {
+    try {
         accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
     }
 
     dispatch(startLoading());
@@ -144,21 +162,22 @@ export const getAllTickets = ({
     if (expand) params['expand'] = expand;
     if (relations) params['relations'] = relations;
     if (order) params['order'] = order;
-    
-    const { baseState: { summit } } = getState();
 
     return getRequest(
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        defaultErrorHandler,
+        authErrorHandler,
         { search_term: filters.toString() }
     )(params)(dispatch).then((payload) => {
         const { response: { last_page } } = payload;
         const allPages = Array.from({ length: last_page}, (_, i) => i + 1);
         const dispatchCalls = allPages.map(p =>
             dispatch(
-                getTickets({ filters, fields, expand, relations, page: p, perPage, dispatchLoader: false })
+                getTickets(
+                    { filters, fields, expand, relations, page: p, perPage },
+                    { dispatchLoader: false }
+                )
             )
         );
         return Promise.all([...dispatchCalls]).then(allTickets => {
@@ -182,13 +201,19 @@ export const getTickets = ({
     order,
     page = 1,
     perPage = DefaultPageSize,
-    dispatchLoader = true
-}) => async (dispatch, getState) => {
+}, { dispatchLoader = true }) => async (dispatch, getState) => {
 
-    let { baseState: { accessTokenQS: accessToken } } = getState();
+    let {
+        baseState: {
+            accessTokenQS: accessToken,
+            summit
+        }
+    } = getState();
 
-    if (!accessToken) {
+    try {
         accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
     }
 
     if (dispatchLoader) dispatch(startLoading());
@@ -204,14 +229,12 @@ export const getTickets = ({
     if (expand) params['expand'] = expand;
     if (relations) params['relations'] = relations;
     if (order) params['order'] = order;
-    
-    const { baseState: { summit } } = getState();
 
     return getRequest(
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        defaultErrorHandler,
+        authErrorHandler,
         { search_term: filters.toString() }
     )(params)(dispatch).then((payload) => {
         const { data } = payload.response;
@@ -225,11 +248,16 @@ export const getTickets = ({
 
 export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async (dispatch, getState) => {
 
-    const accessToken = await getAccessToken();
-
     const { baseState: { selectedTicket } } = getState();
 
     if (!selectedTicket) return Promise.fail();
+
+    let accessToken;
+    try {
+        accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
+    }
 
     const extraQuestionsAnswers = extra_questions.map(q => {
         return { question_id: q.id, answer: `${q.value}` }
