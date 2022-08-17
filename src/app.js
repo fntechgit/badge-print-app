@@ -1,17 +1,17 @@
 
-import React from 'react'
-import { connect } from 'react-redux'
-import { Switch, Redirect, Router } from 'react-router-dom'
-import PrimaryLayout from "./layouts/primary-layout"
-import { AjaxLoader, OPSessionChecker } from "openstack-uicore-foundation/lib/components";
-import { onUserAuth, doLogout, getUserInfo, initLogOut } from "openstack-uicore-foundation/lib/methods";
-import history from './history'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Switch, Redirect, Router } from 'react-router-dom';
+import PrimaryLayout from './layouts/primary-layout';
+import { AjaxLoader } from 'openstack-uicore-foundation/lib/components';
+import { onUserAuth, doLogout, getUserInfo, initLogOut } from 'openstack-uicore-foundation/lib/methods';
+import history from './history';
 import AuthorizedRoute from './routes/authorized-route';
-import AuthorizationCallbackRoute from "./routes/authorization-callback-route";
+import AuthorizationCallbackRoute from './routes/authorization-callback-route';
 import LogOutCallbackRoute from './routes/logout-callback-route';
 import { clearBadge } from "./actions/badge-actions";
 import T from 'i18n-react';
-import LanguageSelect from './components/language-select'
+import LanguageSelect from './components/language-select';
 
 
 // move all env var to global scope so ui core has access to this
@@ -46,44 +46,38 @@ try {
 
 
 class App extends React.PureComponent {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         this.props.clearBadge();
     }
 
     render() {
-        let { loading, summit, isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, accessTokenQS } = this.props;
+        const {
+            loading,
+            summit,
+            isLoggedUser,
+            onUserAuth,
+            doLogout,
+            getUserInfo
+        } = this.props;
         const title = (summit) ? summit.name : T.translate("general.app_title");
-
         return (
             <Router history={history}>
                 <div>
-                    <AjaxLoader show={ loading } size={ 120 }/>
-
-                    {isLoggedUser &&
-                    <OPSessionChecker
-                        clientId={window.OAUTH2_CLIENT_ID}
-                        idpBaseUrl={window.IDP_BASE_URL}
-                    />
-                    }
-
+                    <AjaxLoader show={loading} size={ 120 }/>
                     <div className="header">
                         <div className="header-title row">
                             <div className="col-md-12 title">
                                 <LanguageSelect language={language} />
-                                {title}
-                                {isLoggedUser &&
-                                <a className="logout pull-right" onClick={() => {initLogOut();}}>
+                                { title }
+                                { isLoggedUser &&
+                                <a className="logout pull-right" onClick={() => initLogOut()}>
                                     <i className="fa fa-sign-out" aria-hidden="true"></i>
                                 </a>
                                 }
                             </div>
                         </div>
                     </div>
-
                     <Switch>
                         <AuthorizedRoute path="/check-in" component={PrimaryLayout} />
                         <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
@@ -98,8 +92,6 @@ class App extends React.PureComponent {
 
 const mapStateToProps = ({ loggedUserState, baseState }) => ({
     isLoggedUser: loggedUserState.isLoggedUser,
-    backUrl: loggedUserState.backUrl,
-    member: loggedUserState.member,
     ...baseState
 });
 

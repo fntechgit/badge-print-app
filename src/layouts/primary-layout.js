@@ -13,17 +13,16 @@
 
 import React from 'react'
 import { connect } from 'react-redux';
-import {Switch, Route} from 'react-router-dom';
-import PrintProvider, {NoPrint} from "react-easy-print";
-import SummitLayout from "./summit-layout";
-import NoMatchPage from "../pages/no-match-page";
-import SelectSummitPage from "../pages/select-summit-page";
-
+import { Switch, Route } from 'react-router-dom';
+import PrintProvider, { NoPrint } from 'react-easy-print';
+import SummitLayout from './summit-layout';
+import NoMatchPage from '../pages/no-match-page';
+import SelectSummitPage from '../pages/select-summit-page';
 
 class PrimaryLayout extends React.Component {
 
-    render(){
-        let { match, badge } = this.props;
+    render() {
+        const { match } = this.props;
 
         return(
             <div className="primary-layout">
@@ -44,11 +43,4 @@ class PrimaryLayout extends React.Component {
 
 }
 
-const mapStateToProps = ({ baseState, loggedUserState }) => ({
-    badge: baseState.badge,
-    member: loggedUserState.member
-});
-
-export default connect(mapStateToProps, {})(PrimaryLayout)
-
-
+export default PrimaryLayout;

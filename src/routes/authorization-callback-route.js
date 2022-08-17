@@ -11,8 +11,8 @@
  * limitations under the License.
  **/
 
-import history from '../history'
-import React from 'react'
+import history from '../history';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AbstractAuthorizationCallbackRoute } from "openstack-uicore-foundation/lib/components";
@@ -37,12 +37,7 @@ class AuthorizationCallbackRoute extends AbstractAuthorizationCallbackRoute {
     }
 }
 
-const mapStateToProps = ({ loggedUserState }) => ({
-    idToken:  loggedUserState.idToken,
-    sessionState: loggedUserState.sessionState,
-})
-
-export default connect(mapStateToProps,{
+export default connect(null, {
     getUserInfo
 })(AuthorizationCallbackRoute)
 

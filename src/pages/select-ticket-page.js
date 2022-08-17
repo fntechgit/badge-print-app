@@ -1,10 +1,9 @@
 import React from 'react';
 import history from '../history'
-import {connect} from "react-redux";
-import {loadSummits, setSummit} from "../actions/base-actions";
-import {ATTENDEE_STATUS_INCOMPLETE} from '../utils/constants';
-import {setSelectedTicket} from '../actions/ticket-actions';
-import {clearBadge} from "../actions/badge-actions";
+import { connect } from "react-redux";
+import { ATTENDEE_STATUS_INCOMPLETE } from '../utils/constants';
+import { setSelectedTicket } from '../actions/ticket-actions';
+import { clearBadge } from "../actions/badge-actions";
 import "../styles/select-ticket-page.less"
 import T from "i18n-react/dist/i18n-react";
 
@@ -86,8 +85,6 @@ const mapStateToProps = ({ baseState, loggedUserState }) => ({
 });
 
 export default connect(mapStateToProps, {
-    loadSummits,
-    setSummit,
     setSelectedTicket,
     clearBadge,
 })(SelectTicketPage)

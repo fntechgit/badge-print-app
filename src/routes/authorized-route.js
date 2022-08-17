@@ -12,29 +12,31 @@
  **/
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import qs from 'query-string';
 import LoginPage from '../pages/login-page';
-import {connect} from "react-redux";
-import {setAccessTokenQS} from "../actions/base-actions";
+import { setAccessTokenQS } from '../actions/base-actions';
 
 
 class AuthorizedRoute extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.qs = require('query-string');
-    }
-
     componentWillMount() {
-        let accessToken = this.qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
+        const accessToken = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
         this.props.setAccessTokenQS(accessToken);
     }
 
     render() {
-        let { component: Component, isLoggedUser, backUrl, accessTokenQS, loading, ...rest } = this.props;
+        const {
+            component: Component,
+            isLoggedUser,
+            accessTokenQS,
+            backUrl,
+            ...rest
+        } = this.props;
 
         return (
-            <Route {...rest} render={props => {
+            <Route {...rest} render={ props => {
                 if (isLoggedUser || accessTokenQS) {
                     return (<Component {...props} />);
                 } else {
@@ -48,7 +50,6 @@ class AuthorizedRoute extends React.Component {
 const mapStateToProps = ({ loggedUserState, baseState }) => ({
     isLoggedUser: loggedUserState.isLoggedUser,
     backUrl: loggedUserState.backUrl,
-    member: loggedUserState.member,
     ...baseState
 });
 

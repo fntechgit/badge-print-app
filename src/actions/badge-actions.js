@@ -5,6 +5,7 @@ import {
     stopLoading,
     startLoading,
     getAccessToken,
+    authErrorHandler,
 } from "openstack-uicore-foundation/lib/methods";
 
 import { exec } from "../services/wkbridge";
@@ -19,60 +20,79 @@ export const PRINT_BADGE                          = 'PRINT_BADGE';
 export const BADGE_PRINTED                        = 'BADGE_PRINTED';
 export const CLEAR_BADGE                          = 'CLEAR_BADGE';
 
-export const getBadge = (summitSlug, ticketId) => async (dispatch, getState) => {
+export const getBadge = (
+    summitSlug,
+    ticketId,
+    { viewType = null } = {}
+) => async (dispatch, getState) => {
 
-    const { baseState } = getState();
-    let accessToken = baseState.accessTokenQS;
+    let {
+        baseState: {
+            accessTokenQS: accessToken,
+            summit
+        }
+    } = getState();
+
+    if (!summit || !ticketId) throw Error();
+
+    try {
+        accessToken = await getAccessToken();
+    } catch (e) {
+        console.log(e);
+    }
 
     dispatch(startLoading());
 
-    if (!accessToken) {
-        accessToken = await getAccessToken();
-        summitSlug = baseState.summit.slug;
-    }
-
     const params = {
         access_token: accessToken,
-        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels'
+        expand: 'ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels, type.allowed_view_types'
     };
 
-    if (!summitSlug || !ticketId || !accessToken) return;
+    const viewPath = viewType ? `/${viewType}` : '';
 
     return getRequest(
         createAction(REQUEST_BADGE),
         createAction(BADGE_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
-        noThrowErrorHandler,
-        {summitSlug}
-    )(params)(dispatch)
-        .then((payload) => {
-            dispatch(stopLoading());
-        }
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}/badge/current${viewPath}/print`,
+        authErrorHandler,
+        { viewType }
+    )(params)(dispatch).then(() => 
+        dispatch(stopLoading())
     );
 };
 
-export const incrementBadgePrintCount = (summitSlug, ticketId, checkIn = true) => async (dispatch, getState) => {
+export const incrementBadgePrintCount = (
+    summitSlug,
+    ticketId,
+    { viewType = null, checkIn = true } = {}
+) => async (dispatch, getState) => {
 
-    const { baseState } = getState();
-    let accessToken = baseState.accessTokenQS;
+    let {
+        baseState: {
+            accessTokenQS: accessToken,
+            summit
+        }
+    } = getState();
 
-    if (!accessToken) {
+    if (!summit || !ticketId) throw Error();
+
+    try {
         accessToken = await getAccessToken();
-        summitSlug = baseState.summit.slug;
+    } catch (e) {
+        console.log(e);
     }
 
     const params = {
         access_token: accessToken
     };
-
-    if (!summitSlug || !ticketId || !accessToken) return;
+    const viewPath = viewType ? `/${viewType}` : '';
 
     return putRequest(
         createAction(REQUEST_BADGE_PRINT_COUNT_INCREMENT),
         createAction(BADGE_PRINT_COUNT_INCREMENT_RECEIVED),
-        `${window.API_BASE_URL}/api/v1/summits/${summitSlug}/tickets/${ticketId}/badge/current/print`,
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}/badge/current${viewPath}/print`,
         { check_in: checkIn },
-        errorHandler
+        authErrorHandler
     )(params)(dispatch);
 };
 

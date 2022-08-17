@@ -1,14 +1,19 @@
 import React from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import T from "i18n-react/dist/i18n-react";
 import history from '../history';
 import QrReader from 'react-qr-reader'
 import Swal from "sweetalert2";
 import validator from 'validator';
-import {getTicket, findTicketsByName, findTicketsByEmail, setSelectedTicket} from "../actions/ticket-actions";
+import {
+    getTicket,
+    findTicketsByName,
+    findTicketsByEmail,
+    setSelectedTicket
+} from "../actions/ticket-actions";
 import {scanQRCode} from "../actions/qrcode-actions";
 import ErrorPage from './error-page';
-import {ATTENDEE_STATUS_INCOMPLETE} from '../utils/constants';
+import { ATTENDEE_STATUS_INCOMPLETE } from '../utils/constants';
 import "../styles/find-ticket-page.less"
 
 class FindTicketPage extends React.Component {
@@ -33,7 +38,7 @@ class FindTicketPage extends React.Component {
     handleScan = (qrCode) => {
         const { summit, match, getTicket } = this.props;
         if (qrCode) {
-            this.setState({showQRreader: false});
+            this.setState({ showQRreader: false });
             let qrCodeArray = qrCode.split(summit.qr_registry_field_delimiter);
 
             if (qrCodeArray.length < 2 || qrCodeArray[0] !== summit.ticket_qr_prefix) {
@@ -57,7 +62,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleError = (err) => {
-        this.setState({showQRreader: false});
+        this.setState({ showQRreader: false });
 
         Swal.fire({
             title: T.translate("find_ticket.wrong_qr_title"),
@@ -76,7 +81,7 @@ class FindTicketPage extends React.Component {
                 (data) => {
                     if (data.length === 1) {
                         let ticket = data[0];
-                        if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                        if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
                             setSelectedTicket(ticket).then(() => {
                                 history.push(`/check-in/${summit.slug}/extra-questions`);
                             })
@@ -84,16 +89,16 @@ class FindTicketPage extends React.Component {
                         else
                             history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
-                        history.push(`/check-in/${summit.slug}/tickets`);
+                        history.push(`/check-in/${summit.slug}/select-ticket`);
                     } else {
-                        this.setState({showErrorPage: true})
+                        this.setState({ showErrorPage: true })
                     }
                 }
             );
             return;
         }
 
-        this.setState({error: 'name'});
+        this.setState({ error: 'name' });
 
     };
 
@@ -115,16 +120,16 @@ class FindTicketPage extends React.Component {
                         else
                             history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
-                        history.push(`/check-in/${summit.slug}/tickets`);
+                        history.push(`/check-in/${summit.slug}/select-ticket`);
                     } else {
-                        this.setState({showErrorPage: true})
+                        this.setState({ showErrorPage: true })
                     }
                 }
             );
             return;
         }
 
-        this.setState({error: 'email'});
+        this.setState({ error: 'email' });
 
     };
 
@@ -132,9 +137,7 @@ class FindTicketPage extends React.Component {
         const { scanQRCode } = this.props;
 
         scanQRCode().then(
-            (data) => {
-                this.handleScan(data);
-            }
+            (data) => this.handleScan(data)
         );
     };
     
@@ -146,9 +149,9 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.not_found")}
-                    message={T.translate("find_ticket.not_found_message", {search_term: searchTerm})}
+                    message={T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
                     linkText={T.translate("find_ticket.try_again")}
-                    onLinkClick={() => this.setState({showErrorPage: false})}
+                    onLinkClick={() => this.setState({ showErrorPage: false })}
                 />
             );
         }
@@ -221,7 +224,7 @@ class FindTicketPage extends React.Component {
                                         ref={el => this.lastName = el}
                                         onChange={() => this.setState({error: ''})}
                                     />
-                                    {error === 'name' &&
+                                    { error === 'name' &&
                                     <p className="error">{T.translate("find_ticket.valid_name")}</p>
                                     }
                                 </div>
@@ -244,7 +247,7 @@ class FindTicketPage extends React.Component {
                                         ref={el => this.email = el}
                                         onChange={() => this.setState({error: ''})}
                                     />
-                                    {error === 'email' &&
+                                    { error === 'email' &&
                                     <p className="error">{T.translate("find_ticket.valid_email")}</p>
                                     }
                                 </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import history from '../history'
 import { Dropdown } from 'openstack-uicore-foundation/lib/components'
-import {connect} from "react-redux";
-import {loadSummits, setSummit} from "../actions/base-actions";
+import { connect } from "react-redux";
+import { loadSummits, setSummit } from "../actions/base-actions";
 import T from "i18n-react/dist/i18n-react";
 
 class SelectSummitPage extends React.Component {
@@ -15,7 +15,7 @@ class SelectSummitPage extends React.Component {
     }
 
     onSelectSummit = (ev) => {
-        const {allSummits} = this.props;
+        const { allSummits } = this.props;
         const summitId = ev.target.value;
         const summit = allSummits.find(s => s.id === summitId);
 
@@ -25,7 +25,7 @@ class SelectSummitPage extends React.Component {
 
     render(){
         let { summit, allSummits, loading } = this.props;
-        let summits_ddl = allSummits.map(s => ({label: s.name, value: s.id}));
+        let summits_ddl = allSummits.map(s => ({ label: s.name, value: s.id }));
         let value = summit ? summit.id : null;
 
         return (
