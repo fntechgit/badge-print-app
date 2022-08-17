@@ -2,6 +2,7 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import printableBadge from '../components/printable-badge';
 
+const DefaultBadgeViewType = 'Card';
 
 class Badge {
 
@@ -9,13 +10,35 @@ class Badge {
         this._badge  = badge;
     }
 
-    renderTemplate(summitSlug) {
-        const {type} = this._badge;
+    importTemplate = (templatePaths, { atIndex = -1 } = {}) => {
+        const index = atIndex + 1;
+        const templatePath = templatePaths[index];
+        if (!templatePath)
+            return ({ default: () =>
+                <>
+                    <p>Template not found.</p>
+                    <p>Looking for template at following paths:</p>
+                    <ul>
+                        { templatePaths.map((path) => <li>{path}</li>) }
+                    </ul>
+                    <p>Badge type or view type name casing must match template path and name casing.</p>
+                </>
+            });
+        return import(`../badge_templates/${templatePath}`)
+            .catch(() => this.importTemplate(templatePaths, { atIndex: index }));
+    }
+
+    renderTemplate(summitSlug, viewTypeName = DefaultBadgeViewType) {
+        const { type } = this._badge;
+
+        const badgeTemplatePaths = [
+            `${summitSlug}/${type.name}/${viewTypeName}.js`,
+            `${summitSlug}/${viewTypeName}.js`,
+            `default/${viewTypeName}.js`
+        ];
 
         const BadgeTemplate = React.lazy(
-            () =>
-                import(`../badge_templates/${summitSlug}/${type.name}/badge_1.js`)
-                    .catch(() => import(`../badge_templates/default/badge_1.js`))
+            () => this.importTemplate(badgeTemplatePaths)
         );
 
         const PrintableBadge = printableBadge(BadgeTemplate);
@@ -25,6 +48,11 @@ class Badge {
                 <PrintableBadge badge={this} />
             </React.Suspense>
         );
+    }
+
+    getBadgeTypeName() {    
+        const { type } = this._badge;
+        return type.name;
     }
 
     getFirstName() {

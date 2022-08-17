@@ -268,7 +268,7 @@ class PrintPage extends React.Component {
         } else {
             this.incrementPrintCount().then(() => {
                 // print after incrementing count
-                //window.print();
+                window.print();
                 if (this.isBatchPrinting()) {
                     const { printJobStatus } = this.state;
                     const { badgeTicketId, badgeViewType } = this.props;
@@ -321,6 +321,8 @@ class PrintPage extends React.Component {
             return <ErrorPage title={T.translate("preview.error_retrieving")} message={T.translate("preview.contact_help")} onLinkClick={this.goToFindTicketPage} />;
         }
 
+        const viewTypeId = badgeViewType || badgeAllowedViewTypes.find((viewType) => viewType.is_default)?.id;
+        const viewTypeName = badgeAllowedViewTypes.find((viewType) => viewType.id == viewTypeId)?.name;
         const badgeObj = new Badge(badge);
 
         return (
@@ -336,13 +338,7 @@ class PrintPage extends React.Component {
                                     type="radio"
                                     name="options"
                                     onChange={this.handleViewTypeChange}
-                                    // TODO: badgeViewType not always present, assume default viewType
-                                    value={
-                                        Number(
-                                            badgeViewType || 
-                                            badgeAllowedViewTypes.find((viewType) => viewType.is_default)?.id
-                                        )
-                                    }
+                                    value={Number(viewTypeId)}
                                 >
                                 { badgeAllowedViewTypes.map((viewType) => (
                                     <ToggleButton
@@ -365,7 +361,7 @@ class PrintPage extends React.Component {
                 </>
                 }
                 <div className="badge-wrapper">
-                    {badgeObj.renderTemplate(summitSlug)}
+                    {badgeObj.renderTemplate(summitSlug, viewTypeName)}
                 </div>
                 { !this.isBatchPrinting() &&  
                 <div className="row print-buttons-wrapper">
