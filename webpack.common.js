@@ -19,6 +19,7 @@ module.exports = {
     node: {fs: 'empty'},
     resolve: {
         alias: {
+            '@': path.resolve(__dirname, 'src'),
             fonts: path.resolve(__dirname, 'src/styles/fonts')
         }
     },
