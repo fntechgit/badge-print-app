@@ -18,18 +18,21 @@ import info_img from './images/info.png';
 
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
-    const ref = useRef(null);
+    const barRef = useRef(null);
     useLayoutEffect(() => {
         const barColor = BadgeTypesColor[badge.getBadgeTypeName()];
         if (barColor)
-            ref.current.style.setProperty('background-color', barColor, 'important');
+            barRef.current.style.setProperty('background-color', barColor, 'important');
     }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
-            <div className="bar"></div>
+            <div 
+                ref={barRef}
+                className="bar"
+            ></div>
             <div className="text-boxes">
                 { badge.getFirstName() &&
                     <Textfit
