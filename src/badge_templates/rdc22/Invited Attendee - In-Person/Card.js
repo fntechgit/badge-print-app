@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {
+    useState,
+    useStateuseEffect
+} from 'react';
+
 import { Textfit } from 'react-textfit';
 
 import {
     ExtraQuestionsKeys,
-    PronounsQuestionsAnswers,
+    PronounsQuestionAnswers,
 } from '../utils/constants';
 
 import {
     useForceUpdate
 } from '@/utils/utils';
+
+import {
+    getIdFromUserProfileURL,
+    getRobloxUsernameById
+} from '../utils/utils';
 
 import '../styles/card.less';
 
@@ -17,7 +26,19 @@ import info_img from '../images/info.png';
 
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
-    const username = badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
+    const [username, setUsername] = useState(null);
+    useEffect(() => {
+        const usernameAnswer =
+            badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
+        const userId = !isNaN(usernameAnswer) ? usernameAnswer : getIdFromUserProfileURL(usernameAnswer);
+        if (userId) {
+            getRobloxUsernameById(userId)
+                .then((payload) => setUsername(payload.displayName))
+                .catch((e) => console.log(e));
+        } else {
+            setUsername(usernameAnswer);
+        }
+    }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
     return (
     <>
@@ -37,8 +58,8 @@ export default ({ badge }) => {
                     </Textfit>
                 }
                 { pronouns &&
-                    pronouns != PronounsQuestionsAnswers.NotListedAbove &&
-                    pronouns != PronounsQuestionsAnswers.DontDisclose &&
+                    pronouns != PronounsQuestionAnswers.NotListedAbove &&
+                    pronouns != PronounsQuestionAnswers.DontDisclose &&
                     <Textfit
                         mode="single"
                         className="text-box pronounce"

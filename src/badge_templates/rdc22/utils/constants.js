@@ -3,7 +3,7 @@ export const ExtraQuestionsKeys = {
     Pronouns: 'Pronouns - In-Person SUBQUESTION',
 }
 
-export const PronounsQuestionsAnswers = {
+export const PronounsQuestionAnswers = {
     NotListedAbove: 'Not listed above',
     DontDisclose: 'Prefer not to disclose or print on badge',
 }

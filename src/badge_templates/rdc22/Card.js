@@ -4,7 +4,7 @@ import { Textfit } from 'react-textfit';
 import {
     BadgeTypesColor,
     ExtraQuestionsKeys,
-    PronounsQuestionsAnswers,
+    PronounsQuestionAnswers,
 } from './utils/constants';
 
 import {
@@ -59,8 +59,8 @@ export default ({ badge }) => {
                     </Textfit>
                 }
                 { pronouns &&
-                    pronouns != PronounsQuestionsAnswers.NotListedAbove &&
-                    pronouns != PronounsQuestionsAnswers.DontDisclose &&
+                    pronouns != PronounsQuestionAnswers.NotListedAbove &&
+                    pronouns != PronounsQuestionAnswers.DontDisclose &&
                     <Textfit
                         mode="single"
                         className="text-box pronounce"

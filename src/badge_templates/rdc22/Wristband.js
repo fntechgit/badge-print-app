@@ -17,7 +17,8 @@ import {
 } from './utils/constants';
 
 import {
-    getIdFromUserProfileURL
+    getIdFromUserProfileURL,
+    getRobloxUsernameById
 } from './utils/utils';
 
 import './styles/wristband.less';
@@ -30,7 +31,7 @@ export default ({ badge }) => {
     const backgroundFillRef = useRef(null);
     const stripFillRef = useRef(null);
     const artboardRef = useRef(null);
-    const [userName, setUserName] = useState(null);
+    const [username, setUsername] = useState(null);
     useLayoutEffect(() => {
         const backgroundColor = BadgeTypesColor[badge.getBadgeTypeName()];
         if (backgroundColor) {
@@ -42,12 +43,11 @@ export default ({ badge }) => {
             badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
         const userId = !isNaN(usernameAnswer) ? usernameAnswer : getIdFromUserProfileURL(usernameAnswer);
         if (userId) {
-            fetch(`https://users.roproxy.com/v1/users/${userId}`)
-                .then((response) => response.json())
-                .then((data) => setUserName(data.displayName))
+            getRobloxUsernameById(userId)
+                .then((payload) => setUsername(payload.displayName))
                 .catch((e) => console.log(e));
         } else {
-            setUserName(usernameAnswer);
+            setUsername(usernameAnswer);
         }
     }, []);
     const darkTheme = badge.getBadgeTypeName() == BadgeTypes.Attendee ||
@@ -69,10 +69,10 @@ export default ({ badge }) => {
                 </div>
             }
             <img className="logo white rotate-270" src={darkTheme ? logoBlack : logoWhite}/>
-            { userName &&
+            { username &&
                 <div
                     className={`user-name text-vertical ${darkTheme ? 'black-6c' : 'white'}`}
-                    contentEditable>{userName}
+                    contentEditable>{username}
                 </div>
             }
             { badge.getFirstName() &&
