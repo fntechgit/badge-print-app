@@ -64,6 +64,7 @@ export default ({ badge }) => {
                     pronouns != PronounsQuestionAnswers.DontDisclose &&
                     <Textfit
                         mode="single"
+                        max={16}
                         className="text-box pronounce"
                         onInput={forceUpdate}
                         contentEditable
