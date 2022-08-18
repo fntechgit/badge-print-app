@@ -2,6 +2,7 @@ import React, { useRef, useLayoutEffect } from 'react';
 import { Textfit } from 'react-textfit';
 
 import {
+    BadgeTypes,
     BadgeTypesColor,
     ExtraQuestionsKeys,
     PronounsQuestionAnswers,
@@ -20,8 +21,8 @@ export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     const barRef = useRef(null);
     useLayoutEffect(() => {
-        const barColor = BadgeTypesColor[badge.getBadgeTypeName()];
-        if (barColor)
+        const barColor = badge.getBadgeTypeName() == BadgeTypes.Staff ?
+                            '#75787B' : BadgeTypesColor[badge.getBadgeTypeName()];
             barRef.current.style.setProperty('background-color', barColor, 'important');
     }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
