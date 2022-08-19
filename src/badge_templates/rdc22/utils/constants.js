@@ -18,7 +18,7 @@ export const BadgeTypes = {
 
 export const BadgeTypesColor = {
     [BadgeTypes.Crew]: '#009CDE',
-    [BadgeTypes.Staff]: ' #101820',
+    [BadgeTypes.Staff]: '#101820',
     [BadgeTypes.Speaker]: '#772583',
     [BadgeTypes.Press]: '#F6EB61',
 };

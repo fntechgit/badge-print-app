@@ -1,4 +1,8 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, {
+    useRef,
+    useState,
+    useLayoutEffect
+} from 'react';
 import { Textfit } from 'react-textfit';
 
 import {
@@ -12,6 +16,11 @@ import {
     useForceUpdate
 } from '@/utils/utils';
 
+import {
+    getIdFromUserProfileURL,
+    getRobloxUsernameById
+} from './utils/utils';
+
 import './styles/card.less';
 
 import background_img from './images/background92x140.png';
@@ -20,10 +29,23 @@ import info_img from './images/info.png';
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     const barRef = useRef(null);
+    const [username, setUsername] = useState(null);
     useLayoutEffect(() => {
         const barColor = badge.getBadgeTypeName() == BadgeTypes.Staff ?
                             '#75787B' : BadgeTypesColor[badge.getBadgeTypeName()];
+        if (barColor)
             barRef.current.style.setProperty('background-color', barColor, 'important');
+
+        const usernameAnswer =
+            badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
+        const userId = !isNaN(usernameAnswer) ? usernameAnswer : getIdFromUserProfileURL(usernameAnswer);
+        if (userId) {
+            getRobloxUsernameById(userId)
+                .then((payload) => setUsername(payload.displayName))
+                .catch((e) => console.log(e));
+        } else {
+            setUsername(usernameAnswer);
+        }
     }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
     return (
@@ -35,7 +57,19 @@ export default ({ badge }) => {
                 className="bar"
             ></div>
             <div className="text-boxes">
-                { badge.getFirstName() &&
+                { username &&
+                    <Textfit
+                        mode="single"
+                        max={50}
+                        className="text-box user-name"
+                        onInput={forceUpdate}
+                        contentEditable
+                        suppressContentEditableWarning={true}
+                    >
+                        {username}
+                    </Textfit>
+                }
+                { !username && badge.getFirstName() &&
                     <Textfit
                         mode="single"
                         max={50}
@@ -47,7 +81,7 @@ export default ({ badge }) => {
                         {badge.getFirstName()}
                     </Textfit>
                 }
-                { badge.getLastName() &&
+                { !username && badge.getLastName() &&
                     <Textfit
                         mode="single"
                         max={50}
@@ -76,6 +110,7 @@ export default ({ badge }) => {
                 { badge.getCompany() &&
                     <Textfit
                         mode="single"
+                        max={22}
                         className="text-box company"
                         onInput={forceUpdate}
                         contentEditable
@@ -87,6 +122,7 @@ export default ({ badge }) => {
                 { badge.getFullName() &&
                     <Textfit
                         mode="single"
+                        max={12}
                         className="text-box full-name"
                         onInput={forceUpdate}
                         contentEditable

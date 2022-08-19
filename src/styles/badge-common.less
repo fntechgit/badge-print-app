@@ -1,9 +1,22 @@
 /* -- general styles -- */
 
-.bdg-artboard {
-	margin: 0 auto;
-	position: relative;
-	overflow: hidden;
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #000;
+	}
+	.bdg-artboard {
+		margin: 0 auto;
+		position: relative;
+		overflow: hidden;
+	}
+}
+
+@media print {
+	.bdg-artboard {
+		position: absolute;
+		top: 0px;
+	}
 }
 
 .bdg-image {
