@@ -28,7 +28,7 @@ export default ({ badge }) => {
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
     return (
     <>
-        <div id="badge-artboard" className="bdg-artboard">
+        <div id="badge-artboard" className="bdg-artboard card">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
             <div 
                 ref={barRef}

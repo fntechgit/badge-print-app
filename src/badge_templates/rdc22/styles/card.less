@@ -22,75 +22,73 @@
 	}
 }
 
-#badge-artboard {
+.card {
+	font-family: "TTHoves-Regular";
 	width: 92mm; 
 	height: 280mm;
+
 	img { height: 140mm }
-}
 
-.bdg-artboard {
-	font-family: "TTHoves-Regular";
-}
-
-.bdg-image {
-	position: absolute;
-}
-
-.bdg-image-back {
-	top: 140mm;
-}
-
-.bar {
-	position: absolute;
-	top: 22.28mm;
-	left: 0mm;
-	height: 3.3mm;
-	width: 100%;
-	z-index: 1000;
-}
-
-.text-boxes {
-	display: flex;
-	position: relative;
-	flex-direction: column;
-	margin: 121px 6.6mm 0;
-	color: #000 !important;
-	height: 140mm;
-	z-index: 1000;
-	div {
-		color: #000 !important;
+	.bdg-image {
+		position: absolute;
 	}
-	.text-box {
+
+	.bdg-image-back {
+		top: 140mm;
+	}
+
+	.bar {
+		position: absolute;
+		top: 22.28mm;
+		left: 0mm;
+		height: 3.3mm;
+		width: 100%;
+		z-index: 1000;
+	}
+
+	.text-boxes {
 		display: flex;
-		align-items: center;
-		margin-top: 1px;
-		height: 38px;
-		text-transform: capitalize;
-	}
-	.user-name {
-		font-family: "TTHoves-Bold";
-		text-transform: uppercase;
-	}
-	.first-name {
-		font-family: "TTHoves-Bold";
-	}
-	.last-name {
-		font-family: "TTHoves-Bold";
-		margin-top: 15px;
-	}
-	.pronounce {
-		font-size: 16px;
-		margin-top: 12px;
-		text-transform: uppercase;
-	}
-	.company {
-		position: absolute;
-		top: 87.5mm;
-		font-size: 22px;
-	}
-	.full-name {
-		position: absolute;
-		top: 114mm;
-		font-size: 12px;
+		position: relative;
+		flex-direction: column;
+		margin: 121px 6.6mm 0;
+		color: #000 !important;
+		height: 140mm;
+		z-index: 1000;
+		div {
+			color: #000 !important;
+		}
+		.text-box {
+			display: flex;
+			align-items: center;
+			margin-top: 1px;
+			height: 38px;
+			text-transform: capitalize;
+		}
+		.user-name {
+			font-family: "TTHoves-Bold";
+			text-transform: uppercase;
+		}
+		.first-name {
+			font-family: "TTHoves-Bold";
+		}
+		.last-name {
+			font-family: "TTHoves-Bold";
+			margin-top: 15px;
+		}
+		.pronounce {
+			font-size: 16px;
+			margin-top: 12px;
+			text-transform: uppercase;
+		}
+		.company {
+			position: absolute;
+			top: 87.5mm;
+			font-size: 22px;
+		}
+		.full-name {
+			position: absolute;
+			top: 114mm;
+			font-size: 12px;
+		}
 	}
 }

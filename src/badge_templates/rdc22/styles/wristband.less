@@ -16,95 +16,90 @@
 }
 
 @media print {
-	.bdg-artboard {
+	.wristband {
 		position: absolute;
 		top: 0px;
 	}
 }
 
-#badge-artboard {
+.wristband {
+	font-family: "TTHoves-Regular";
 	height: 337mm;
 	width: 41mm;
-	//transform: rotate(270deg);
-}
+	
+	.strip-fill {
+		position: absolute;
+		top: 1mm;
+		left: 13.35mm;
+		width: 15mm;
+		height: 156mm;
+	}
 
-.bdg-artboard {
-	font-family: "TTHoves-Regular";
-}
+	.background-fill {
+		position: absolute;
+		top: 157mm;
+		left: 5.3mm;
+		width: 31mm;
+		height: 137mm;
+	}
 
-
-.strip-fill {
-	position: absolute;
-	top: 1mm;
-	left: 13.35mm;
-	width: 15mm;
-	height: 156mm;
-}
-
-.background-fill {
-	position: absolute;
-	top: 157mm;
-	left: 5.3mm;
-	width: 31mm;
-	height: 137mm;
-}
-
-.qrcode-box {
-	position: absolute;
-	top: 249mm;
-	right: 9.2mm;
-	// need to add specific height
-	// to remove unwanted bottom padding
-	height: 79px;
-	background-color: #fff;
-	border: 1.4mm solid #fff;
-	border-bottom: 1.6mm solid #fff;
-}
-
-@media print {
 	.qrcode-box {
-		right: 9.7mm;
+		position: absolute;
+		top: 249mm;
+		right: 9.2mm;
+		// need to add specific height
+		// to remove unwanted bottom padding
+		height: 79px;
+		background-color: #fff;
+		border: 1.4mm solid #fff;
+		border-bottom: 1.6mm solid #fff;
 	}
-}
 
-.logo {
-	position: absolute;
-	top: 205mm;
-	right: -2.1mm;
-	width: 164px;
-}
+	@media print {
+		.qrcode-box {
+			right: 9.7mm;
+		}
+	}
 
-@media print {
 	.logo {
-		right: -0.3mm;
+		position: absolute;
+		top: 205mm;
+		right: -2.1mm;
+		width: 164px;
 	}
-}
 
-.user-name {
-	font-family: "TTHoves-Bold";
-	position: absolute;
-	top: 125mm;
-	left: 18.5mm;
-	height: 50mm;
-  overflow: hidden;
-  white-space: nowrap;
-}
+	@media print {
+		.logo {
+			right: -0.3mm;
+		}
+	}
 
-.name {
-	position: absolute;
-	top: 8mm;
-	height: 50mm;
-	text-transform: capitalize;
-  overflow: hidden;
-  white-space: nowrap;
-}
+	.user-name {
+		font-family: "TTHoves-Bold";
+		position: absolute;
+		top: 125mm;
+		left: 18.5mm;
+		height: 50mm;
+	  overflow: hidden;
+	  white-space: nowrap;
+	}
 
-.first-name {
-	left: 16.2mm;
-}
+	.name {
+		position: absolute;
+		top: 8mm;
+		height: 50mm;
+		text-transform: capitalize;
+	  overflow: hidden;
+	  white-space: nowrap;
+	}
 
-.last-name {
-	left: 20.8mm;
+	.first-name {
+		left: 16.2mm;
+	}
+
+	.last-name {
+		left: 20.8mm;
+	}
 }
 
 .white {

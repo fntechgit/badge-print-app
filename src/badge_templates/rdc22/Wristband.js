@@ -54,7 +54,7 @@ export default ({ badge }) => {
                         badge.getBadgeTypeName() == BadgeTypes.Press;
     return (
     <>
-        <div id="badge-artboard" className="bdg-artboard" ref={artboardRef}>
+        <div id="badge-artboard" className="bdg-artboard wristband" ref={artboardRef}>
             <div
                 ref={backgroundFillRef}
                 className="background-fill"
