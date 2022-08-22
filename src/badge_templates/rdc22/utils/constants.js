@@ -24,5 +24,5 @@ export const BadgeTypesColor = {
     // elected to match Pantone 2612 C - Page C 69
     [BadgeTypes.Speaker]: '#8B2583',
     // elected to match Pantone 100 C - Page C 2
-    [BadgeTypes.Press]: '#FFFF75',
+    [BadgeTypes.Press]: '#FFF960',
 };
