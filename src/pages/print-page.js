@@ -252,6 +252,18 @@ class PrintPage extends React.Component {
     handlePrint = (callback = () => {}) => {
         if (!(callback instanceof Function)) throw Error;
 
+        const afterPrint = () => {
+            if (this.isBatchPrinting()) {
+                const { printJobStatus } = this.state;
+                const { badgeTicketId, badgeViewType } = this.props;
+                const newPrintJobStatus = { ...printJobStatus };
+                newPrintJobStatus[badgeTicketId][badgeViewType] = PrintStatus.Printed;
+                this.setState({ printJobStatus: newPrintJobStatus }, callback);
+            } else {
+                this.props.clearBadge().then(callback);
+            }
+        };
+
         if (this.state.embedded) {
             const { badgeViewType } = this.props;
             const element = document.getElementById('badge-artboard');
@@ -263,22 +275,14 @@ class PrintPage extends React.Component {
             // call native printing then increment count
             this.props.printBadge(payload).then(() =>
                 this.incrementPrintCount().then(() => 
-                    this.props.clearBadge().then(callback)
+                    afterPrint()
                 )
             );
         } else {
             this.incrementPrintCount().then(() => {
                 // print after incrementing count
                 window.print();
-                if (this.isBatchPrinting()) {
-                    const { printJobStatus } = this.state;
-                    const { badgeTicketId, badgeViewType } = this.props;
-                    const newPrintJobStatus = { ...printJobStatus };
-                    newPrintJobStatus[badgeTicketId][badgeViewType] = PrintStatus.Printed;
-                    this.setState({ printJobStatus: newPrintJobStatus }, callback);
-                } else {
-                    this.props.clearBadge().then(callback);
-                }
+                afterPrint();
             });
         }
     };
