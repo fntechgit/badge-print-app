@@ -253,11 +253,12 @@ class PrintPage extends React.Component {
         if (!(callback instanceof Function)) throw Error;
 
         if (this.state.embedded) {
+            const { badgeViewType } = this.props;
             const element = document.getElementById('badge-artboard');
             const payload = {
                 height: element.clientHeight,
                 width: element.clientWidth,
-                view: viewType,
+                view: badgeViewType,
             };
             // call native printing then increment count
             this.props.printBadge(payload).then(() =>
