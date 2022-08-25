@@ -133,7 +133,7 @@ class PrintPage extends React.Component {
     };
 
     getBadge = (prevProps = null) => {
-        const { summitSlug } = this.state;
+        const { summitSlug, viewTypeOverride } = this.state;
         const { ticket_id: ticketId, view_type: viewType } = this.props.match.params;
 
         let shouldGetBadge = !!ticketId;
@@ -144,8 +144,8 @@ class PrintPage extends React.Component {
                     (ticketId == prevTicketId && viewType != prevViewType);
         }
         if (shouldGetBadge) {
-            if (viewType) {
-                this.props.getBadge(summitSlug, ticketId, { viewType });
+            if (viewTypeOverride || viewType) {
+                this.props.getBadge(summitSlug, ticketId, { viewType: viewTypeOverride || viewType });
             } else {
                 this.props.getBadge(summitSlug, ticketId);
             }
@@ -332,9 +332,10 @@ class PrintPage extends React.Component {
 
         return (
             <div className="container print-page-wrapper">
-                { badgeAllowedViewTypes &&
-                    badgeAllowedViewTypes.length > 1 &&
-                        (this.isBatchPrinting() ? !autoProcessBatch : true) &&
+                { !viewTypeOverride &&
+                      badgeAllowedViewTypes &&
+                          badgeAllowedViewTypes.length > 1 &&
+                              (this.isBatchPrinting() ? !autoProcessBatch : true) &&
                 <>
                     <div className="row">
                         <div className="col-md-4 col-md-offset-5">
@@ -352,7 +353,6 @@ class PrintPage extends React.Component {
                                         type="radio"
                                         name="radio"
                                         value={viewType.id}
-                                        disabled={!!viewTypeOverride}
                                     >
                                         {viewType.name}
                                     </ToggleButton>
