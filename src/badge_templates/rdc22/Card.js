@@ -43,7 +43,7 @@ export default ({ badge }) => {
             getRobloxUsernameById(userId)
                 .then((payload) => setUsername(payload.displayName))
                 .catch((e) => console.log(e));
-        } else {
+        } else if (usernameAnswer.trim() !== '') {
             setUsername(usernameAnswer);
         }
     }, []);
