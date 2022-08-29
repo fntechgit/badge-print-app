@@ -131,6 +131,12 @@ export default ({ badge }) => {
                         {badge.getFullName()}
                     </Textfit>
                 }
+                { badge.getFeature('Keynote Icon') &&
+                    <img className="feature" src={badge.getFeature('Keynote Icon').image}/>
+                }
+                { badge.getFeature('Chaperone Icon') &&
+                    <img className="feature" src={badge.getFeature('Chaperone Icon').image}/>
+                }
             </div>
             <img className="bdg-image bdg-image-back" src={info_img}/>
         </div>
