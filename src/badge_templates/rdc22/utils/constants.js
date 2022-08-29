@@ -10,10 +10,10 @@ export const PronounsQuestionAnswers = {
 
 export const BadgeTypes = {
     'Crew': 'CREW',
-    'Staff': 'Roblox Staff Invite: In-Person',
+    'Staff': 'Roblox Staff Invite - In-Person',
     'Attendee': 'Invited Attendee - In-Person',
-    'Speaker': 'Speaker Invite: In-Person',
-    'Press': 'Press Invite: In-Person',
+    'Speaker': 'Speaker Invite - In-Person',
+    'Press': 'Press Invite - In-Person',
 };
 
 export const BadgeTypesColor = {
