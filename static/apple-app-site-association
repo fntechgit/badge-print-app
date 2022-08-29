@@ -1,0 +1,30 @@
+{
+  "applinks" :
+  {
+      "apps" : [],
+      "details" :
+      {
+          "Y7FG9N5SL2.net.tipit.checkin" :
+          {
+              "paths" :
+              [
+              "/check-in/*"
+              ]
+          },
+          "Y7FG9N5SL2.net.tipit.checkin.stage" :
+          {
+              "paths" :
+              [
+              "/check-in/*"
+              ]
+          },
+          "Y7FG9N5SL2.net.tipit.checkin.dev" :
+          {
+              "paths" :
+              [
+              "/check-in/*"
+              ]
+          },
+      }
+  }
+}
