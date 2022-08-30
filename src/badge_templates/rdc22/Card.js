@@ -23,8 +23,8 @@ import {
 
 import './styles/card.less';
 
-import background_img from './images/background92x140.png';
-import info_img from './images/info.png';
+import background_img from './images/background94x140.png';
+import info_img from './images/info94x140.png';
 
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
