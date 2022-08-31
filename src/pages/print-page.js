@@ -332,6 +332,13 @@ class PrintPage extends React.Component {
 
         return (
             <div className="container print-page-wrapper">
+                { this.isBatchPrinting() &&
+                    <>
+                        { batchItemsRef.indexOf(`${badgeTicketId}|${badgeViewType}`) + 1}
+                        /
+                        { batchItemsRef.length }
+                    </>
+                }
                 { !viewTypeOverride &&
                       badgeAllowedViewTypes &&
                           badgeAllowedViewTypes.length > 1 &&
