@@ -175,7 +175,7 @@ export const getAllTickets = ({
         const dispatchCalls = allPages.map(p =>
             dispatch(
                 getTickets(
-                    { filters, fields, expand, relations, page: p, perPage },
+                    { filters, fields, expand, relations, page: p, perPage, order },
                     { dispatchLoader: false }
                 )
             )
