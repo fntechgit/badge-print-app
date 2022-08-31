@@ -7,7 +7,7 @@ import { Textfit } from 'react-textfit';
 
 import {
     BadgeTypes,
-    BadgeTypesColor,
+    CardBadgeTypesColor as BadgeTypesColor,
     ExtraQuestionsKeys,
     PronounsQuestionAnswers,
 } from './utils/constants';

@@ -12,7 +12,7 @@ import {
 
 import {
     BadgeTypes,
-    BadgeTypesColor,
+    WristbandBadgeTypesColor as BadgeTypesColor,
     ExtraQuestionsKeys,
 } from './utils/constants';
 
