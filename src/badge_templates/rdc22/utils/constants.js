@@ -1,5 +1,6 @@
 export const ExtraQuestionsKeys = {
-    Username: 'Roblox User ID_All Attendee Types BUT Press and Partner_SUBQUESTION',
+    Username: 'Roblox Username _All Attendee Types BUT Press and Partners_SUBQUESTION',
+    UserId: 'Roblox User ID_All Attendee Types BUT Press and Partner_SUBQUESTION',
     Pronouns: 'Pronouns - In-Person SUBQUESTION',
 }
 

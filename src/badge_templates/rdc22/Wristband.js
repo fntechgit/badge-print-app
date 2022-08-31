@@ -41,13 +41,18 @@ export default ({ badge }) => {
         }
         const usernameAnswer =
             badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
-        const userId = !isNaN(usernameAnswer) ? usernameAnswer : getIdFromUserProfileURL(usernameAnswer);
-        if (userId) {
-            getRobloxUsernameById(userId)
-                .then((payload) => setUsername(payload.displayName))
-                .catch((e) => console.log(e));
-        } else {
+        if (usernameAnswer && usernameAnswer.trim() !== '' &&
+            usernameAnswer != 'N/A' && usernameAnswer != 'n/a') {
             setUsername(usernameAnswer);
+        } else {
+            const userIdAnswer =
+                badge.getExtraQuestionValue(ExtraQuestionsKeys.UserId);
+            const userId = !isNaN(userIdAnswer) ? userIdAnswer : getIdFromUserProfileURL(userIdAnswer);
+            if (userId) {
+                getRobloxUsernameById(userId)
+                    .then((payload) => setUsername(payload.displayName))
+                    .catch((e) => console.log(e));
+            }
         }
     }, []);
     const darkTheme = badge.getBadgeTypeName() == BadgeTypes.Attendee ||
