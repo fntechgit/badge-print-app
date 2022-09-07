@@ -36,19 +36,21 @@ export default ({ badge }) => {
         if (barColor)
             barRef.current.style.setProperty('background-color', barColor, 'important');
 
-        const usernameAnswer =
-            badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
-        if (usernameAnswer && usernameAnswer.trim() !== '' &&
-            usernameAnswer != 'N/A' && usernameAnswer != 'n/a') {
-            setUsername(usernameAnswer);
-        } else {
-            const userIdAnswer =
-                badge.getExtraQuestionValue(ExtraQuestionsKeys.UserId);
-            const userId = !isNaN(userIdAnswer) ? userIdAnswer : getIdFromUserProfileURL(userIdAnswer);
-            if (userId) {
-                getRobloxUsernameById(userId)
-                    .then((payload) => setUsername(payload.displayName))
-                    .catch((e) => console.log(e));
+        if (badge.getBadgeTypeName() != BadgeTypes.Crew) { 
+            const usernameAnswer =
+                badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
+            if (usernameAnswer && usernameAnswer.trim() !== '' &&
+                usernameAnswer != 'N/A' && usernameAnswer != 'n/a') {
+                setUsername(usernameAnswer);
+            } else {
+                const userIdAnswer =
+                    badge.getExtraQuestionValue(ExtraQuestionsKeys.UserId);
+                const userId = !isNaN(userIdAnswer) ? userIdAnswer : getIdFromUserProfileURL(userIdAnswer);
+                if (userId) {
+                    getRobloxUsernameById(userId)
+                        .then((payload) => setUsername(payload.displayName))
+                        .catch((e) => console.log(e));
+                }
             }
         }
     }, []);
