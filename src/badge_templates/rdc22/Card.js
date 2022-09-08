@@ -70,6 +70,7 @@ export default ({ badge }) => {
                         max={50}
                         className="text-box user-name"
                         onInput={forceUpdate}
+                        onReady={() => window.dispatchEvent(new CustomEvent('resize'))}
                         contentEditable
                         suppressContentEditableWarning={true}
                     >
