@@ -24,14 +24,17 @@ import {
 import './styles/card.less';
 
 import background_img from './images/background94x140.png';
+import investor_background_img from './images/investor-background94x140.png';
 import info_img from './images/info94x140.png';
+import investor_info_img from './images/investor-info94x140.png';
 
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     const barRef = useRef(null);
     const [username, setUsername] = useState(null);
     useLayoutEffect(() => {
-        const barColor = badge.getBadgeTypeName() == BadgeTypes.Staff ?
+        const barColor = badge.getBadgeTypeName() == BadgeTypes.Staff ||
+                            badge.getBadgeTypeName() == BadgeTypes.StaffInvestor ?
                             '#75787B' : BadgeTypesColor[badge.getBadgeTypeName()];
         if (barColor)
             barRef.current.style.setProperty('background-color', barColor, 'important');
@@ -55,10 +58,12 @@ export default ({ badge }) => {
         }
     }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
+    const isInvestorBadge = badge.getBadgeTypeName() == BadgeTypes.StaffInvestor ||
+                            badge.getBadgeTypeName() == BadgeTypes.AttendeeInvestor;
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard card">
-            <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
+            <img id="badge-artboard-img" className="bdg-image" src={isInvestorBadge ? investor_background_img : background_img}/>
             <div 
                 ref={barRef}
                 className="bar"
@@ -146,7 +151,7 @@ export default ({ badge }) => {
                     <img className="feature" src={badge.getFeature('Chaperone Icon').image}/>
                 }
             </div>
-            <img className="bdg-image bdg-image-back" src={info_img}/>
+            <img className="bdg-image bdg-image-back" src={isInvestorBadge ? investor_info_img : info_img}/>
         </div>
     </>
     );

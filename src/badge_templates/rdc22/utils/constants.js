@@ -15,6 +15,8 @@ export const BadgeTypes = {
     'Attendee': 'Invited Attendee - In-Person',
     'Speaker': 'Speaker Invite - In-Person',
     'Press': 'Press Invite - In-Person',
+    'StaffInvestor': 'Investor Day - Roblox Staff',
+    'AttendeeInvestor': 'Investor Day - General Attendee',
 };
 
 export const CardBadgeTypesColor = {
@@ -26,6 +28,8 @@ export const CardBadgeTypesColor = {
     [BadgeTypes.Speaker]: '#7A107A',
     // elected to match Pantone 100 C - Page C 2
     [BadgeTypes.Press]: '#FFF960',
+    // elected to match Pantone Black 6 C - Page C 189
+    [BadgeTypes.StaffInvestor]: '#100420',
 };
 
 export const WristbandBadgeTypesColor = {
@@ -37,4 +41,6 @@ export const WristbandBadgeTypesColor = {
     [BadgeTypes.Speaker]: '#8B2583',
     // elected to match Pantone 100 C - Page C 2
     [BadgeTypes.Press]: '#FFF960',
+    // elected to match Pantone Black 6 C - Page C 189
+    [BadgeTypes.StaffInvestor]: '#100420',
 };
