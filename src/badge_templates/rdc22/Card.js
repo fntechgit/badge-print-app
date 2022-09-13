@@ -32,6 +32,10 @@ export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     const barRef = useRef(null);
     const [username, setUsername] = useState(null);
+    const [isInvestorBadge, setIsInvestorBadge] = useState(
+        badge.getBadgeTypeName() == BadgeTypes.StaffInvestor ||
+        badge.getBadgeTypeName() == BadgeTypes.AttendeeInvestor
+    );
     useLayoutEffect(() => {
         const barColor = badge.getBadgeTypeName() == BadgeTypes.Staff ||
                             badge.getBadgeTypeName() == BadgeTypes.StaffInvestor ?
@@ -39,7 +43,7 @@ export default ({ badge }) => {
         if (barColor)
             barRef.current.style.setProperty('background-color', barColor, 'important');
 
-        if (badge.getBadgeTypeName() != BadgeTypes.Crew) { 
+        if (badge.getBadgeTypeName() != BadgeTypes.Crew && !isInvestorBadge) { 
             const usernameAnswer =
                 badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
             if (usernameAnswer && usernameAnswer.trim() !== '' &&
@@ -58,8 +62,6 @@ export default ({ badge }) => {
         }
     }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
-    const isInvestorBadge = badge.getBadgeTypeName() == BadgeTypes.StaffInvestor ||
-                            badge.getBadgeTypeName() == BadgeTypes.AttendeeInvestor;
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard card">
