@@ -108,7 +108,8 @@ export default ({ badge }) => {
                         {badge.getLastName()}
                     </Textfit>
                 }
-                { pronouns &&
+                { !isInvestorBadge &&
+                    pronouns &&
                     pronouns != PronounsQuestionAnswers.NotListedAbove &&
                     pronouns != PronounsQuestionAnswers.DontDisclose &&
                     <Textfit
