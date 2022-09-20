@@ -134,11 +134,11 @@ export const ExtraQuestionsPage = ({
 										</h5>
 										<div>
 											<ExtraQuestionsForm
+												ref={formRef}
 											  className={styles.form}
 												extraQuestions={extraQuestions}
 												userAnswers={userAnswers}
 												onAnswerChanges={handleAnswerChanges}
-												formRef={formRef}
 												questionContainerClassName={`row ${styles.inputRow}`}
 												questionLabelContainerClassName={'col-md-4'}
 												questionControlContainerClassName={`col-md-8 ${styles.inputField}`}
