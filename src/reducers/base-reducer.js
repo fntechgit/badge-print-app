@@ -4,13 +4,14 @@ import {
     RECEIVE_SUMMITS,
     RECEIVE_SUMMIT,
     SET_SUMMIT,
-    SET_ACCESS_TOKEN_QS
+    SET_ACCESS_TOKEN_QS,
+    GET_EXTRA_QUESTIONS,
 } from "../actions/base-actions";
 
 import {
     REQUEST_BADGE,
     BADGE_RECEIVED,
-    CLEAR_BADGE
+    CLEAR_BADGE,
 } from "../actions/badge-actions";
 
 import {
@@ -18,7 +19,7 @@ import {
     RECEIVE_TICKETS,
     SET_SELECTED_TICKET,
     CLEAR_SELECTED_TICKET,
-    TICKET_UPDATED
+    TICKET_UPDATED,
 } from "../actions/ticket-actions";
 
 
@@ -27,10 +28,11 @@ const DEFAULT_STATE = {
     allTickets: [],
     searchTerm: '',
     summit: null,
+    extraQuestions: [],
     badge: null,
     badgeViewType: null,
     accessTokenQS: null,
-    loading: 0,
+    loading: false,
     selectedTicket: null
 }
 
@@ -44,10 +46,10 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return { ...state, accessTokenQS: payload.accessToken };
         case START_LOADING:
             console.log('now loading');
-            return { ...state, loading: 1 };
+            return { ...state, loading: true };
         case STOP_LOADING:
             console.log('stop loading');
-            return { ...state, loading: 0 };
+            return { ...state, loading: false };
         case RECEIVE_SUMMITS:
             return { ...state, allSummits: payload.response.data };
         case RECEIVE_SUMMIT:
@@ -86,6 +88,10 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
                 searchTerm: '',
                 allTickets: []
             }
+        case GET_EXTRA_QUESTIONS: {
+              const extraQuestions = payload.response.data;
+              return { ...state, loading: false, extraQuestions: extraQuestions }
+        }
         default:
             return state;
     }
