@@ -1,11 +1,24 @@
-.question-wrapper {
-  margin: 35px 0;
+.form {
+  margin-bottom: 30px;
+  :global {
+    button {
+      display: none;
+    }
+  }
 }
-
-.button-save {
-  margin: 30px 15px;
+.input-row {
+  margin-top: 35px;
+  margin-bottom: 35px;
 }
-
+.input-field {
+  margin-bottom: 5px;
+  :global {
+    h4 {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}
 .disclaimer {
   margin: 25px 5px 0 5px;
   > div {
@@ -17,21 +30,6 @@
     list-style: inside;
   }
 }
-.form {
-  margin-bottom: 30px;
-  .input-row {
-    margin-top: 35px;
-    margin-bottom: 35px;
-
-    .input-field {
-      display: flex;
-      flex-direction: column;
-
-      b {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 5px;
-      }      
-    }
-  }
+.button-save {
+  margin: 30px 15px;
 }
