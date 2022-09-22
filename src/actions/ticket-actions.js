@@ -246,7 +246,7 @@ export const getTickets = ({
     });
 };
 
-export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async (dispatch, getState) => {
+export const saveExtraQuestions = (extra_questions, owner) => async (dispatch, getState) => {
 
     const { baseState: { selectedTicket } } = getState();
 
@@ -268,9 +268,12 @@ export const saveExtraQuestions = (extra_questions, owner, disclaimer) => async 
         attendee_first_name: owner.first_name,
         attendee_last_name: owner.last_name,
         attendee_company: owner.company,
-        disclaimer_accepted: disclaimer,
-        extra_questions: extraQuestionsAnswers
+        disclaimer_accepted: owner.disclaimer,
     };
+
+    if (extraQuestionsAnswers.length > 0) {
+        normalizedEntity['extra_questions'] = extraQuestionsAnswers;
+    }
 
     dispatch(startLoading());
 
