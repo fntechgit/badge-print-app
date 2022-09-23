@@ -289,12 +289,11 @@ export const saveExtraQuestions = (extra_questions, owner) => async (dispatch, g
         normalizedEntity,
         authErrorHandler
     )(params)(dispatch).then((payload) => {
-        Swal.fire('Success', "Extra questions saved successfully", "success");
         dispatch(stopLoading());
         return payload;
     }).catch(e => {
         dispatch(stopLoading());
         Swal.fire('Error', "Error saving your questions. Please retry.", "warning");
-        return (e);
+        return Promise.reject(e);
     });
 };
