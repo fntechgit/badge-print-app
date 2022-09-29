@@ -1,0 +1,112 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "FranklinGothicURW-Med";
+  src: url('~fonts/Franklin Gothic Medium/FranklinGothic-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "FranklinGothicURW-Boo";
+  src: url('~fonts/Franklin Gothic Book/FranklinGothic-Book.ttf') format('truetype');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #1e2860;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #1e2860 !important;
+	}
+}
+
+#badge-artboard {
+	width: 92mm; 
+	height: 140mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+#badge-artboard-img {
+	position: absolute;
+	top: 6px;
+}
+
+.bdg-artboard {
+	font-family: FranklinGothicURW-Med;
+}
+
+.text-box {
+	position: absolute;
+	top: 138px;
+	width: 100%;
+	padding: 0 2mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;	
+	div {
+		color: #1e2860 !important;
+	}
+	.first-name {
+		font-size: 31pt;
+		line-height: 0.8;
+	}
+	.last-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		margin: 14px 0 10px;
+	}
+	.badge-title {
+		font-family: FranklinGothicURW-Boo;
+		font-size: 18.8pt;
+		font-weight: bold;
+		text-transform: uppercase;
+		border-radius: 25px;
+		padding: 0 15px;
+		letter-spacing: 0.01em;
+		line-height: 1.25;
+		color-adjust: exact;
+		align-self: center;
+	}
+	.ocp-staff {
+		background-color: #63bc47 !important;
+		color: #fff !important;
+	}
+	.attendee-title {
+		color: #63bc47 !important;
+		font-size: 19.1pt;
+		text-transform: uppercase;
+	}
+	.last-name + .attendee-title {
+		margin-top: 10px;
+	}
+	.last-name + .badge-title {
+		margin-top: 5px;
+	}
+	.badge-title + .attendee-title {
+		margin-top: 7px;
+	}
+}
+
+@media screen {
+	.hex-logo {
+		position: absolute;
+		width: 108px;
+		top: 424px;
+		left: 8.5px;
+	}
+}
+
+@media print {
+	.hex-logo {
+		position: absolute;
+		width: 108px;
+		top: 426px;
+		left: 8.5px;
+	}
+}
