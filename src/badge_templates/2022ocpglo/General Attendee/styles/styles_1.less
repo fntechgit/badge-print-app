@@ -1,0 +1,161 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "FranklinGothicURW-Med";
+  src: url('~fonts/Franklin Gothic Medium/FranklinGothic-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "FranklinGothicURW-Boo";
+  src: url('~fonts/Franklin Gothic Book/FranklinGothic-Book.ttf') format('truetype');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #1e2860;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #1e2860 !important;
+	}
+}
+
+#badge-artboard {
+	width: 92mm; 
+	height: 140mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+#badge-artboard-img {
+	position: absolute;
+	top: 6px;
+}
+
+.bdg-artboard {
+	font-family: FranklinGothicURW-Med;
+}
+
+.text-box {
+	position: absolute;
+	top: 138px;
+	width: 100%;
+	padding: 0 2mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;
+	color: #1e2860 !important;
+	div {
+			color: #1e2860 !important;
+	}
+	.first-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		div {
+		}
+	}
+	.last-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		margin: 14px 0 10px;
+	}
+	.badge-title {
+		font-family: FranklinGothicURW-Boo;
+		font-size: 18.8pt;
+		font-weight: bold;
+		text-transform: uppercase;
+		border-radius: 25px;
+		padding: 0 15px;
+		letter-spacing: 0.01em;
+		line-height: 1.25;
+		color-adjust: exact;
+		color: #fff !important;
+		align-self: center;
+	}
+	.symposium-title {
+		background-color: #002554 !important;
+	}
+	.board-member-title {
+		background-color: #63bc47 !important;
+	}
+	.project-lead-title {
+		background-color: #d57800 !important;
+	}
+	.incubation-committee-title {
+		background-color: #f6bf16 !important;
+	}
+	.company {
+		font-size: 19.1pt;
+		text-transform: uppercase;
+	}
+	.last-name + .company {
+		margin-top: 10px;
+	}
+	.last-name + .badge-title {
+		margin-top: 5px;
+	}
+	.badge-title + .company {
+		margin-top: 7px;
+	}
+	.badge-title + .badge-title {
+		margin-top: 8px;
+	}
+}
+
+.qrcode-box {
+	position: absolute;
+	bottom: 3.5mm;
+	right: 3.5mm;
+	// need to add specific height
+	// to remove unwanted bottom padding
+	height: 80px;
+}
+
+@media screen {
+	.icon-feature {
+		position: absolute;
+		width: 108px;
+		top: 424px;
+		left: 8.5px;
+		& ~ .icon-feature {
+			top: 380px;
+			left: 84px;
+			& ~ .icon-feature {
+				top: 336px;
+				left: 8.5px;
+			}
+		}
+	}
+}
+
+@media print {
+	.icon-feature {
+		position: absolute;
+		width: 108px;
+		top: 426px;
+		left: 8.5px;
+		& ~ .icon-feature {
+			top: 381.5px;
+			left: 85px;
+			& ~ .icon-feature {
+				top: 337.5px;
+				left: 8.5px;
+			}
+		}
+	}
+}
+
+#t-shirt-size {
+	position: absolute;
+	right: 3.5mm;
+	bottom: 0.5mm;
+	color: white !important;
+	letter-spacing: 0.5em;
+	margin-right: -0.5em;
+}
+
