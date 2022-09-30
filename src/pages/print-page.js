@@ -270,7 +270,7 @@ class PrintPage extends React.Component {
             const payload = {
                 height: element.clientHeight,
                 width: element.clientWidth,
-                view: badgeViewType,
+                view: badgeViewType ?? "Card",
             };
             // call native printing then increment count
             this.props.printBadge(payload).then(() =>
