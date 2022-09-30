@@ -44,7 +44,7 @@ export default ({badge}) => {
             </div>
             {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content qrcode-box">
-                {badge.getQRCode({ fgColor: '#1e2860', size: 80 })}
+                {badge.getQRCode({ fgColor: '#141b76', size: 80 })}
             </div>
             }
             {badge.getFeature('Expo Sponsor Staff') &&
