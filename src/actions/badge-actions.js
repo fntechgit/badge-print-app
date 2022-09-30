@@ -103,7 +103,7 @@ export const printBadge = (params) => (dispatch) => {
         createAction(BADGE_PRINTED),
         'print'
     )(params)(dispatch).then((payload) => {
-        return payload.respons.data;
+        return payload.response.data;
     });
 };
 
