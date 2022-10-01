@@ -1,12 +1,37 @@
 /* -- general styles -- */
 
+/**
+ * @license
+ * MyFonts Webfont Build ID 3943157, 2020-09-02T14:12:19-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: FranklinGothicURW-Boo by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-book/
+ * 
+ * Webfont: FranklinGothicURW-Dem by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-demi/
+ * 
+ * Webfont: FranklinGothicURW-Med by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-medium/
+ * 
+ * 
+ * Webfonts copyright: Copyright 2010 URW++ Design &amp;amp; Development Hamburg
+ * 
+ * © 2020 MyFonts Inc
+*/
+  
 @font-face {
-  font-family: "FranklinGothicURW-Med";
-  src: url('~fonts/Franklin Gothic Medium/FranklinGothic-Medium.ttf') format('truetype');
+  font-family: 'FranklinGothicURW-Boo';
+  src: url('~fonts/FranklinGothicURW-Boo/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Boo/font.woff') format('woff');
 }
 @font-face {
-  font-family: "FranklinGothicURW-Boo";
-  src: url('~fonts/Franklin Gothic Book/FranklinGothic-Book.ttf') format('truetype');
+  font-family: 'FranklinGothicURW-Med';
+  src: url('~fonts/FranklinGothicURW-Med/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Med/font.woff') format('woff');
 }
 
 @media screen {
@@ -27,11 +52,6 @@
 	height: 140mm;
 	img { height: 100%; }
 	overflow: hidden;
-}
-
-#badge-artboard-img {
-	position: absolute;
-	top: 6px;
 }
 
 .bdg-artboard {
@@ -65,14 +85,12 @@
 		margin: 14px 0 10px;
 	}
 	.badge-title {
-		font-family: FranklinGothicURW-Boo;
 		font-size: 18.8pt;
-		font-weight: bold;
 		text-transform: uppercase;
 		border-radius: 25px;
-		padding: 0 15px;
+		padding: 8px 15px 0px;
 		letter-spacing: 0.01em;
-		line-height: 1.25;
+		line-height: 0.9;
 		color-adjust: exact;
 		color: #fff !important;
 		align-self: center;
@@ -96,11 +114,8 @@
 	.last-name + .company {
 		margin-top: 10px;
 	}
-	.last-name + .badge-title {
-		margin-top: 5px;
-	}
 	.badge-title + .company {
-		margin-top: 7px;
+		margin-top: 13px;
 	}
 	.badge-title + .badge-title {
 		margin-top: 8px;
@@ -119,15 +134,15 @@
 @media screen {
 	.icon-feature {
 		position: absolute;
-		width: 108px;
-		top: 424px;
-		left: 8.5px;
+		width: 110px;
+		top: 421px;
+		left: 9px;
 		& ~ .icon-feature {
-			top: 380px;
-			left: 84px;
+			top: 376.5px;
+			left: 86px;
 			& ~ .icon-feature {
-				top: 336px;
-				left: 8.5px;
+				top: 332px;
+				left: 9px;
 			}
 		}
 	}
@@ -136,14 +151,14 @@
 @media print {
 	.icon-feature {
 		position: absolute;
-		width: 108px;
-		top: 426px;
+		width: 110.5px;
+		top: 423px;
 		left: 9px;
 		& ~ .icon-feature {
-			top: 381.5px;
-			left: 85px;
+			top: 378px;
+			left: 87px;
 			& ~ .icon-feature {
-				top: 337.5px;
+				top: 333px;
 				left: 9px;
 			}
 		}
@@ -153,7 +168,7 @@
 #t-shirt-size {
 	position: absolute;
 	right: 3.2mm;
-	bottom: 0.5mm;
+	bottom: -0.7mm;
 	color: white !important;
 	letter-spacing: 0.5em;
 	margin-right: -0.5em;
