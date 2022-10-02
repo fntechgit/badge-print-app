@@ -5,9 +5,14 @@ import {
     useForceUpdate
 } from '@/utils/utils';
 
-import './styles/card.less';
+import './styles/zebra-card.less';
 
-import background_img from './images/general94x140.svg';
+import background_img from './images/general88x140.svg';
+
+import badge_feature_expo from './images/badge-feature-pms-expo.svg';
+import badge_feature_keynote from './images/badge-feature-pms-keynote.svg';
+import badge_feature_media from './images/badge-feature-pms-media.svg';
+import badge_feature_speaker from './images/badge-feature-pms-speaker.svg';
 
 const shirtSize = {
     'Unisex XS': '.',
@@ -44,27 +49,27 @@ export default ({badge}) => {
             </div>
             {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content qrcode-box">
-                {badge.getQRCode({ fgColor: '#141b76', size: 80 })}
+                {badge.getQRCode({ fgColor: '#002554', size: 80 })}
             </div>
             }
             {badge.getFeature('Expo Sponsor Staff') &&
             <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Expo Sponsor Staff').image}/>
+                <img className="bdg-image" src={badge_feature_expo}/>
             </div>
             }
             {badge.getFeature('Speaker') && !badge.getFeature('Keynote') &&
             <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Speaker').image}/>
+                <img className="bdg-image" src={badge_feature_speaker}/>
             </div>
             }
             {badge.getFeature('Keynote') &&
             <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Keynote').image}/>
+                <img className="bdg-image" src={badge_feature_keynote}/>
             </div>
             }
             {badge.getFeature('Media') &&
             <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Media').image}/>
+                <img className="bdg-image" src={badge_feature_media}/>
             </div>
             }
             <div id="t-shirt-size" className="bdg-content">{ shirtSize[badge.getExtraQuestionValue('T-shirt Size')] }</div>

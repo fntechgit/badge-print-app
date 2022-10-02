@@ -1,0 +1,181 @@
+/* -- general styles -- */
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 3943157, 2020-09-02T14:12:19-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: FranklinGothicURW-Boo by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-book/
+ * 
+ * Webfont: FranklinGothicURW-Dem by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-demi/
+ * 
+ * Webfont: FranklinGothicURW-Med by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-medium/
+ * 
+ * 
+ * Webfonts copyright: Copyright 2010 URW++ Design &amp;amp; Development Hamburg
+ * 
+ * © 2020 MyFonts Inc
+*/
+  
+@font-face {
+  font-family: 'FranklinGothicURW-Boo';
+  src: url('~fonts/FranklinGothicURW-Boo/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Boo/font.woff') format('woff');
+}
+@font-face {
+  font-family: 'FranklinGothicURW-Med';
+  src: url('~fonts/FranklinGothicURW-Med/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Med/font.woff') format('woff');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #141b76;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #141b76 !important;
+	}
+}
+
+#badge-artboard {
+	width: 88mm;
+	height: 140mm;
+	img { height: 100%; }
+	overflow: hidden;
+	transform: rotate(270deg);
+}
+
+.bdg-artboard {
+	font-family: FranklinGothicURW-Med;
+}
+
+.text-box {
+	position: absolute;
+	top: 138px;
+	width: 100%;
+	padding: 0 2mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;
+	color: #002554 !important;
+	div {
+			color: #002554 !important;
+	}
+	.first-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		div {
+		}
+	}
+	.last-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		margin: 14px 0 10px;
+	}
+	.badge-title {
+		font-size: 18.8pt;
+		text-transform: uppercase;
+		border-radius: 25px;
+		padding: 8px 15px 0px;
+		letter-spacing: 0.01em;
+		line-height: 0.9;
+		color-adjust: exact;
+		color: #fff !important;
+		align-self: center;
+	}
+	.symposium-title {
+		// PMS 655 C
+		background-color: #002554 !important;
+	}
+	.board-member-title {
+		// PMS 376 C
+		background-color: #84bd00 !important;
+	}
+	.project-lead-title {
+		// PMS 1385 C
+		background-color: #d57800 !important;
+	}
+	.incubation-committee-title {
+		// PMS 123 C
+		background-color: #ffc72c !important;
+	}
+	.company {
+		font-size: 19.1pt;
+		text-transform: uppercase;
+	}
+	.last-name + .company {
+		margin-top: 10px;
+	}
+	.badge-title + .company {
+		margin-top: 13px;
+	}
+	.badge-title + .badge-title {
+		margin-top: 8px;
+	}
+}
+
+.qrcode-box {
+	position: absolute;
+	bottom: 3.2mm;
+	right: 3.2mm;
+	height: 88px;
+	padding: 1mm;
+	background-color: white !important;
+}
+
+@media screen {
+	.icon-feature {
+		position: absolute;
+		width: 110px;
+		top: 420px;
+		left: 7px;
+		& ~ .icon-feature {
+			top: 375.5px;
+			left: 85px;
+			& ~ .icon-feature {
+				top: 331px;
+				left: 7px;
+			}
+		}
+	}
+}
+
+@media print {
+	.icon-feature {
+		position: absolute;
+		width: 110.5px;
+		top: 422.5px;
+		left: 7px;
+		& ~ .icon-feature {
+			top: 377.5px;
+			left: 85px;
+			& ~ .icon-feature {
+				top: 332.5px;
+				left: 7px;
+			}
+		}
+	}
+}
+
+#t-shirt-size {
+	position: absolute;
+	right: 3.2mm;
+	bottom: -0.7mm;
+	color: white !important;
+	letter-spacing: 0.5em;
+	margin-right: -0.5em;
+}
+
