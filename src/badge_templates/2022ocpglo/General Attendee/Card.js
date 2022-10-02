@@ -23,7 +23,7 @@ export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     return (
     <>
-        <div id="badge-artboard" className="bdg-artboard">
+        <div id="badge-artboard" className="bdg-artboard card">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
             <div className="text-box">
                 <Textfit mode="single" max={42} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>

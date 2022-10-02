@@ -47,7 +47,7 @@
 	}
 }
 
-#badge-artboard {
+.card {
 	width: 94mm; 
 	height: 140mm;
 	img { height: 100%; }
@@ -132,34 +132,38 @@
 }
 
 @media screen {
-	.icon-feature {
-		position: absolute;
-		width: 110px;
-		top: 421px;
-		left: 9px;
-		& ~ .icon-feature {
-			top: 376.5px;
-			left: 86px;
+	.card {
+		.icon-feature {
+			position: absolute;
+			width: 110px;
+			top: 421px;
+			left: 9px;
 			& ~ .icon-feature {
-				top: 332px;
-				left: 9px;
+				top: 376.5px;
+				left: 86px;
+				& ~ .icon-feature {
+					top: 332px;
+					left: 9px;
+				}
 			}
 		}
 	}
 }
 
 @media print {
-	.icon-feature {
-		position: absolute;
-		width: 110.5px;
-		top: 423px;
-		left: 9px;
-		& ~ .icon-feature {
-			top: 378px;
-			left: 87px;
+	.card {
+		.icon-feature {
+			position: absolute;
+			width: 110.5px;
+			top: 423px;
+			left: 9px;
 			& ~ .icon-feature {
-				top: 333px;
-				left: 9px;
+				top: 378px;
+				left: 87px;
+				& ~ .icon-feature {
+					top: 333px;
+					left: 9px;
+				}
 			}
 		}
 	}
