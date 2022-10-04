@@ -1,6 +1,7 @@
 import React from 'react';
 import history from '../history'
 import { connect } from "react-redux";
+import ErrorPage from './error-page';
 import { ATTENDEE_STATUS_INCOMPLETE } from '../utils/constants';
 import { setSelectedTicket } from '../actions/ticket-actions';
 import { clearBadge } from "../actions/badge-actions";
@@ -9,10 +10,22 @@ import T from "i18n-react/dist/i18n-react";
 
 class SelectTicketPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            alreadyCheckedIn : false,
+        };
+
+    }
     onSelectTicket = (ticketId) => {
         const { allTickets, summit, setSelectedTicket} = this.props;
         const ticket = allTickets.find((t) => t.id === ticketId);
-        if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+        if (ticket.owner.summit_hall_checked_in) {
+            this.setState({ alreadyCheckedIn: true });
+            return;
+        }
+        if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
             setSelectedTicket(ticket).then(() => {
                 history.push(`/check-in/${summit.slug}/extra-questions`);
             })
@@ -28,6 +41,18 @@ class SelectTicketPage extends React.Component {
 
     render(){
         let { allTickets, searchTerm } = this.props;
+        const { alreadyCheckedIn } = this.state;
+
+        if (alreadyCheckedIn) {
+            return (
+                <ErrorPage
+                    title={T.translate("find_ticket.checked_in")}
+                    message={T.translate("find_ticket.checked_in_message")}
+                    linkText={T.translate("find_ticket.try_again")}
+                    onLinkClick={() => this.setState({ alreadyCheckedIn: false })}
+                />
+            );
+        }
 
         return (
             <div className="container select-ticket-page">

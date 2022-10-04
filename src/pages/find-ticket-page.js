@@ -22,10 +22,11 @@ class FindTicketPage extends React.Component {
         super(props);
 
         this.state = {
-            embedded      : window.embedded !== undefined,
-            showQRreader  : false,
-            showErrorPage : false,
-            error         : '',
+            embedded         : window.embedded !== undefined,
+            showQRreader     : false,
+            showErrorPage    : false,
+            alreadyCheckedIn : false,
+            error            : '',
         };
 
     }
@@ -51,7 +52,11 @@ class FindTicketPage extends React.Component {
             }
             let ticketNumber = qrCodeArray[1];
             getTicket(ticketNumber).then((ticket) => {
-                if(ticket.owner.status === 'Incomplete') {
+                if (ticket.owner.summit_hall_checked_in) {
+                    this.setState({ alreadyCheckedIn: true });
+                    return;
+                }
+                if (ticket.owner.status === 'Incomplete') {
                     history.push(`/check-in/${summit.slug}/extra-questions`);
                     return;
                 }
@@ -81,7 +86,9 @@ class FindTicketPage extends React.Component {
                 (data) => {
                     if (data.length === 1) {
                         let ticket = data[0];
-                        if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                        if (ticket.owner.summit_hall_checked_in) {
+                            this.setState({ alreadyCheckedIn: true });
+                        } else if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
                             setSelectedTicket(ticket).then(() => {
                                 history.push(`/check-in/${summit.slug}/extra-questions`);
                             })
@@ -111,8 +118,9 @@ class FindTicketPage extends React.Component {
                 (data) => {
                     if (data.length === 1) {
                         let ticket = data[0];
-
-                        if(ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                        if (ticket.owner.summit_hall_checked_in) {
+                            this.setState({ showErrorPage: true })
+                        } else if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
                             setSelectedTicket(ticket).then(() => {
                                 history.push(`/check-in/${summit.slug}/extra-questions`);
                             })
@@ -142,8 +150,19 @@ class FindTicketPage extends React.Component {
     };
     
     render(){
-        const { embedded, showQRreader, showErrorPage, error } = this.state;
+        const { embedded, showQRreader, showErrorPage, alreadyCheckedIn, error } = this.state;
         const { searchTerm } = this.props;
+
+        if (alreadyCheckedIn) {
+            return (
+                <ErrorPage
+                    title={T.translate("find_ticket.checked_in")}
+                    message={T.translate("find_ticket.checked_in_message", { search_term: searchTerm })}
+                    linkText={T.translate("find_ticket.try_again")}
+                    onLinkClick={() => this.setState({ alreadyCheckedIn: false })}
+                />
+            );
+        }
 
         if (showErrorPage) {
             return (
