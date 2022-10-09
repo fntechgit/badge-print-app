@@ -19,9 +19,9 @@ class SelectTicketPage extends React.Component {
 
     }
     onSelectTicket = (ticketId) => {
-        const { allTickets, summit, setSelectedTicket} = this.props;
+        const { userIsAdmin, allTickets, summit, setSelectedTicket} = this.props;
         const ticket = allTickets.find((t) => t.id === ticketId);
-        if (ticket.owner.summit_hall_checked_in) {
+        if (!userIsAdmin && ticket.owner.summit_hall_checked_in) {
             this.setState({ alreadyCheckedIn: true });
             return;
         }
