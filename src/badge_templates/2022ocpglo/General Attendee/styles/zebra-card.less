@@ -1,37 +1,27 @@
-/* -- general styles -- */
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * franklin-gothic-urw:
+ *   - http://typekit.com/eulas/000000000000000000012126
+ *   - http://typekit.com/eulas/0000000000000000000118ad
+ *   - http://typekit.com/eulas/000000000000000000011ce6
+ *   - http://typekit.com/eulas/0000000000000000000118b1
+ *   - http://typekit.com/eulas/0000000000000000000118b3
+ *
+ * © 2009-2022 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2019-03-11 21:13:23 UTC"}*/
 
-/**
- * @license
- * MyFonts Webfont Build ID 3943157, 2020-09-02T14:12:19-0400
- * 
- * The fonts listed in this notice are subject to the End User License
- * Agreement(s) entered into by the website owner. All other parties are 
- * explicitly restricted from using the Licensed Webfonts(s).
- * 
- * You may obtain a valid license at the URLs below.
- * 
- * Webfont: FranklinGothicURW-Boo by URW Type Foundry
- * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-book/
- * 
- * Webfont: FranklinGothicURW-Dem by URW Type Foundry
- * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-demi/
- * 
- * Webfont: FranklinGothicURW-Med by URW Type Foundry
- * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-medium/
- * 
- * 
- * Webfonts copyright: Copyright 2010 URW++ Design &amp;amp; Development Hamburg
- * 
- * © 2020 MyFonts Inc
-*/
-  
 @font-face {
-  font-family: 'FranklinGothicURW-Boo';
-  src: url('~fonts/FranklinGothicURW-Boo/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Boo/font.woff') format('woff');
-}
-@font-face {
-  font-family: 'FranklinGothicURW-Med';
-  src: url('~fonts/FranklinGothicURW-Med/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Med/font.woff') format('woff');
+	font-family: "franklin-gothic-urw";
+	src: url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 500;
+	font-stretch: normal;
 }
 
 @media screen {
@@ -55,12 +45,13 @@
 }
 
 .bdg-artboard {
-	font-family: FranklinGothicURW-Med;
+	font-family: "franklin-gothic-urw", sans-serif;
+	font-weight: 500;
 }
 
 .text-box {
 	position: absolute;
-	top: 138px;
+	top: 130px;
 	width: 100%;
 	padding: 0 2mm;
 	display: flex;
@@ -76,21 +67,19 @@
 	.first-name {
 		font-size: 31pt;
 		line-height: 0.8;
-		div {
-		}
 	}
 	.last-name {
 		font-size: 31pt;
 		line-height: 0.8;
-		margin: 14px 0 10px;
+		margin-top: 14px;
 	}
 	.badge-title {
 		font-size: 18.8pt;
 		text-transform: uppercase;
 		border-radius: 25px;
-		padding: 8px 15px 0px;
+		padding: 0 14px;
 		letter-spacing: 0.01em;
-		line-height: 0.9;
+		line-height: 1.16;
 		color-adjust: exact;
 		color: #fff !important;
 		align-self: center;
@@ -114,12 +103,17 @@
 	.company {
 		font-size: 19.1pt;
 		text-transform: uppercase;
+		line-height: 0.9;
+	}
+	.last-name + .badge-title {
+		margin-top: 18px;
 	}
 	.last-name + .company {
-		margin-top: 10px;
+		margin-top: 30px;
 	}
 	.badge-title + .company {
-		margin-top: 13px;
+		margin-top: 18px;
+		padding: 0 10px;
 	}
 	.badge-title + .badge-title {
 		margin-top: 8px;
