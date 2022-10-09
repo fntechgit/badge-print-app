@@ -36,14 +36,20 @@ export default ({badge}) => {
                 {badge.getFeature('OCP Future Tech Symposium Title') &&
                 <span className="badge-title symposium-title">{badge.getFeature('OCP Future Tech Symposium Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
-                {badge.getFeature('Project Lead Title') &&
-                <span className="badge-title project-lead-title">{badge.getFeature('Project Lead Title').template_content.replace(/<[^>]+>/g, '')}</span>
-                }
                 {badge.getFeature('Board Member Title') &&
+                !badge.getFeature('OCP Future Tech Symposium Title') &&
                 <span className="badge-title board-member-title">{badge.getFeature('Board Member Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 {badge.getFeature('Incubation Committee Title') &&
+                !badge.getFeature('Board Member Title') &&
+                !badge.getFeature('OCP Future Tech Symposium Title') &&
                 <span className="badge-title incubation-committee-title">{badge.getFeature('Incubation Committee Title').template_content.replace(/<[^>]+>/g, '')}</span>
+                }
+                {badge.getFeature('Project Lead Title') &&
+                !badge.getFeature('Incubation Committee Title') &&
+                !badge.getFeature('Board Member Title') &&
+                !badge.getFeature('OCP Future Tech Symposium Title') &&
+                <span className="badge-title project-lead-title">{badge.getFeature('Project Lead Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
                 <Textfit mode="single" max={24} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
             </div>
