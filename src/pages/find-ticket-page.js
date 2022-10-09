@@ -119,7 +119,7 @@ class FindTicketPage extends React.Component {
                     if (data.length === 1) {
                         let ticket = data[0];
                         if (ticket.owner.summit_hall_checked_in) {
-                            this.setState({ showErrorPage: true })
+                            this.setState({ alreadyCheckedIn: true })
                         } else if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
                             setSelectedTicket(ticket).then(() => {
                                 history.push(`/check-in/${summit.slug}/extra-questions`);
