@@ -45,7 +45,7 @@ export default ({badge}) => {
                 {badge.getFeature('Incubation Committee Title') &&
                 <span className="badge-title incubation-committee-title">{badge.getFeature('Incubation Committee Title').template_content.replace(/<[^>]+>/g, '')}</span>
                 }
-                <span className="company" contentEditable>{badge.getCompany()}</span>
+                <Textfit mode="single" max={24} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
             </div>
             {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content qrcode-box">
