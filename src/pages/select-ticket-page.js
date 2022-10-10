@@ -21,17 +21,19 @@ class SelectTicketPage extends React.Component {
     onSelectTicket = (ticketId) => {
         const { userIsAdmin, allTickets, summit, setSelectedTicket} = this.props;
         const ticket = allTickets.find((t) => t.id === ticketId);
-        if (!userIsAdmin && ticket.owner.summit_hall_checked_in) {
-            this.setState({ alreadyCheckedIn: true });
-            return;
+        if (!userIsAdmin) {
+            if (ticket.owner.summit_hall_checked_in) {
+                this.setState({ alreadyCheckedIn: true });
+                return;
+            }
+            if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                setSelectedTicket(ticket).then(() => {
+                    history.push(`/check-in/${summit.slug}/extra-questions`);
+                });
+                return;
+            }
         }
-        if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-            setSelectedTicket(ticket).then(() => {
-                history.push(`/check-in/${summit.slug}/extra-questions`);
-            })
-        }
-        else
-            history.push(`/check-in/${summit.slug}/tickets/${ticketId}`);
+        history.push(`/check-in/${summit.slug}/tickets/${ticketId}`);
     };
 
     onCancel = () => {
