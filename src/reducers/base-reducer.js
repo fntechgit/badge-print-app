@@ -1,3 +1,6 @@
+import {
+    ADMIN_GROUPS
+} from "../app";
 
 import {
     START_LOADING,
@@ -28,7 +31,6 @@ import {
     TICKET_UPDATED,
 } from "../actions/ticket-actions";
 
-
 const DEFAULT_STATE = {
     allSummits: [],
     allTickets: [],
@@ -41,7 +43,7 @@ const DEFAULT_STATE = {
     loading: false,
     selectedTicket: null,
     userIsAdmin: false
-}
+};
 
 const baseReducer = (state = DEFAULT_STATE, action) => {
     const { type, payload } = action
@@ -50,8 +52,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         case RECEIVE_USER_INFO: {
             const { response } = payload;
             const userGroups = response.groups.map((group) => group.title);
-            const adminGroups = ['super-admins', 'administrators'];
-            const userIsAdmin = userGroups.some(v => adminGroups.includes(v));
+            const userIsAdmin = userGroups.some(v => ADMIN_GROUPS.includes(v));
             return { ...state, userIsAdmin };
         };
         case LOGOUT_USER:
