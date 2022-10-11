@@ -6,9 +6,10 @@ import {
     createAction,
     stopLoading,
     startLoading,
-    getAccessToken,
     authErrorHandler
-} from "openstack-uicore-foundation/lib/methods";
+} from "openstack-uicore-foundation/lib/utils/actions";
+
+import {getAccessTokenSafely} from '../utils/utils';
 
 export const REQUEST_TICKET            = 'REQUEST_TICKET';
 export const RECEIVE_TICKET            = 'RECEIVE_TICKET';
@@ -21,15 +22,9 @@ export const TICKET_UPDATED            = 'TICKET_UPDATED';
 const DefaultPageSize = 100;
 
 export const getTicket = (ticketId) => async (dispatch, getState) => {
-
-    const { baseState: { summit } } = getState();
-
-    let accessToken;
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const { baseState } = getState();
+    const {summit} = baseState;
+    const accessToken = await getAccessTokenSafely();
 
     dispatch(startLoading());
 
@@ -60,15 +55,8 @@ export const clearSelectedTicket = () => (dispatch) => Promise.resolve().then(()
 })
 
 export const findTicketsByName = (firstName, lastName) => async (dispatch, getState) => {
-
     const { baseState: { summit } } = getState();
-
-    let accessToken;
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const accessToken = await getAccessTokenSafely();
 
     dispatch(startLoading());
 
@@ -95,15 +83,9 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
 };
 
 export const findTicketsByEmail = (email) => async (dispatch, getState) => {
-
     const { baseState: { summit } } = getState();
+    const accessToken = await getAccessTokenSafely();
 
-    let accessToken;
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
 
     dispatch(startLoading());
 
@@ -136,19 +118,8 @@ export const getAllTickets = ({
     page = 1,
     perPage = 5,
 }) => async (dispatch, getState) => {
-
-    let {
-        baseState: {
-            accessTokenQS: accessToken,
-            summit
-        }
-    } = getState();
-
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const { baseState: { summit } } = getState();
+    const accessToken = await getAccessTokenSafely();
 
     dispatch(startLoading());
 
@@ -203,19 +174,8 @@ export const getTickets = ({
     page = 1,
     perPage = DefaultPageSize,
 }, { dispatchLoader = true }) => async (dispatch, getState) => {
-
-    let {
-        baseState: {
-            accessTokenQS: accessToken,
-            summit
-        }
-    } = getState();
-
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const { baseState: { summit } } = getState();
+    const accessToken = await getAccessTokenSafely();
 
     if (dispatchLoader) dispatch(startLoading());
 
@@ -248,17 +208,10 @@ export const getTickets = ({
 };
 
 export const saveExtraQuestions = (extra_questions, owner) => async (dispatch, getState) => {
-
     const { baseState: { selectedTicket } } = getState();
+    const accessToken = await getAccessTokenSafely();
 
     if (!selectedTicket) return Promise.fail();
-
-    let accessToken;
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
 
     const extraQuestionsAnswers = extra_questions.map(q => {
         return { question_id: q.id, answer: `${q.value}` }

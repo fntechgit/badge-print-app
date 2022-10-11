@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {getAccessToken} from 'openstack-uicore-foundation/lib/security/methods'
+import { initLogOut} from 'openstack-uicore-foundation/lib/security/methods';
 
 export const useForceUpdate = () => {
     const [value, setValue] = useState(0);
@@ -45,3 +47,13 @@ export const doFetch = async (url) => {
         return Promise.reject(e);
     });
 }
+
+export const getAccessTokenSafely = async () => {
+    try {
+        return await getAccessToken();
+    }
+    catch (e) {
+        console.log('log out: ', e);
+        initLogOut();
+    }
+};

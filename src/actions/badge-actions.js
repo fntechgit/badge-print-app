@@ -4,13 +4,10 @@ import {
     createAction,
     stopLoading,
     startLoading,
-    getAccessToken,
     authErrorHandler,
-} from "openstack-uicore-foundation/lib/methods";
-
+} from "openstack-uicore-foundation/lib/utils/actions";
+import {getAccessTokenSafely} from '../utils/utils';
 import { exec } from "../services/wkbridge";
-
-import { errorHandler, noThrowErrorHandler } from './base-actions';
 
 export const REQUEST_BADGE                        = 'REQUEST_BADGE';
 export const BADGE_RECEIVED                       = 'BADGE_RECEIVED';
@@ -20,26 +17,12 @@ export const PRINT_BADGE                          = 'PRINT_BADGE';
 export const BADGE_PRINTED                        = 'BADGE_PRINTED';
 export const CLEAR_BADGE                          = 'CLEAR_BADGE';
 
-export const getBadge = (
-    summitSlug,
-    ticketId,
-    { viewType = null } = {}
-) => async (dispatch, getState) => {
-
-    let {
-        baseState: {
-            accessTokenQS: accessToken,
-            summit
-        }
-    } = getState();
+export const getBadge = (summitSlug, ticketId, { viewType = null } = {}) => async (dispatch, getState) => {
+    const accessToken = await getAccessTokenSafely();
+    const {baseState} = getState();
+    const {summit} = baseState;
 
     if (!summit || !ticketId) throw Error();
-
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
 
     dispatch(startLoading());
 
@@ -61,31 +44,18 @@ export const getBadge = (
     );
 };
 
-export const incrementBadgePrintCount = (
-    summitSlug,
-    ticketId,
-    { viewType = null, checkIn = true } = {}
-) => async (dispatch, getState) => {
-
-    let {
-        baseState: {
-            accessTokenQS: accessToken,
-            summit
-        }
-    } = getState();
+export const incrementBadgePrintCount = (summitSlug, ticketId, { viewType = null, checkIn = true } = {}) => async (dispatch, getState) => {
+    const {baseState} = getState();
+    const {summit} = baseState;
+    const viewPath = viewType ? `/${viewType}` : '';
 
     if (!summit || !ticketId) throw Error();
 
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const accessToken = await getAccessTokenSafely();
 
     const params = {
         access_token: accessToken
     };
-    const viewPath = viewType ? `/${viewType}` : '';
 
     return putRequest(
         createAction(REQUEST_BADGE_PRINT_COUNT_INCREMENT),

@@ -13,11 +13,10 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import qs from 'query-string';
 import LoginPage from '../pages/login-page';
 import { setAccessTokenQS } from '../actions/base-actions';
-
 
 class AuthorizedRoute extends React.Component {
 
