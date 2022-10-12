@@ -48,11 +48,12 @@ export const doFetch = async (url) => {
     });
 }
 
-export const getAccessTokenSafely = async () => {
+export const getAccessTokenSafely = async (accessTokenQS) => {
     try {
         return await getAccessToken();
     }
     catch (e) {
+        if (accessTokenQS) return accessTokenQS;
         console.log('log out: ', e);
         initLogOut();
     }

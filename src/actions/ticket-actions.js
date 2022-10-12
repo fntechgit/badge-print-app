@@ -23,8 +23,8 @@ const DefaultPageSize = 100;
 
 export const getTicket = (ticketId) => async (dispatch, getState) => {
     const { baseState } = getState();
-    const {summit} = baseState;
-    const accessToken = await getAccessTokenSafely();
+    const { summit, accessTokenQS } = baseState;
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -55,8 +55,8 @@ export const clearSelectedTicket = () => (dispatch) => Promise.resolve().then(()
 })
 
 export const findTicketsByName = (firstName, lastName) => async (dispatch, getState) => {
-    const { baseState: { summit } } = getState();
-    const accessToken = await getAccessTokenSafely();
+    const { baseState: { summit, accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -83,8 +83,8 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
 };
 
 export const findTicketsByEmail = (email) => async (dispatch, getState) => {
-    const { baseState: { summit } } = getState();
-    const accessToken = await getAccessTokenSafely();
+    const { baseState: { summit, accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
 
     dispatch(startLoading());
@@ -118,8 +118,8 @@ export const getAllTickets = ({
     page = 1,
     perPage = 5,
 }) => async (dispatch, getState) => {
-    const { baseState: { summit } } = getState();
-    const accessToken = await getAccessTokenSafely();
+    const { baseState: { summit, accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -174,8 +174,8 @@ export const getTickets = ({
     page = 1,
     perPage = DefaultPageSize,
 }, { dispatchLoader = true }) => async (dispatch, getState) => {
-    const { baseState: { summit } } = getState();
-    const accessToken = await getAccessTokenSafely();
+    const { baseState: { summit, accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     if (dispatchLoader) dispatch(startLoading());
 
@@ -208,8 +208,8 @@ export const getTickets = ({
 };
 
 export const saveExtraQuestions = (extra_questions, owner) => async (dispatch, getState) => {
-    const { baseState: { selectedTicket } } = getState();
-    const accessToken = await getAccessTokenSafely();
+    const { baseState: { selectedTicket, accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     if (!selectedTicket) return Promise.fail();
 

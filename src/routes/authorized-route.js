@@ -21,8 +21,10 @@ import { setAccessTokenQS } from '../actions/base-actions';
 class AuthorizedRoute extends React.Component {
 
     componentWillMount() {
-        const accessToken = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
-        this.props.setAccessTokenQS(accessToken);
+        const accessToken = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })?.access_token;
+        if (accessToken) {
+            this.props.setAccessTokenQS(accessToken);
+        }
     }
 
     render() {

@@ -22,8 +22,9 @@ export const setAccessTokenQS = (accessToken) => (dispatch) => {
     dispatch(createAction(SET_ACCESS_TOKEN_QS)({accessToken}));
 };
 
-export const loadSummits = () => async (dispatch) => {
-    const accessToken = await getAccessTokenSafely();
+export const loadSummits = () => async (dispatch, getState) => {
+    const { baseState: { accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -49,8 +50,9 @@ export const setSummit = (summit) => (dispatch, getState) => {
     dispatch(createAction(SET_SUMMIT)({summit}));
 };
 
-export const getSummit = (summitSlug) => async (dispatch) => {
-    const accessToken = await getAccessTokenSafely();
+export const getSummit = (summitSlug) => async (dispatch, getState) => {
+    const { baseState: { accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -69,8 +71,9 @@ export const getSummit = (summitSlug) => async (dispatch) => {
     );
 };
 
-export const getExtraQuestions = (summit) => async (dispatch) => {
-    const accessToken = await getAccessTokenSafely();
+export const getExtraQuestions = (summit) => async (dispatch, getState) => {
+    const { baseState: { accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
