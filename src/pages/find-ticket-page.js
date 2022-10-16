@@ -37,7 +37,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleScan = (qrCode) => {
-        const { summit, match, getTicket } = this.props;
+        const { userIsAdmin, summit, match, getTicket } = this.props;
         if (qrCode) {
             this.setState({ showQRreader: false });
             let qrCodeArray = qrCode.split(summit.qr_registry_field_delimiter);
@@ -52,13 +52,15 @@ class FindTicketPage extends React.Component {
             }
             let ticketNumber = qrCodeArray[1];
             getTicket(ticketNumber).then((ticket) => {
-                if (ticket.owner.summit_hall_checked_in) {
-                    this.setState({ alreadyCheckedIn: true });
-                    return;
-                }
-                if (ticket.owner.status === 'Incomplete') {
-                    history.push(`/check-in/${summit.slug}/extra-questions`);
-                    return;
+                if (!userIsAdmin) {
+                    if (ticket.owner.summit_hall_checked_in) {
+                        this.setState({ alreadyCheckedIn: true });
+                        return;
+                    }
+                    if (ticket.owner.status === 'Incomplete') {
+                        history.push(`/check-in/${summit.slug}/extra-questions`);
+                        return;
+                    }
                 }
                 history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
             })
@@ -77,7 +79,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleFindByName = () => {
-        const { summit, findTicketsByName,  setSelectedTicket } = this.props;
+        const { userIsAdmin, summit, findTicketsByName,  setSelectedTicket } = this.props;
         const firstName = this.firstName.value.trim();
         const lastName = this.lastName.value.trim();
 
@@ -86,15 +88,19 @@ class FindTicketPage extends React.Component {
                 (data) => {
                     if (data.length === 1) {
                         let ticket = data[0];
-                        if (ticket.owner.summit_hall_checked_in) {
-                            this.setState({ alreadyCheckedIn: true });
-                        } else if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-                            setSelectedTicket(ticket).then(() => {
-                                history.push(`/check-in/${summit.slug}/extra-questions`);
-                            })
+                        if (!userIsAdmin) {
+                            if (ticket.owner.summit_hall_checked_in) {
+                                this.setState({ alreadyCheckedIn: true });
+                                return;
+                            }
+                            if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                                setSelectedTicket(ticket).then(() => {
+                                    history.push(`/check-in/${summit.slug}/extra-questions`);
+                                });
+                                return;
+                            }
                         }
-                        else
-                            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
                         history.push(`/check-in/${summit.slug}/select-ticket`);
                     } else {
@@ -110,7 +116,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleFindByEmail = () => {
-        const { summit, findTicketsByEmail, setSelectedTicket } = this.props;
+        const { userIsAdmin, summit, findTicketsByEmail, setSelectedTicket } = this.props;
         const email = this.email.value;
 
         if (email && validator.isEmail(email)) {
@@ -118,15 +124,19 @@ class FindTicketPage extends React.Component {
                 (data) => {
                     if (data.length === 1) {
                         let ticket = data[0];
-                        if (ticket.owner.summit_hall_checked_in) {
-                            this.setState({ alreadyCheckedIn: true })
-                        } else if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-                            setSelectedTicket(ticket).then(() => {
-                                history.push(`/check-in/${summit.slug}/extra-questions`);
-                            })
+                        if (!userIsAdmin) {
+                            if (ticket.owner.summit_hall_checked_in) {
+                                this.setState({ alreadyCheckedIn: true })
+                                return;
+                            }
+                            if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                                setSelectedTicket(ticket).then(() => {
+                                    history.push(`/check-in/${summit.slug}/extra-questions`);
+                                });
+                                return;
+                            }
                         }
-                        else
-                            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
                     } else if (data.length > 1) {
                         history.push(`/check-in/${summit.slug}/select-ticket`);
                     } else {

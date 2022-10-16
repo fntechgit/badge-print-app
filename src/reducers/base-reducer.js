@@ -1,5 +1,14 @@
+import {
+    ADMIN_GROUPS
+} from "../app";
 
-import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+import {
+    START_LOADING,
+    STOP_LOADING,
+    LOGOUT_USER,
+    RECEIVE_USER_INFO
+} from "openstack-uicore-foundation/lib/actions";
+
 import {
     RECEIVE_SUMMITS,
     RECEIVE_SUMMIT,
@@ -22,7 +31,6 @@ import {
     TICKET_UPDATED,
 } from "../actions/ticket-actions";
 
-
 const DEFAULT_STATE = {
     allSummits: [],
     allTickets: [],
@@ -33,13 +41,20 @@ const DEFAULT_STATE = {
     badgeViewType: null,
     accessTokenQS: null,
     loading: false,
-    selectedTicket: null
-}
+    selectedTicket: null,
+    userIsAdmin: false
+};
 
 const baseReducer = (state = DEFAULT_STATE, action) => {
     const { type, payload } = action
 
     switch(type){
+        case RECEIVE_USER_INFO: {
+            const { response } = payload;
+            const userGroups = response.groups.map((group) => group.title);
+            const userIsAdmin = userGroups.some(v => ADMIN_GROUPS.includes(v));
+            return { ...state, userIsAdmin };
+        };
         case LOGOUT_USER:
             return DEFAULT_STATE;
         case SET_ACCESS_TOKEN_QS:

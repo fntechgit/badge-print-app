@@ -22,6 +22,9 @@ window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];
 
+// admin groups allowed to bypass user checks on find and select ticket pages
+export const ADMIN_GROUPS = ['super-admins', 'administrators'];
+
 // here is set by default user lang as en
 
 let language = localStorage.getItem('PREFERRED_LANGUAGE');
@@ -101,4 +104,4 @@ export default connect(mapStateToProps, {
     doLogout,
     getUserInfo,
     clearBadge
-})(App)
+})(App);
