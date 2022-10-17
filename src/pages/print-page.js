@@ -61,6 +61,7 @@ class PrintPage extends React.Component {
         this.state = {
             embedded: window.embedded !== undefined,
             summitSlug: null,
+            printing: false, 
             willCheckIn: true,
             batchItemsRef: [],
             printJobStatus: null,
@@ -252,14 +253,17 @@ class PrintPage extends React.Component {
     handlePrint = (callback = () => {}) => {
         if (!(callback instanceof Function)) throw Error;
 
+        this.setState({ printing: true });
+
         const afterPrint = () => {
             if (this.isBatchPrinting()) {
                 const { printJobStatus } = this.state;
                 const { badgeTicketId, badgeViewType } = this.props;
                 const newPrintJobStatus = { ...printJobStatus };
                 newPrintJobStatus[badgeTicketId][badgeViewType] = PrintStatus.Printed;
-                this.setState({ printJobStatus: newPrintJobStatus }, callback);
+                this.setState({ printJobStatus: newPrintJobStatus, printing: false }, callback);
             } else {
+                this.setState({ printing: false });
                 this.props.clearBadge().then(callback);
             }
         };
@@ -307,6 +311,7 @@ class PrintPage extends React.Component {
             autoProcessBatch,
             batchPrintingComplete,
             viewTypeOverride,
+            printing
         } = this.state;
 
         const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType } = this.props;
@@ -378,7 +383,11 @@ class PrintPage extends React.Component {
                 { !this.isBatchPrinting() &&  
                 <div className="row print-buttons-wrapper">
                     <div className="col-md-4 col-md-offset-4">
-                        <button className="btn btn-primary" onClick={() => this.handlePrint(this.goToThankYou)}>
+                        <button
+                            className="btn btn-primary"
+                            disabled={printing}
+                            onClick={() => this.handlePrint(this.goToThankYou)}
+                        >
                             {T.translate("preview.confirm")}
                         </button>
                         <button className="btn btn-danger" onClick={this.cancelPrint}>
@@ -407,7 +416,7 @@ class PrintPage extends React.Component {
                         </button>
                     </div>
                     <div className="col-md-2">
-                        <button className="btn btn-primary" onClick={() => this.handlePrint()}>
+                        <button className="btn btn-primary" disabled={printing} onClick={() => this.handlePrint()}>
                             {T.translate("Print")}
                         </button>
                     </div>
