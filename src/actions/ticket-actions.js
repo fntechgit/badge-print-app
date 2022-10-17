@@ -11,6 +11,7 @@ import {
 } from "openstack-uicore-foundation/lib/methods";
 
 export const REQUEST_TICKET            = 'REQUEST_TICKET';
+export const RECEIVE_TICKET            = 'RECEIVE_TICKET';
 export const REQUEST_TICKETS           = 'REQUEST_TICKETS';
 export const RECEIVE_TICKETS           = 'RECEIVE_TICKETS';
 export const SET_SELECTED_TICKET       = 'SET_SELECTED_TICKET';
@@ -39,7 +40,7 @@ export const getTicket = (ticketId) => async (dispatch, getState) => {
 
     return getRequest(
         createAction(REQUEST_TICKET),
-        createAction(SET_SELECTED_TICKET),
+        createAction(RECEIVE_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}`,
         authErrorHandler,
         { search_term: ticketId }

@@ -79,7 +79,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleFindByName = () => {
-        const { userIsAdmin, summit, findTicketsByName,  setSelectedTicket } = this.props;
+        const { userIsAdmin, summit, findTicketsByName, setSelectedTicket } = this.props;
         const firstName = this.firstName.value.trim();
         const lastName = this.lastName.value.trim();
 
