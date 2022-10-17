@@ -72,7 +72,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return { ...state, summit: payload.response };
         case SET_SUMMIT:
             return { ...state, summit: payload.summit };
-        case REQUEST_TICKET:
+        case RECEIVE_TICKET:
             return { ...state, selectedTicket: payload.response };
         case REQUEST_TICKETS:
             return { ...state, searchTerm: payload.search_term };
