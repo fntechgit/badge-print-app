@@ -24,6 +24,7 @@ import {
 } from "../actions/badge-actions";
 
 import {
+    RECEIVE_TICKET,
     REQUEST_TICKETS,
     RECEIVE_TICKETS,
     SET_SELECTED_TICKET,
@@ -71,6 +72,8 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return { ...state, summit: payload.response };
         case SET_SUMMIT:
             return { ...state, summit: payload.summit };
+        case REQUEST_TICKET:
+            return { ...state, selectedTicket: payload.response };
         case REQUEST_TICKETS:
             return { ...state, searchTerm: payload.search_term };
         case RECEIVE_TICKETS:
@@ -92,7 +95,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
                 allTickets: []
             };
         case SET_SELECTED_TICKET:
-            return { ...state, selectedTicket: payload.response || payload };
+            return { ...state, selectedTicket: payload };
         case TICKET_UPDATED:
             return { ...state };
         case CLEAR_SELECTED_TICKET:
