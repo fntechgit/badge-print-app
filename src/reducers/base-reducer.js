@@ -92,7 +92,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
                 allTickets: []
             };
         case SET_SELECTED_TICKET:
-            return { ...state, selectedTicket: payload };
+            return { ...state, selectedTicket: payload.response || payload };
         case TICKET_UPDATED:
             return { ...state };
         case CLEAR_SELECTED_TICKET:
