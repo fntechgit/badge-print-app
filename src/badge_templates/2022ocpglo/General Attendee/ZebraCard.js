@@ -7,7 +7,7 @@ import {
 
 import './styles/zebra-card.less';
 
-import background_img from './images/general88x140.svg';
+import background_img from './images/general89x142.2.svg';
 
 import badge_feature_expo from './images/badge-feature-pms-expo.svg';
 import badge_feature_keynote from './images/badge-feature-pms-keynote.svg';
