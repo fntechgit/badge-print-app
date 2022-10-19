@@ -5,16 +5,16 @@ import {
     useForceUpdate
 } from '@/utils/utils';
 
-import './styles/card.less';
+import './styles/zebra-card.less';
 
-import background_img from './images/staff94x140.svg';
-import logo from './images/hex-logo.svg';
+import background_img from './images/general89x142.2.svg';
+import logo from './images/zebra-hex-logo.svg';
 
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     return (
     <>
-        <div id="badge-artboard" className="bdg-artboard card">
+        <div id="badge-artboard" className="bdg-artboard zebra-card">
             <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
             <div className="text-box">
                 <Textfit mode="single" max={42} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
