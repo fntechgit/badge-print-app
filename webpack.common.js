@@ -8,6 +8,9 @@ const path = require('path')
 module.exports = {
   entry: "./src/index.js",
   plugins: [
+    new Dotenv({
+      expand: true
+    }),
     // Work around for Buffer is undefined:
     // https://github.com/webpack/changelog-v5/issues/10
     new webpack.ProvidePlugin({
@@ -19,14 +22,11 @@ module.exports = {
       title: 'Badge Print App',
       template: './src/index.ejs'
     }),
-    new Dotenv({
-      expand: true
-    }),
   ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      fonts: path.resolve(__dirname, 'src/styles/fonts')
+      'fonts': path.resolve(__dirname, 'src/styles/fonts')
     },
     mainFields: ['browser', 'module', 'main'],
     fallback: {
@@ -59,7 +59,6 @@ module.exports = {
               "@babel/plugin-proposal-class-properties",
               "@babel/plugin-proposal-nullish-coalescing-operator",
               "@babel/plugin-transform-arrow-functions",
-
             ]
           }
         }
@@ -111,16 +110,16 @@ module.exports = {
         ]
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: "url-loader?limit=10000&minetype=application/font-woff&name=fonts/[folder]/[name].[ext]"
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
       },
       {
-        test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: "file-loader?name=fonts/[folder]/[name].[ext]"
-      },
-      {
-        test: /\.jpg|\.png|\.svg|\.gif$/,
+        test: /\.jpg|\.png|\.gif$/,
         use: "file-loader?name=images/[path][name].[ext]"
+      },
+      {
+        test: /\.svg/,
+        use: "file-loader?name=svg/[name].[ext]!svgo-loader"
       },
       {
         test: /\.yaml$/,
