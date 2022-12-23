@@ -104,6 +104,7 @@ module.exports = {
             options: {
               sourceMap: true,
               modules: true,
+              url: false
             }
           },
           { loader: "sass-loader" }
@@ -114,8 +115,8 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.jpg|\.png|\.gif$/,
-        use: "file-loader?name=images/[path][name].[ext]"
+        test: /\.(jpg|png|svg|gif)$/,
+        type: 'asset/resource',
       },
       {
         test: /\.svg/,
