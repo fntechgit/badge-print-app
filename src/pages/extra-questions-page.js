@@ -152,8 +152,8 @@ export const ExtraQuestionsPage = ({
 												userAnswers={userAnswers}
 												onAnswerChanges={handleAnswerChanges}
 												questionContainerClassName={`row ${styles.inputRow}`}
-												questionLabelContainerClassName={'col-md-4'}
-												questionControlContainerClassName={`col-md-8 ${styles.inputField}`}
+												questionLabelContainerClassName={'col-md-12'}
+												questionControlContainerClassName={`col-md-12 ${styles.inputField}`}
 											/>
 										</div>
 									</>
