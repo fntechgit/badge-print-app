@@ -84,21 +84,18 @@ export const ExtraQuestionsPage = ({
 								<h3>Attendee Information</h3>
 								<div className={styles.form}>
 										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Ticket assigned to email</div>
-												<div className='col-md-8'>
-													{owner.email}
-												</div>
+												<div className='col-md-12'>Ticket assigned to {`${owner.email}`}</div>
+
 										</div>
 										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>First Name *</div>
-												<div className='col-md-8'>
+												<div className='col-md-12'>First Name *</div>
+												<div className='col-md-12'>
 												{ selectedTicket.owner.first_name ?
 													selectedTicket.owner.first_name
 													:
 													<input
-														className={`${styles.inputField}`}
+														className={`form-control ${styles.inputField}`}
 														type="text"
-														placeholder="First Name"
 														onChange={e => setOwner({ ...owner, first_name: e.target.value })}
 														value={owner.first_name}
 													/>
@@ -106,15 +103,14 @@ export const ExtraQuestionsPage = ({
 												</div>
 										</div>
 										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Last Name *</div>
-												<div className='col-md-8'>
+												<div className='col-md-12'>Last Name *</div>
+												<div className='col-md-12'>
 												{ selectedTicket.owner.last_name ?
 													selectedTicket.owner.last_name
 													:
 													<input
-														className={`${styles.inputField}`}
+														className={`form-control ${styles.inputField}`}
 														type="text"
-														placeholder="Last Name"
 														onChange={e => setOwner({ ...owner, last_name: e.target.value })}
 														value={owner.last_name}
 													/>
@@ -122,15 +118,14 @@ export const ExtraQuestionsPage = ({
 												</div>
 										</div>
 										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Company *</div>
-												<div className='col-md-8'>
+												<div className='col-md-12'>Company *</div>
+												<div className='col-md-12'>
 														{ selectedTicket.owner.company ?
 															selectedTicket.owner.company
 															:
 															<input
-																className={`${styles.inputField}`}
+																className={`form-control ${styles.inputField}`}
 																type="text"
-																placeholder="Company"
 																onChange={e => setOwner({ ...owner, company: e.target.value })}
 																value={owner.company}
 															/>
