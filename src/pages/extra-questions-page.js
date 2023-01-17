@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import history from '../history';
 import { Redirect } from 'react-router-dom';
 import QuestionsSet from 'openstack-uicore-foundation/lib/utils/questions-set';
-import { ExtraQuestionsForm } from 'openstack-uicore-foundation/lib/components';
+import ExtraQuestionsForm from 'openstack-uicore-foundation/lib/components/extra-questions';
 import { getExtraQuestions } from '../actions/base-actions';
 import { saveExtraQuestions, clearSelectedTicket } from '../actions/ticket-actions';
 import styles from '../styles/extra-questions.module.scss';
