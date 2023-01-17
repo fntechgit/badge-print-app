@@ -87,7 +87,10 @@ module.exports = {
             loader: "css-loader",
             options: {
               sourceMap: true,
-              modules: true,
+              modules: {
+                auto: true,
+                exportLocalsConvention: "camelCase",
+              },
             }
           },
           { loader: "less-loader" },
@@ -103,7 +106,10 @@ module.exports = {
             loader: "css-loader",
             options: {
               sourceMap: true,
-              modules: true,
+              modules: {
+                auto: true,
+                exportLocalsConvention: "camelCase",
+              },
               url: false
             }
           },
