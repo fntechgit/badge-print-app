@@ -84,10 +84,7 @@ export const ExtraQuestionsPage = ({
 								<h3>Attendee Information</h3>
 								<div className={styles.form}>
 										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Ticket assigned to email</div>
-												<div className='col-md-8'>
-													{owner.email}
-												</div>
+												<div className='col-md-12'>Ticket assigned to {`${owner.email}`}</div>
 										</div>
 										<div className={`row ${styles.inputRow}`}>
 												<div className='col-md-4'>First Name *</div>
