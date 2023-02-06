@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import history from '../history';
 import { Redirect } from 'react-router-dom';
 import QuestionsSet from 'openstack-uicore-foundation/lib/utils/questions-set';
-import { ExtraQuestionsForm } from 'openstack-uicore-foundation/lib/components';
+import ExtraQuestionsForm from 'openstack-uicore-foundation/lib/components/extra-questions';
 import { getExtraQuestions } from '../actions/base-actions';
 import { saveExtraQuestions, clearSelectedTicket } from '../actions/ticket-actions';
 import styles from '../styles/extra-questions.module.scss';
@@ -84,10 +84,7 @@ export const ExtraQuestionsPage = ({
 								<h3>Attendee Information</h3>
 								<div className={styles.form}>
 										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Ticket assigned to email</div>
-												<div className='col-md-8'>
-													{owner.email}
-												</div>
+												<div className='col-md-12'>Ticket assigned to {`${owner.email}`}</div>
 										</div>
 										<div className={`row ${styles.inputRow}`}>
 												<div className='col-md-4'>First Name *</div>
@@ -152,8 +149,8 @@ export const ExtraQuestionsPage = ({
 												userAnswers={userAnswers}
 												onAnswerChanges={handleAnswerChanges}
 												questionContainerClassName={`row ${styles.inputRow}`}
-												questionLabelContainerClassName={'col-md-4'}
-												questionControlContainerClassName={`col-md-8 ${styles.inputField}`}
+												questionLabelContainerClassName={'col-md-12'}
+												questionControlContainerClassName={`col-md-12 ${styles.inputField}`}
 											/>
 										</div>
 									</>

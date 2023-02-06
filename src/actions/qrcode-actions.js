@@ -3,7 +3,7 @@ import T from "i18n-react/dist/i18n-react";
 
 import { exec } from "../services/wkbridge";
 
-import { createAction } from "openstack-uicore-foundation/lib/methods";
+import { createAction } from "openstack-uicore-foundation/lib/utils/actions";
 
 export const REQUEST_QRCODE = 'REQUEST_QRCODE';
 export const RECEIVE_QRCODE = 'RECEIVE_QRCODE';

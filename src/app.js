@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { Switch, Redirect, Router } from 'react-router-dom';
 import PrimaryLayout from './layouts/primary-layout';
 import { AjaxLoader } from 'openstack-uicore-foundation/lib/components';
-import { onUserAuth, doLogout, getUserInfo, initLogOut } from 'openstack-uicore-foundation/lib/methods';
+import { resetLoading } from "openstack-uicore-foundation/lib/utils/actions";
+import { onUserAuth, doLogout, getUserInfo } from 'openstack-uicore-foundation/lib/security/actions';
+import { initLogOut } from 'openstack-uicore-foundation/lib/security/methods';
 import history from './history';
 import AuthorizedRoute from './routes/authorized-route';
 import AuthorizationCallbackRoute from './routes/authorization-callback-route';
@@ -49,6 +51,10 @@ try {
 
 
 class App extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        props.resetLoading();
+    }
 
     componentDidMount() {
         this.props.clearBadge();
@@ -64,6 +70,7 @@ class App extends React.PureComponent {
             getUserInfo
         } = this.props;
         const title = (summit) ? summit.name : T.translate("general.app_title");
+
         return (
             <Router history={history}>
                 <div>
@@ -74,8 +81,8 @@ class App extends React.PureComponent {
                                 <LanguageSelect language={language} />
                                 { title }
                                 { isLoggedUser &&
-                                <a className="logout pull-right" onClick={() => initLogOut()}>
-                                    <i className="fa fa-sign-out" aria-hidden="true"></i>
+                                <a className="logout pull-right" onClick={initLogOut}>
+                                    <i className="fa fa-sign-out" aria-hidden="true" />
                                 </a>
                                 }
                             </div>
@@ -99,9 +106,9 @@ const mapStateToProps = ({ loggedUserState, baseState }) => ({
 });
 
 export default connect(mapStateToProps, {
-    initLogOut,
     onUserAuth,
     doLogout,
     getUserInfo,
-    clearBadge
-})(App);
+    clearBadge,
+    resetLoading
+})(App)

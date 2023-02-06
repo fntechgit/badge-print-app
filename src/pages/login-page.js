@@ -1,39 +1,25 @@
 import React from 'react';
-import {doLogin, getBackURL, initLogOut} from "openstack-uicore-foundation/lib/methods";
-import {connect} from "react-redux";
+import { doLoginBasicLogin} from 'openstack-uicore-foundation/lib/security/methods';
 import T from "i18n-react/dist/i18n-react";
 
+const LoginPage = () => {
 
-class LoginPage extends React.Component {
-
-    onClickLogin() {
-        doLogin('/check-in');
+    const onClickLogin = () => {
+        doLoginBasicLogin('/check-in');
     };
 
-    render(){
-        let {initLogOut, match} = this.props;
+    return (
+      <main id="page-wrap">
+          <div className="container">
+              <div className="login-page">
+                  <div className="login-message">{T.translate("general.login_message")}</div>
+                  <button className="btn btn-primary btn-lg" onClick={onClickLogin}>
+                      Log In
+                  </button>
+              </div>
+          </div>
+      </main>
+    );
+};
 
-        return (
-            <main id="page-wrap">
-                <div className="container">
-                    <div className="login-page">
-                        <div className="login-message">{T.translate("general.login_message")}</div>
-                        <button className="btn btn-primary btn-lg" onClick={this.onClickLogin}>
-                            Log In
-                        </button>
-                    </div>
-                </div>
-            </main>
-        );
-    }
-}
-
-const mapStateToProps = ({ baseState }) => ({
-    ...baseState
-});
-
-export default connect(mapStateToProps, {
-    doLogin,
-    initLogOut,
-    getBackURL
-})(LoginPage)
+export default LoginPage;

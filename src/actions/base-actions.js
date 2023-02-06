@@ -1,15 +1,14 @@
-import Swal from "sweetalert2";
 import {
     getRequest,
     createAction,
     stopLoading,
     startLoading,
-    showMessage,
-    getAccessToken,
-    clearAccessToken,
     authErrorHandler
-} from "openstack-uicore-foundation/lib/methods";
-import T from "i18n-react/dist/i18n-react";
+} from "openstack-uicore-foundation/lib/utils/actions";
+import { clearAccessToken } from "openstack-uicore-foundation/lib/security/methods";
+
+import {getAccessTokenSafely} from '../utils/utils';
+
 
 export const REQUEST_SUMMITS     = 'REQUEST_SUMMITS';
 export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
@@ -24,13 +23,8 @@ export const setAccessTokenQS = (accessToken) => (dispatch) => {
 };
 
 export const loadSummits = () => async (dispatch, getState) => {
-
-    let accessToken;
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const { baseState: { accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -57,14 +51,8 @@ export const setSummit = (summit) => (dispatch, getState) => {
 };
 
 export const getSummit = (summitSlug) => async (dispatch, getState) => {
-
-    let { baseState: { accessTokenQS: accessToken } } = getState();
-
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const { baseState: { accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 
@@ -84,14 +72,8 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
 };
 
 export const getExtraQuestions = (summit) => async (dispatch, getState) => {
-
-    let { baseState: { accessTokenQS: accessToken } } = getState();
-
-    try {
-        accessToken = await getAccessToken();
-    } catch (e) {
-        console.log(e);
-    }
+    const { baseState: { accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
 
     dispatch(startLoading());
 

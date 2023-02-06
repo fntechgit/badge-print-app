@@ -1,4 +1,4 @@
-import { defaultErrorHandler } from "openstack-uicore-foundation/lib/methods";
+import { defaultErrorHandler } from "openstack-uicore-foundation/lib/utils/actions";
 
 class DeferredPromise {
   constructor() {

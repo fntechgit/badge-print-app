@@ -13,17 +13,18 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import qs from 'query-string';
 import LoginPage from '../pages/login-page';
 import { setAccessTokenQS } from '../actions/base-actions';
 
-
 class AuthorizedRoute extends React.Component {
 
     componentWillMount() {
-        const accessToken = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).access_token;
-        this.props.setAccessTokenQS(accessToken);
+        const accessToken = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })?.access_token;
+        if (accessToken) {
+            this.props.setAccessTokenQS(accessToken);
+        }
     }
 
     render() {

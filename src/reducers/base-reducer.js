@@ -2,12 +2,8 @@ import {
     ADMIN_GROUPS
 } from "../app";
 
-import {
-    START_LOADING,
-    STOP_LOADING,
-    LOGOUT_USER,
-    RECEIVE_USER_INFO
-} from "openstack-uicore-foundation/lib/actions";
+import { START_LOADING, STOP_LOADING, RESET_LOADING } from "openstack-uicore-foundation/lib/utils/actions";
+import { LOGOUT_USER, RECEIVE_USER_INFO } from 'openstack-uicore-foundation/lib/security/actions';
 
 import {
     RECEIVE_SUMMITS,
@@ -55,16 +51,17 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             const userGroups = response.groups.map((group) => group.title);
             const userIsAdmin = userGroups.some(v => ADMIN_GROUPS.includes(v));
             return { ...state, userIsAdmin };
-        };
+        }
         case LOGOUT_USER:
             return DEFAULT_STATE;
         case SET_ACCESS_TOKEN_QS:
             return { ...state, accessTokenQS: payload.accessToken };
+        case RESET_LOADING: {
+            return {...state, loading: 0};
+        }
         case START_LOADING:
-            console.log('now loading');
             return { ...state, loading: true };
         case STOP_LOADING:
-            console.log('stop loading');
             return { ...state, loading: false };
         case RECEIVE_SUMMITS:
             return { ...state, allSummits: payload.response.data };
