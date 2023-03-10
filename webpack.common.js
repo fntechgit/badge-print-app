@@ -121,12 +121,12 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.(jpg|png|svg|gif)$/,
+        test: /\.(jpg|png|gif)$/,
         type: 'asset/resource',
       },
       {
         test: /\.svg/,
-        use: "file-loader?name=svg/[name].[ext]!svgo-loader"
+        use: "file-loader?name=svg/[hash][name].[ext]"
       },
       {
         test: /\.yaml$/,
