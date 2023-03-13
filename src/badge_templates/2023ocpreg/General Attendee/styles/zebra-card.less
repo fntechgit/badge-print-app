@@ -1,0 +1,178 @@
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * franklin-gothic-urw:
+ *   - http://typekit.com/eulas/000000000000000000012126
+ *   - http://typekit.com/eulas/0000000000000000000118ad
+ *   - http://typekit.com/eulas/000000000000000000011ce6
+ *   - http://typekit.com/eulas/0000000000000000000118b1
+ *   - http://typekit.com/eulas/0000000000000000000118b3
+ *
+ * © 2009-2022 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2019-03-11 21:13:23 UTC"}*/
+
+@font-face {
+	font-family: "franklin-gothic-urw";
+	src: url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 500;
+	font-stretch: normal;
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #002554;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #002554 !important;
+	}
+}
+
+.zebra-card {
+	width: 89mm;
+	height: 142.2mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+.bdg-artboard {
+	font-family: "franklin-gothic-urw", sans-serif;
+	font-weight: 500;
+}
+
+.text-box {
+	position: absolute;
+	top: 130px;
+	width: 100%;
+	padding: 0 2mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;
+	color: #002554 !important;
+	div {
+			color: #002554 !important;
+	}
+	.first-name {
+		font-size: 31pt;
+		line-height: 0.8;
+	}
+	.last-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		margin-top: 14px;
+	}
+	.badge-title {
+		font-size: 18.8pt;
+		text-transform: uppercase;
+		border-radius: 25px;
+		padding: 0 14px;
+		letter-spacing: 0.01em;
+		line-height: 1.16;
+		color-adjust: exact;
+		color: #fff !important;
+		align-self: center;
+	}
+	.symposium-title {
+		// PMS 655 C
+		background-color: #002554 !important;
+	}
+	.board-member-title {
+		// PMS 376 C
+		background-color: #84bd00 !important;
+	}
+	.project-lead-title {
+		// PMS 1385 C
+		background-color: #d57800 !important;
+	}
+	.incubation-committee-title {
+		// PMS 123 C
+		background-color: #ffc72c !important;
+	}
+	.company {
+		font-size: 19.1pt;
+		text-transform: uppercase;
+		line-height: 0.9;
+	}
+	.last-name + .badge-title {
+		margin-top: 18px;
+	}
+	.last-name + .company {
+		margin-top: 30px;
+	}
+	.badge-title + .company {
+		margin-top: 18px;
+		padding: 0 10px;
+	}
+	.badge-title + .badge-title {
+		margin-top: 8px;
+	}
+}
+
+.qrcode-box {
+	position: absolute;
+	bottom: 3.2mm;
+	right: 3.2mm;
+	height: 88px;
+	padding: 1mm;
+	background-color: white !important;
+}
+
+@media screen {
+	.zebra-card {
+		.icon-feature {
+			position: absolute;
+			width: 110px;
+			top: 429.5px;
+			left: 9.5px;
+			& ~ .icon-feature {
+				top: 385px;
+				left: 86.5px;
+				& ~ .icon-feature {
+					top: 340px;
+					left: 9.5px;
+				}
+			}
+		}
+	}
+}
+
+@media print {
+	.zebra-card {
+		.icon-feature {
+			position: absolute;
+			width: 111px;
+			top: 431px;
+			left: 9.5px;
+			& ~ .icon-feature {
+				top: 386.5px;
+				left: 87px;
+				& ~ .icon-feature {
+					top: 341.5px;
+					left: 9.5px;
+				}
+			}
+		}
+	}
+}
+
+#t-shirt-size {
+	position: absolute;
+	right: 3.2mm;
+	bottom: 0mm;
+	color: white !important;
+	letter-spacing: 0.5em;
+	margin-right: -0.5em;
+}
+

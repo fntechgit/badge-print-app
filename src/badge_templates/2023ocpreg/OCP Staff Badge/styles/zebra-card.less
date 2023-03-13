@@ -1,0 +1,124 @@
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * franklin-gothic-urw:
+ *   - http://typekit.com/eulas/000000000000000000012126
+ *   - http://typekit.com/eulas/0000000000000000000118ad
+ *   - http://typekit.com/eulas/000000000000000000011ce6
+ *   - http://typekit.com/eulas/0000000000000000000118b1
+ *   - http://typekit.com/eulas/0000000000000000000118b3
+ *
+ * © 2009-2022 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2019-03-11 21:13:23 UTC"}*/
+
+@font-face {
+	font-family: "franklin-gothic-urw";
+	src: url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/2e6f07/000000000000000000011ce6/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n5&v=3") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 500;
+	font-stretch: normal;
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #002554;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #002554 !important;
+	}
+}
+
+.zebra-card {
+	width: 89mm;
+	height: 142.2mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+.bdg-artboard {
+	font-family: "franklin-gothic-urw";
+	font-weight: 500;
+}
+
+.text-box {
+	position: absolute;
+	top: 130px;
+	width: 100%;
+	padding: 0 2mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;	
+	div {
+		color: #002554 !important;
+	}
+	.first-name {
+		font-size: 31pt;
+		line-height: 0.8;
+	}
+	.last-name {
+		font-size: 31pt;
+		line-height: 0.8;
+		margin-top: 14px;
+	}
+	.badge-title {
+		font-size: 18.8pt;
+		text-transform: uppercase;
+		border-radius: 25px;
+		padding: 0 14px;
+		letter-spacing: 0.01em;
+		line-height: 1.16;
+		color-adjust: exact;
+		align-self: center;
+	}
+	.ocp-staff {
+		background-color: #8dd500 !important;
+		color: #fff !important;
+		margin-top: 18px;
+	}
+	.attendee-title {
+		color: #8dd500 !important;
+		font-size: 19.1pt;
+		line-height: 0.9;
+		text-transform: uppercase;
+		div {
+			color: #8dd500 !important;
+		}
+	}
+	.last-name + .attendee-title {
+		margin-top: 30px;
+	}
+	.badge-title + .attendee-title {
+		margin-top: 18px;
+		padding: 0 10px;
+	}
+}
+
+@media screen {
+	.hex-logo {
+		position: absolute;
+		width: 110px;
+		top: 429.5px;
+		left: 9px;
+	}
+}
+
+@media print {
+	.hex-logo {
+		position: absolute;
+		width: 110.5px;
+		top: 432px;
+		left: 9px;
+	}
+}
