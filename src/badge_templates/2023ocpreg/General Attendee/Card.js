@@ -7,7 +7,7 @@ import {
 
 import './styles/card.less';
 
-import background_img from './images/general94x140.svg';
+import background_img from './images/general94x140.no-match-page';
 
 const shirtSize = {
     'Unisex XS': '.',

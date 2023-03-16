@@ -7,7 +7,7 @@ import {
 
 import './styles/card.less';
 
-import background_img from './images/staff94x140.svg';
+import background_img from './images/staff94x140.png';
 import logo from './images/hex-logo.svg';
 
 export default ({badge}) => {
