@@ -20,7 +20,7 @@ export default ({badge}) => {
                 <Textfit mode="single" max={42} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={42} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
                 <span className="badge-title ocp-staff">OCP Staff</span>
-                <Textfit mode="single" max={24} className="attendee-title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Job Title')}</Textfit>
+                <Textfit max={24} className="attendee-title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Job Title')}</Textfit>
             </div>
             <div className="bdg-content hex-logo">
                 <img className="bdg-image" src={logo}/>
