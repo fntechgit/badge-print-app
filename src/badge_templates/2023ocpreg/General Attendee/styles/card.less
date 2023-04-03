@@ -39,7 +39,7 @@
 
 .card {
 	width: 94mm; 
-	height: 140mm;
+	height: 280mm;
 	img { height: 100%; }
 	overflow: hidden;
 }
@@ -47,6 +47,15 @@
 .bdg-artboard {
 	font-family: "franklin-gothic-urw", sans-serif;
 	font-weight: 500;
+}
+
+.bdg-image-front {
+	height: 140mm!important;
+}
+
+.bdg-image-back {
+	top: 140mm;
+	height: 140mm!important;
 }
 
 .text-box {
@@ -124,12 +133,12 @@
 	.icon-feature {
 		position: absolute;
 		width: 117px;
-		top: 408px;
+		top: 410px;
 		right: 6px;
 		& ~ .icon-feature {
-			top: 311px;
+			top: 314px;
 			& ~ .icon-feature {
-				top: 215px;
+				top: 218px;
 			}
 		}
 	}
@@ -138,7 +147,7 @@
 @media print {
 	.icon-feature {
 		position: absolute;
-		width: 117px;
+		width: 118px;
 		top: 410px;
 		right: 6px;
 		& ~ .icon-feature {

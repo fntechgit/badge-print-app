@@ -9,13 +9,14 @@ import './styles/card.less';
 
 import background_img from './images/staff94x140.png';
 import logo from './images/hex-logo.svg';
+import info_img from './images/info.png';
 
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard card">
-            <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
+            <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={background_img}/>
             <div className="text-box">
                 <Textfit mode="single" max={42} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={42} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
@@ -25,6 +26,7 @@ export default ({badge}) => {
             <div className="bdg-content hex-logo">
                 <img className="bdg-image" src={logo}/>
             </div>
+            <img className="bdg-image bdg-image-back" src={info_img}/>
         </div>
     </>
     );
