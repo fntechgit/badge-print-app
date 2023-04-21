@@ -79,7 +79,6 @@ export const getExtraQuestions = (summit) => async (dispatch, getState) => {
 
     const params = {
         access_token: accessToken,
-        'filter[]': ['class==MainQuestion', 'usage==Ticket'],
         expand: '*sub_question_rules,*sub_question,*values',
         order: 'order',
         page: 1,
@@ -89,7 +88,7 @@ export const getExtraQuestions = (summit) => async (dispatch, getState) => {
     return getRequest(
         null,
         createAction(GET_EXTRA_QUESTIONS),
-        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/order-extra-questions`,
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/attendees/me/allowed-extra-questions`,
         authErrorHandler
     )(params)(dispatch).then(() => {
         dispatch(stopLoading());
