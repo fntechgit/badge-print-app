@@ -71,7 +71,7 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
     );
 };
 
-export const getExtraQuestions = (summit) => async (dispatch, getState) => {
+export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getState) => {
     const { baseState: { accessTokenQS } } = getState();
     const accessToken = await getAccessTokenSafely(accessTokenQS);
 
@@ -88,7 +88,7 @@ export const getExtraQuestions = (summit) => async (dispatch, getState) => {
     return getRequest(
         null,
         createAction(GET_EXTRA_QUESTIONS),
-        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/attendees/me/allowed-extra-questions`,
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/attendees/${attendeeId}/allowed-extra-questions`,        
         authErrorHandler
     )(params)(dispatch).then(() => {
         dispatch(stopLoading());

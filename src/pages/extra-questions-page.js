@@ -20,7 +20,7 @@ export const ExtraQuestionsPage = ({
 	const formRef = useRef(null);
 
 	useEffect(() => {
-		getExtraQuestions(summit);
+		if(selectedTicket?.owner?.id) getExtraQuestions(summit, selectedTicket.owner.id);
 	}, []);
 
 	const userAnswers = selectedTicket ? selectedTicket.owner.extra_questions : [];
