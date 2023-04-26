@@ -21,7 +21,7 @@ export const ExtraQuestionsPage = ({
 
 	useEffect(() => {
 		if(selectedTicket?.owner?.id) getExtraQuestions(summit, selectedTicket.owner.id);
-	}, []);
+	}, [selectedTicket.owner]);
 
 	const userAnswers = selectedTicket ? selectedTicket.owner.extra_questions : [];
 
