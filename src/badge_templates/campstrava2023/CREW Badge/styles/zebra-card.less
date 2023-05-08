@@ -1,0 +1,81 @@
+/* -- general styles -- */
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 3943157, 2020-09-02T14:12:19-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: FranklinGothicURW-Boo by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-book/
+ * 
+ * Webfont: FranklinGothicURW-Dem by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-demi/
+ * 
+ * Webfont: FranklinGothicURW-Med by URW Type Foundry
+ * URL: https://www.myfonts.com/fonts/urw/franklin-gothic/t-medium/
+ * 
+ * 
+ * Webfonts copyright: Copyright 2010 URW++ Design &amp;amp; Development Hamburg
+ * 
+ * © 2020 MyFonts Inc
+*/
+  
+@font-face {
+  font-family: 'FranklinGothicURW-Boo';
+  src: url('~fonts/FranklinGothicURW-Boo/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Boo/font.woff') format('woff');
+}
+@font-face {
+  font-family: 'FranklinGothicURW-Med';
+  src: url('~fonts/FranklinGothicURW-Med/font.woff2') format('woff2'), url('~fonts/FranklinGothicURW-Med/font.woff') format('woff');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #002554;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #002554 !important;
+	}
+}
+
+#badge-artboard {
+	width: 89mm;
+	height: 142.2mm;
+	img { height: 100%; }
+}
+
+.content-wrapper {
+	position: absolute;
+	top: 237px;
+	width: 100%;
+	padding: 0 5mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	letter-spacing: 0.05em;
+	text-align: center;
+	div {
+		color: #fff !important;
+	}
+	.first-name {
+		font-family: FranklinGothicURW-Med;
+		font-size: 31pt;
+		line-height: 0.8;
+	}
+	.last-name {
+		font-family: FranklinGothicURW-Med;
+		font-size: 31pt;
+		line-height: 0.7;
+		margin: 14px 0 10px;
+	}
+}
