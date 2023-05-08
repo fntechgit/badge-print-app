@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "Maison Neue";
+  src: url('~fonts/Maison Neue/MaisonNeue-Book.otf') format('opentype');
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #000 !important;
+	}
+}
+
+.zebra-card {
+	width: 89mm;
+	height: 142.2mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+.bdg-artboard {
+	font-family: "Maison Neue", sans-serif;
+}
+
+.text-box {
+	position: absolute;
+	top: 310px;
+	width: 100%;
+	padding: 0 14.9mm;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	line-height: 1;
+	color: #fff !important;
+	div {
+			color: #fff !important;
+	}
+	.first-name {
+		font-size: 28pt;
+	}
+	.last-name {
+		font-size: 28pt;
+	}
+	.pronouns {
+		font-size: 12pt;
+	}
+	.title,
+	.company {
+		font-size: 14pt;
+	}
+	.last-name + .pronouns {
+		margin-top: 4px;
+	}
+	.pronouns + .company {
+		margin-top: 44px;
+	}
+	.pronouns + .title {
+		margin-top: 22px;
+	}
+	.last-name + .title,
+	.last-name + .company {
+		margin-top: 41px;
+	}
+	.title + .company {
+		margin-top: 2px;
+	}
+}
+
+.staff {
+	color: #000 !important;
+	div {
+			color: #000 !important;
+	}
+	.pronouns {
+		font-size: 14pt;
+	}
+	.last-name + .pronouns {
+		margin-top: 10px;
+	}
+	.last-name + .company {
+		margin-top: 12px;
+	}
+	.pronouns + .company {
+		margin-top: 2px;
+	}
+}
