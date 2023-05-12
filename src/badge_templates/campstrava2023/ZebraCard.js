@@ -48,7 +48,7 @@ export default ({badge}) => {
         <Textfit mode="single" max={badgeType === BadgeTypes.staff ? 20 : 16} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue("Pronouns")}</Textfit>
         }
         { badge.getExtraQuestionValue("Job Title") && badgeType !== BadgeTypes.staff &&
-        <Textfit mode="single" max={20} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue("Job Title")}</Textfit>
+        <Textfit max={20} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue("Job Title")}</Textfit>
         }
         { badge.getCompany() !== "N/A" &&
         <Textfit mode="single" max={20} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
