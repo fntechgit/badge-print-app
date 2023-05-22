@@ -6,9 +6,10 @@ import QrReader from 'react-qr-reader'
 import Swal from "sweetalert2";
 import validator from 'validator';
 import {
-    getTicket,
+    findTicketByQRCode,
     findTicketsByName,
     findTicketsByEmail,
+    findExternalTicketsByEmail,
     setSelectedTicket
 } from "../actions/ticket-actions";
 import {scanQRCode} from "../actions/qrcode-actions";
@@ -37,21 +38,10 @@ class FindTicketPage extends React.Component {
     };
 
     handleScan = (qrCode) => {
-        const { userIsAdmin, summit, match, getTicket } = this.props;
+        const { userIsAdmin, summit, match, findTicketByQRCode } = this.props;
         if (qrCode) {
             this.setState({ showQRreader: false });
-            let qrCodeArray = qrCode.split(summit.qr_registry_field_delimiter);
-
-            if (qrCodeArray.length < 2 || qrCodeArray[0] !== summit.ticket_qr_prefix) {
-                Swal.fire(
-                    T.translate("find_ticket.wrong_qr_title"),
-                    T.translate("find_ticket.wrong_qr_text"),
-                    "warning"
-                );
-                return;
-            }
-            let ticketNumber = qrCodeArray[1];
-            getTicket(ticketNumber).then((ticket) => {
+            findTicketByQRCode(qrCode).then((ticket) => {
                 if (!userIsAdmin) {
                     if (ticket.owner.summit_hall_checked_in) {
                         this.setState({ alreadyCheckedIn: true });
@@ -116,7 +106,7 @@ class FindTicketPage extends React.Component {
     };
 
     handleFindByEmail = () => {
-        const { userIsAdmin, summit, findTicketsByEmail, setSelectedTicket } = this.props;
+        const { userIsAdmin, summit, findTicketsByEmail, findExternalTicketsByEmail, setSelectedTicket } = this.props;
         const email = this.email.value;
 
         if (email && validator.isEmail(email)) {
@@ -140,6 +130,29 @@ class FindTicketPage extends React.Component {
                     } else if (data.length > 1) {
                         history.push(`/check-in/${summit.slug}/select-ticket`);
                     } else {
+                        // empty data set , check if we have external reg feed
+                        if(summit.external_registration_feed_type != ''){
+                            findExternalTicketsByEmaill(email).then((data) => {
+                                if (data.length === 1) {
+                                    let ticket = data[0];
+                                    if (!userIsAdmin) {
+                                        if (ticket.owner.summit_hall_checked_in) {
+                                            this.setState({ alreadyCheckedIn: true })
+                                            return;
+                                        }
+                                        if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                                            setSelectedTicket(ticket).then(() => {
+                                                history.push(`/check-in/${summit.slug}/extra-questions`);
+                                            });
+                                            return;
+                                        }
+                                    }
+                                    history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                                }
+                                else
+                                    this.setState({ showErrorPage: true })
+                            });
+                        }
                         this.setState({ showErrorPage: true })
                     }
                 }
@@ -309,9 +322,10 @@ const mapStateToProps = ({ baseState }) => ({
 });
 
 export default connect(mapStateToProps, {
-    getTicket,
+    getTicket: findTicketByQRCode,
     findTicketsByName,
     findTicketsByEmail,
+    findExternalTicketsByEmail,
     scanQRCode,
     setSelectedTicket,
 })(FindTicketPage)

@@ -21,7 +21,7 @@ export const TICKET_UPDATED            = 'TICKET_UPDATED';
 
 const DefaultPageSize = 100;
 
-export const getTicket = (ticketId) => async (dispatch, getState) => {
+export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
     const { baseState } = getState();
     const { summit, accessTokenQS } = baseState;
     const accessToken = await getAccessTokenSafely(accessTokenQS);
@@ -33,12 +33,14 @@ export const getTicket = (ticketId) => async (dispatch, getState) => {
         expand: 'badge, badge.features, promo_code, ticket_type, owner, owner.member, owner.extra_questions'
     };
 
+    let encodedQRCode = btoa(qrCode);
+
     return getRequest(
         createAction(REQUEST_TICKET),
         createAction(RECEIVE_TICKET),
-        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}`,
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${encodedQRCode}`,
         authErrorHandler,
-        { search_term: ticketId }
+        { search_term: encodedQRCode }
     )(params)(dispatch).then((payload) => {
             dispatch(stopLoading());
             return payload.response;
@@ -86,7 +88,6 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
     const { baseState: { summit, accessTokenQS } } = getState();
     const accessToken = await getAccessTokenSafely(accessTokenQS);
 
-
     dispatch(startLoading());
 
     const params = {
@@ -101,6 +102,32 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
+        authErrorHandler,
+        { search_term: email }
+    )(params)(dispatch).then((payload) => {
+        dispatch(stopLoading());
+        return payload.response.data;
+    });
+};
+
+export const findExternalTicketsByEmail = (email) => async (dispatch, getState) => {
+    const { baseState: { summit, accessTokenQS } } = getState();
+    const accessToken = await getAccessTokenSafely(accessTokenQS);
+
+    dispatch(startLoading());
+
+    const params = {
+        access_token : accessToken,
+        page         : 1,
+        per_page     : 20,
+        'filter[]'   : [`owner_email==${email}`],
+        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions'
+    };
+
+    return getRequest(
+        createAction(REQUEST_TICKETS),
+        createAction(RECEIVE_TICKETS),
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/external`,
         authErrorHandler,
         { search_term: email }
     )(params)(dispatch).then((payload) => {
