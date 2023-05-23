@@ -54,7 +54,6 @@ class FindTicketPage extends React.Component {
                 }
                 history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
             })
-
         }
     };
 
@@ -105,63 +104,53 @@ class FindTicketPage extends React.Component {
 
     };
 
+    /**
+     *
+     * @param data
+     * @param useExternalFallback
+     */
+    processFindByEmailData = (data, useExternalFallback = true) => {
+        const { userIsAdmin, summit, findExternalTicketsByEmail, setSelectedTicket } = this.props;
+
+        if (data.length === 1) {
+            let ticket = data[0];
+            if (!userIsAdmin) {
+                if (ticket.owner.summit_hall_checked_in) {
+                    this.setState({ alreadyCheckedIn: true })
+                    return;
+                }
+                if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                    setSelectedTicket(ticket).then(() => {
+                        history.push(`/check-in/${summit.slug}/extra-questions`);
+                    });
+                    return;
+                }
+            }
+            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+        } else if (data.length > 1) {
+            history.push(`/check-in/${summit.slug}/select-ticket`);
+        } else {
+            // empty data set , check if we have external reg feed
+            if (summit.external_registration_feed_type != '' && useExternalFallback) {
+                findExternalTicketsByEmail(this.email.value).then((data) => {
+                    this.processFindByEmailData(data, false);
+                });
+                return;
+            }
+
+            this.setState({showErrorPage: true})
+        }
+    }
+
     handleFindByEmail = () => {
-        const { userIsAdmin, summit, findTicketsByEmail, findExternalTicketsByEmail, setSelectedTicket } = this.props;
+        const { findTicketsByEmail } = this.props;
         const email = this.email.value;
 
         if (email && validator.isEmail(email)) {
-            findTicketsByEmail(email).then(
-                (data) => {
-                    if (data.length === 1) {
-                        let ticket = data[0];
-                        if (!userIsAdmin) {
-                            if (ticket.owner.summit_hall_checked_in) {
-                                this.setState({ alreadyCheckedIn: true })
-                                return;
-                            }
-                            if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-                                setSelectedTicket(ticket).then(() => {
-                                    history.push(`/check-in/${summit.slug}/extra-questions`);
-                                });
-                                return;
-                            }
-                        }
-                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
-                    } else if (data.length > 1) {
-                        history.push(`/check-in/${summit.slug}/select-ticket`);
-                    } else {
-                        // empty data set , check if we have external reg feed
-                        if(summit.external_registration_feed_type != ''){
-                            findExternalTicketsByEmaill(email).then((data) => {
-                                if (data.length === 1) {
-                                    let ticket = data[0];
-                                    if (!userIsAdmin) {
-                                        if (ticket.owner.summit_hall_checked_in) {
-                                            this.setState({ alreadyCheckedIn: true })
-                                            return;
-                                        }
-                                        if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-                                            setSelectedTicket(ticket).then(() => {
-                                                history.push(`/check-in/${summit.slug}/extra-questions`);
-                                            });
-                                            return;
-                                        }
-                                    }
-                                    history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
-                                }
-                                else
-                                    this.setState({ showErrorPage: true })
-                            });
-                        }
-                        this.setState({ showErrorPage: true })
-                    }
-                }
-            );
+            findTicketsByEmail(email).then((data) => this.processFindByEmailData(data));
             return;
         }
-
         this.setState({ error: 'email' });
-
     };
 
     handleScanQRCode = () => {
@@ -322,7 +311,7 @@ const mapStateToProps = ({ baseState }) => ({
 });
 
 export default connect(mapStateToProps, {
-    getTicket: findTicketByQRCode,
+    findTicketByQRCode,
     findTicketsByName,
     findTicketsByEmail,
     findExternalTicketsByEmail,
