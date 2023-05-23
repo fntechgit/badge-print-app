@@ -34,8 +34,10 @@
     "valid_name"        : "Por favor ingresa un nombre valido.",
     "not_found"         : "Ticket no encontrado",
     "not_found_message" : "No se pudo encontrar el ticket usando _{search_term}_ \nPor favor contacta a un miembro del staff si piensas que esto es incorrecto.",
+    "not_found_message_qr_code" : "No se pudo encontrar el ticket usando el codigo QR \nPor favor contacta a un miembro del staff si piensas que esto es incorrecto.",
     "checked_in"        : "Ya registrado",
     "checked_in_message": "El asistente _{search_term}_ ya ha hecho check-in. \nPor favor contacta a un miembro del staff si piensas que esto es incorrecto.",
+    "checked_in_message_qr_code": "El asistente ya ha hecho check-in. \nPor favor contacta a un miembro del staff si piensas que esto es incorrecto.",
     "try_again"         : "Vuelve y prueba de nuevo"
   },
   "thank_you": {

@@ -175,7 +175,8 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.checked_in")}
-                    message={T.translate("find_ticket.checked_in_message", { search_term: searchTerm })}
+                    message={searchTerm ? T.translate("find_ticket.checked_in_message", { search_term: searchTerm })
+                        : T.translate("find_ticket.checked_in_message_qr_code")}
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ alreadyCheckedIn: false })}
                 />
@@ -186,7 +187,7 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.not_found")}
-                    message={T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
+                    message={ searchTerm ? T.translate("find_ticket.not_found_message", { search_term: searchTerm }) : T.translate("find_ticket.not_found_message_qr_code")}
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ showErrorPage: false })}
                 />

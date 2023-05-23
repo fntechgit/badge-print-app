@@ -40,7 +40,7 @@ export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
         createAction(RECEIVE_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${encodedQRCode}`,
         authErrorHandler,
-        { search_term: encodedQRCode }
+        { search_term: null } // we send null string bc the search criteria is an opoque string
     )(params)(dispatch).then((payload) => {
             dispatch(stopLoading());
             return payload.response;
