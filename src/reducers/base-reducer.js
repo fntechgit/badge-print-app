@@ -11,6 +11,7 @@ import {
     SET_SUMMIT,
     SET_ACCESS_TOKEN_QS,
     GET_EXTRA_QUESTIONS,
+    RECEIVE_MARKETING_SETTINGS
 } from "../actions/base-actions";
 
 import {
@@ -106,6 +107,10 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         case GET_EXTRA_QUESTIONS: {
               const extraQuestions = payload.response.data;
               return { ...state, loading: false, extraQuestions: extraQuestions }
+        }
+        case RECEIVE_MARKETING_SETTINGS: {
+            const marketingSettings = payload.response.data;
+            return { ...state, marketingSettings }
         }
         default:
             return state;
