@@ -161,7 +161,7 @@ class FindTicketPage extends React.Component {
 
     hideFieldFromSetting = (summitSetting) => {
         const { marketingSettings } = this.props;
-        const setting = marketingSettings.find(s => s.key === summitSetting);
+        const setting = marketingSettings?.find(s => s.key === summitSetting);
         return setting?.value === "1" ? true : false;
     }
     
