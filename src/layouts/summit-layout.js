@@ -31,7 +31,7 @@ class SummitLayout extends React.Component {
         const summitSlug = match.params.summit_slug;
 
         if (!summit || !summit.id || summitSlug !== summit.slug) {
-            this.props.getSummit(summitSlug).then(() => this.props.getMarketingSettings(summit.id));
+            this.props.getSummit(summitSlug).then((newSummit) => this.props.getMarketingSettings(newSummit.id));
         } else {
             this.props.getMarketingSettings(summit.id);
         }

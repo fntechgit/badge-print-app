@@ -13,7 +13,7 @@ import {
 } from "../actions/ticket-actions";
 import {scanQRCode} from "../actions/qrcode-actions";
 import ErrorPage from './error-page';
-import { ATTENDEE_STATUS_INCOMPLETE } from '../utils/constants';
+import { ATTENDEE_STATUS_INCOMPLETE, PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL, PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME } from '../utils/constants';
 import "../styles/find-ticket-page.less"
 
 class FindTicketPage extends React.Component {
@@ -159,10 +159,10 @@ class FindTicketPage extends React.Component {
         );
     };
 
-    hideFieldFromSetting = (marketingSetting) => {
+    hideFieldFromSetting = (summitSetting) => {
         const { marketingSettings } = this.props;
-        const setting = marketingSettings.find(s => s.key === marketingSetting);
-        return setting?.value !== "1" ? true : false;
+        const setting = marketingSettings.find(s => s.key === summitSetting);
+        return setting?.value === "1" ? true : false;
     }
     
     render(){
@@ -236,7 +236,7 @@ class FindTicketPage extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <div className="row">
-                            {this.hideFieldFromSetting("PRINT_APP_HIDE_HIDE_FIND_TICKET_BY_FULLNAME") && 
+                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME) && 
                                 <div className="col-md-12 find-tix-wrapper">
                                     <div className="find-tix-label">
                                         {T.translate("find_ticket.name_title")}
@@ -271,7 +271,7 @@ class FindTicketPage extends React.Component {
                                     </div>
                                 </div>
                             }
-                            {this.hideFieldFromSetting("PRINT_APP_HIDE_HIDE_FIND_TICKET_BY_EMAIL") && 
+                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL) && 
                                 <div className="col-md-12 find-tix-wrapper">
                                     <div className="find-tix-label">
                                         {T.translate("find_ticket.email_title")}

@@ -68,8 +68,10 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
         createAction(RECEIVE_SUMMIT),
         `${window.API_BASE_URL}/api/v1/summits/all/${summitSlug}`,
         authErrorHandler
-    )(params)(dispatch).then(() =>
+    )(params)(dispatch).then(({response: summit}) => {
         dispatch(stopLoading())
+        return summit;
+    }
     );
 };
 
