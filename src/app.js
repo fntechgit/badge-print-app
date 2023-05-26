@@ -23,6 +23,7 @@ window.OAUTH2_FLOW         = process.env['OAUTH2_FLOW'];
 window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];
+window.MARKETING_API_BASE_URL = process.env['MARKETING_API_BASE_URL'];
 
 // admin groups allowed to bypass user checks on find and select ticket pages
 export const ADMIN_GROUPS = ['super-admins', 'administrators'];

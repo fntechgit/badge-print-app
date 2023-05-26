@@ -17,6 +17,8 @@ export const REQUEST_SUMMIT      = 'REQUEST_SUMMIT';
 export const RECEIVE_SUMMIT      = 'RECEIVE_SUMMIT';
 export const SET_ACCESS_TOKEN_QS = 'SET_ACCESS_TOKEN_QS';
 export const GET_EXTRA_QUESTIONS = 'GET_EXTRA_QUESTIONS';
+export const REQUEST_MARKETING_SETTINGS = 'REQUEST_MARKETING_SETTINGS';
+export const RECEIVE_MARKETING_SETTINGS = 'RECEIVE_MARKETING_SETTINGS';
 
 export const setAccessTokenQS = (accessToken) => (dispatch) => {
     dispatch(createAction(SET_ACCESS_TOKEN_QS)({accessToken}));
@@ -66,8 +68,10 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
         createAction(RECEIVE_SUMMIT),
         `${window.API_BASE_URL}/api/v1/summits/all/${summitSlug}`,
         authErrorHandler
-    )(params)(dispatch).then(() =>
+    )(params)(dispatch).then(({response: summit}) => {
         dispatch(stopLoading())
+        return summit;
+    }
     );
 };
 
@@ -99,3 +103,28 @@ export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getSta
         return Promise.reject(e);
     });
 }
+
+export const getMarketingSettings = (summitId) => (dispatch) => {
+
+    dispatch(startLoading());
+
+    if(!summitId) return Promise.reject();
+
+    let params = {
+      per_page: 100,
+      page: 1
+    };
+  
+    return getRequest(
+      createAction(REQUEST_MARKETING_SETTINGS),
+      createAction(RECEIVE_MARKETING_SETTINGS),
+      `${window.MARKETING_API_BASE_URL}/api/public/v1/config-values/all/shows/${summitId}`,
+      authErrorHandler
+    )(params)(dispatch).then(() => {
+        dispatch(stopLoading());
+    }).catch(e => {
+        console.log('ERROR: ', e);
+        dispatch(stopLoading());
+        return Promise.reject(e);
+    });
+  };
