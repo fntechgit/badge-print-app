@@ -106,6 +106,8 @@ export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getSta
 
 export const getMarketingSettings = (summitId) => (dispatch) => {
 
+    dispatch(startLoading());
+
     if(!summitId) return Promise.reject();
 
     let params = {
@@ -118,5 +120,11 @@ export const getMarketingSettings = (summitId) => (dispatch) => {
       createAction(RECEIVE_MARKETING_SETTINGS),
       `${window.MARKETING_API_BASE_URL}/api/public/v1/config-values/all/shows/${summitId}`,
       authErrorHandler
-    )(params)(dispatch);
+    )(params)(dispatch).then(() => {
+        dispatch(stopLoading());
+    }).catch(e => {
+        console.log('ERROR: ', e);
+        dispatch(stopLoading());
+        return Promise.reject(e);
+    });
   };
