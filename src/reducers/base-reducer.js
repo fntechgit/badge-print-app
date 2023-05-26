@@ -40,7 +40,8 @@ const DEFAULT_STATE = {
     accessTokenQS: null,
     loading: false,
     selectedTicket: null,
-    userIsAdmin: false
+    userIsAdmin: false,
+    marketingSettings: [],
 };
 
 const baseReducer = (state = DEFAULT_STATE, action) => {
@@ -105,11 +106,11 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
                 allTickets: []
             }
         case GET_EXTRA_QUESTIONS: {
-              const extraQuestions = payload.response.data;
+              const extraQuestions = payload?.response?.data || [];
               return { ...state, loading: false, extraQuestions: extraQuestions }
         }
         case RECEIVE_MARKETING_SETTINGS: {
-            const marketingSettings = payload.response.data;
+            const marketingSettings = payload?.response?.data || [];
             return { ...state, marketingSettings }
         }
         default:
