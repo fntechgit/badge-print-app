@@ -29,7 +29,7 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
     return (
       <div className="container summit-select-page">
           <div className="row">
-              <div className="col-md-9">
+              <div className="col-md-12">
                   <p>{T.translate("general.select_label")}:</p>
                   <Dropdown
                     id="summit"
@@ -39,7 +39,7 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
                     onChange={onSelectSummit}
                   />
               </div>
-              <div className="col-md-3 form-check abc-checkbox">
+              <div className="col-md-12 form-check abc-checkbox">
                   <input
                     type="checkbox"
                     id="all_summits"
@@ -48,7 +48,7 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
                     className="form-check-input"
                   />
                   <label className="form-check-label" htmlFor="all_summits">
-                      Show all summits
+                      {T.translate("general.show_all_summits")}
                   </label>
               </div>
           </div>

@@ -13,6 +13,7 @@
     "app_title"        : "Check In & Print Badge",
     "select_label"     : "To continue, please select a show",
     "select_show"      : "Select a show",
+    "show_all_summits" : "Show all summits",
     "continue"         : "Continue",
     "cancel"           : "Cancel",
     "login_message"    : "You must log in to continue. Please contact help-desk."
