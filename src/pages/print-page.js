@@ -372,21 +372,21 @@ class PrintPage extends React.Component {
                     <br/>
                 </>
                 }
+                { !this.isBatchPrinting() &&
+                  <div className="row print-buttons-wrapper">
+                      <div className="col-md-4 col-md-offset-4">
+                          <button className="btn btn-primary" onClick={() => this.handlePrint(this.goToThankYou)}>
+                              {T.translate("preview.confirm")}
+                          </button>
+                          <button className="btn btn-danger" onClick={this.cancelPrint}>
+                              {T.translate("preview.cancel")}
+                          </button>
+                      </div>
+                  </div>
+                }
                 <div className="badge-wrapper">
                     {badgeObj.renderTemplate(summitSlug, viewTypeName)}
                 </div>
-                { !this.isBatchPrinting() &&  
-                <div className="row print-buttons-wrapper">
-                    <div className="col-md-4 col-md-offset-4">
-                        <button className="btn btn-primary" onClick={() => this.handlePrint(this.goToThankYou)}>
-                            {T.translate("preview.confirm")}
-                        </button>
-                        <button className="btn btn-danger" onClick={this.cancelPrint}>
-                            {T.translate("preview.cancel")}
-                        </button>
-                    </div>
-                </div>
-                }
                 <br/>
                 { this.isBatchPrinting() && !batchPrintingComplete &&
                 <div className="row print-buttons-wrapper">
