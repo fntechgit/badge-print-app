@@ -1,5 +1,5 @@
 import React from 'react';
-import { QRCodeCanvas } from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 import printableBadge from '../components/printable-badge';
 
 const DefaultBadgeViewType = 'Card';
@@ -142,7 +142,7 @@ class Badge {
         let qr = null;
 
         if (qr_code) {
-            qr = <QRCodeCanvas value={qr_code} {...settings} />
+            qr = <QRCodeSVG value={qr_code} {...settings} />
         }
 
         return qr;
