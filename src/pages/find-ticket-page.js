@@ -16,7 +16,7 @@ import {scanQRCode} from "../actions/qrcode-actions";
 import ErrorPage from './error-page';
 import { ATTENDEE_STATUS_INCOMPLETE, PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL, PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME } from '../utils/constants';
 import "../styles/find-ticket-page.less"
-
+import {QR_SEARCH_CRITERIA} from '../utils/constants';
 class FindTicketPage extends React.Component {
 
     constructor(props) {
@@ -175,7 +175,7 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.checked_in")}
-                    message={searchTerm == 'QR' ? T.translate("find_ticket.checked_in_message_qr_code")
+                    message={searchTerm == QR_SEARCH_CRITERIA ? T.translate("find_ticket.checked_in_message_qr_code")
                         : T.translate("find_ticket.checked_in_message", { search_term: searchTerm })
                         }
                     linkText={T.translate("find_ticket.try_again")}
@@ -188,7 +188,7 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.not_found")}
-                    message={ searchTerm == 'QR' ?  T.translate("find_ticket.not_found_message_qr_code") : T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
+                    message={ searchTerm == QR_SEARCH_CRITERIA ?  T.translate("find_ticket.not_found_message_qr_code") : T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ showErrorPage: false })}
                 />

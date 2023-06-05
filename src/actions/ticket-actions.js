@@ -10,6 +10,7 @@ import {
 } from "openstack-uicore-foundation/lib/utils/actions";
 
 import {getAccessTokenSafely} from '../utils/utils';
+import {QR_SEARCH_CRITERIA} from '../utils/constants';
 
 export const REQUEST_TICKET            = 'REQUEST_TICKET';
 export const RECEIVE_TICKET            = 'RECEIVE_TICKET';
@@ -40,7 +41,7 @@ export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
         createAction(RECEIVE_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${encodedQRCode}`,
         authErrorHandler,
-        { search_term: 'QR' } // we send hardcode string bc the search criteria is an opoque string
+        { search_term: QR_SEARCH_CRITERIA} // we send hardcode string bc the search criteria is an opoque string
     )(params)(dispatch).then((payload) => {
             dispatch(stopLoading());
             return payload.response;
