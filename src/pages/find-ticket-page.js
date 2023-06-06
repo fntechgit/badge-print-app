@@ -6,16 +6,17 @@ import QrReader from 'react-qr-reader'
 import Swal from "sweetalert2";
 import validator from 'validator';
 import {
-    getTicket,
+    findTicketByQRCode,
     findTicketsByName,
     findTicketsByEmail,
+    findExternalTicketsByEmail,
     setSelectedTicket
 } from "../actions/ticket-actions";
 import {scanQRCode} from "../actions/qrcode-actions";
 import ErrorPage from './error-page';
 import { ATTENDEE_STATUS_INCOMPLETE, PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL, PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME } from '../utils/constants';
 import "../styles/find-ticket-page.less"
-
+import {QR_SEARCH_CRITERIA} from '../utils/constants';
 class FindTicketPage extends React.Component {
 
     constructor(props) {
@@ -37,21 +38,10 @@ class FindTicketPage extends React.Component {
     };
 
     handleScan = (qrCode) => {
-        const { userIsAdmin, summit, match, getTicket } = this.props;
+        const { userIsAdmin, summit, match, findTicketByQRCode } = this.props;
         if (qrCode) {
             this.setState({ showQRreader: false });
-            let qrCodeArray = qrCode.split(summit.qr_registry_field_delimiter);
-
-            if (qrCodeArray.length < 2 || qrCodeArray[0] !== summit.ticket_qr_prefix) {
-                Swal.fire(
-                    T.translate("find_ticket.wrong_qr_title"),
-                    T.translate("find_ticket.wrong_qr_text"),
-                    "warning"
-                );
-                return;
-            }
-            let ticketNumber = qrCodeArray[1];
-            getTicket(ticketNumber).then((ticket) => {
+            findTicketByQRCode(qrCode).then((ticket) => {
                 if (!userIsAdmin) {
                     if (ticket.owner.summit_hall_checked_in) {
                         this.setState({ alreadyCheckedIn: true });
@@ -64,7 +54,6 @@ class FindTicketPage extends React.Component {
                 }
                 history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
             })
-
         }
     };
 
@@ -115,40 +104,53 @@ class FindTicketPage extends React.Component {
 
     };
 
+    /**
+     *
+     * @param data
+     * @param useExternalFallback
+     */
+    processFindByEmailData = (data, useExternalFallback = true) => {
+        const { userIsAdmin, summit, findExternalTicketsByEmail, setSelectedTicket } = this.props;
+
+        if (data.length === 1) {
+            let ticket = data[0];
+            if (!userIsAdmin) {
+                if (ticket.owner.summit_hall_checked_in) {
+                    this.setState({ alreadyCheckedIn: true })
+                    return;
+                }
+                if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
+                    setSelectedTicket(ticket).then(() => {
+                        history.push(`/check-in/${summit.slug}/extra-questions`);
+                    });
+                    return;
+                }
+            }
+            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+        } else if (data.length > 1) {
+            history.push(`/check-in/${summit.slug}/select-ticket`);
+        } else {
+            // empty data set , check if we have external reg feed
+            if (summit.external_registration_feed_type != '' && useExternalFallback) {
+                findExternalTicketsByEmail(this.email.value).then((data) => {
+                    this.processFindByEmailData(data, false);
+                });
+                return;
+            }
+
+            this.setState({showErrorPage: true})
+        }
+    }
+
     handleFindByEmail = () => {
-        const { userIsAdmin, summit, findTicketsByEmail, setSelectedTicket } = this.props;
+        const { findTicketsByEmail } = this.props;
         const email = this.email.value;
 
         if (email && validator.isEmail(email)) {
-            findTicketsByEmail(email).then(
-                (data) => {
-                    if (data.length === 1) {
-                        let ticket = data[0];
-                        if (!userIsAdmin) {
-                            if (ticket.owner.summit_hall_checked_in) {
-                                this.setState({ alreadyCheckedIn: true })
-                                return;
-                            }
-                            if (ticket.owner.status === ATTENDEE_STATUS_INCOMPLETE){
-                                setSelectedTicket(ticket).then(() => {
-                                    history.push(`/check-in/${summit.slug}/extra-questions`);
-                                });
-                                return;
-                            }
-                        }
-                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
-                    } else if (data.length > 1) {
-                        history.push(`/check-in/${summit.slug}/select-ticket`);
-                    } else {
-                        this.setState({ showErrorPage: true })
-                    }
-                }
-            );
+            findTicketsByEmail(email).then((data) => this.processFindByEmailData(data));
             return;
         }
-
         this.setState({ error: 'email' });
-
     };
 
     handleScanQRCode = () => {
@@ -173,7 +175,9 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.checked_in")}
-                    message={T.translate("find_ticket.checked_in_message", { search_term: searchTerm })}
+                    message={searchTerm == QR_SEARCH_CRITERIA ? T.translate("find_ticket.checked_in_message_qr_code")
+                        : T.translate("find_ticket.checked_in_message", { search_term: searchTerm })
+                        }
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ alreadyCheckedIn: false })}
                 />
@@ -184,7 +188,7 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.not_found")}
-                    message={T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
+                    message={ searchTerm == QR_SEARCH_CRITERIA ?  T.translate("find_ticket.not_found_message_qr_code") : T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ showErrorPage: false })}
                 />
@@ -309,9 +313,10 @@ const mapStateToProps = ({ baseState }) => ({
 });
 
 export default connect(mapStateToProps, {
-    getTicket,
+    findTicketByQRCode,
     findTicketsByName,
     findTicketsByEmail,
+    findExternalTicketsByEmail,
     scanQRCode,
     setSelectedTicket,
 })(FindTicketPage)
