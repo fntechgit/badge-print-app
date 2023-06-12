@@ -14,9 +14,6 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
 
     useEffect(() => {
         clearSummit();
-    },[]);
-
-    useEffect(() => {
         if ((isLoggedUser || accessTokenQS)) {
             loadSummits();
         }
@@ -25,9 +22,8 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
     const onSelectSummit = (ev) => {
         const summitId = ev.target.value;
         const summit = allSummits.find(s => s.id === summitId);
-
         setSummit(summit);
-        history.push(`check-in/${summit.slug}`);
+        history.push(`/check-in/${summit.slug}`);
     };
     
     return (
@@ -59,7 +55,6 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
       </div>
     );
 }
-
 
 const mapStateToProps = ({ baseState, loggedUserState }) => ({
     isLoggedUser: loggedUserState.isLoggedUser,

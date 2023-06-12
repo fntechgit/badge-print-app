@@ -70,7 +70,7 @@ body {
   padding: 10px 0;
   background-color: var(--color_secondary);
   font-weight: bold;
-  color: var(--color_primary);
+  color: var(--color_text_dark);
 
   .language-select {
     width: 50px;
@@ -93,6 +93,14 @@ body {
       text-align: center;
     }
   }
+
+  a {
+    color: var(--color_text_dark);
+
+    :hover {
+      color: var(--color_text_dark) !important;
+    }
+  }
 }
 
 .container {
@@ -106,7 +114,7 @@ body {
 
   .container {
     div {
-      color: var(--color_primary);
+      color: var(--color_text_dark);
     }
   }
 
@@ -135,22 +143,22 @@ body {
   }
 
   .btn-primary {
-    background-color: var(--color_primary_contrast) !important;
+    background-color: var(--color_primary) !important;
     color: white !important;
     border: none !important;
 
     &:hover {
-      background-color: var(--color_primary) !important;
+      background-color: var(--color_primary_contrast) !important;
     }
   }
 
   .btn-danger {
     background-color: white !important;
-    color: var(--color_primary_contrast) !important;
-    border: 2px solid var(--color_primary_contrast) !important;
+    color: var(--color_primary) !important;
+    border: 2px solid var(--color_primary) !important;
 
     &:hover {
-      background-color: var(--color_secondary_contrast) !important;
+      background-color: var(--color_primary_contrast) !important;
     }
   }
 

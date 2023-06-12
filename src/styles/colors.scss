@@ -1,11 +1,14 @@
 :root {
-  --color_primary:  #327cc0;
-  --color_primary_contrast: #3ea2f7;
+  --color_primary:  #3ea2f7;
+  --color_primary_contrast: #327cc0;
+
   --color_secondary: #d4e6f4;
   --color_secondary_contrast: #eff3f7;
   --color_secondary_contrast50: #c2f3ff;
-  --color_text_dark: #2A4E68;
-  --color_text_light: #ffffff;
+
+  --color_text_dark: #327cc0;
+  --color_text_light: #327cc0;
+
   --color_text_input_borders: #d4e1ea;
   --color_text_input_hints:#a9bbc8
 }
