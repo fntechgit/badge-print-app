@@ -11,7 +11,8 @@ import {
     SET_SUMMIT,
     SET_ACCESS_TOKEN_QS,
     GET_EXTRA_QUESTIONS,
-    RECEIVE_MARKETING_SETTINGS
+    RECEIVE_MARKETING_SETTINGS,
+    CLEAR_SUMMIT,
 } from "../actions/base-actions";
 
 import {
@@ -28,6 +29,7 @@ import {
     CLEAR_SELECTED_TICKET,
     TICKET_UPDATED,
 } from "../actions/ticket-actions";
+import {setDocumentColors} from "../utils/methods";
 
 const DEFAULT_STATE = {
     allSummits: [],
@@ -66,11 +68,14 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         case STOP_LOADING:
             return { ...state, loading: false };
         case RECEIVE_SUMMITS:
-            return { ...state, allSummits: payload.response.data };
+            return { ...state, allSummits: payload.response.data, summit:null };
         case RECEIVE_SUMMIT:
             return { ...state, summit: payload.response };
         case SET_SUMMIT:
             return { ...state, summit: payload.summit };
+        case CLEAR_SUMMIT:{
+            return {...state, summit: null};
+        }
         case RECEIVE_TICKET:
             return { ...state, selectedTicket: payload.response };
         case REQUEST_TICKETS:
@@ -111,6 +116,7 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
         }
         case RECEIVE_MARKETING_SETTINGS: {
             const marketingSettings = payload?.response?.data || [];
+            setDocumentColors(marketingSettings);
             return { ...state, marketingSettings }
         }
         default:

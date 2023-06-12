@@ -13,6 +13,7 @@ import {getAccessTokenSafely} from '../utils/utils';
 export const REQUEST_SUMMITS     = 'REQUEST_SUMMITS';
 export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
 export const SET_SUMMIT          = 'SET_SUMMIT';
+export const CLEAR_SUMMIT        = 'CLEAR_SUMMIT';
 export const REQUEST_SUMMIT      = 'REQUEST_SUMMIT';
 export const RECEIVE_SUMMIT      = 'RECEIVE_SUMMIT';
 export const SET_ACCESS_TOKEN_QS = 'SET_ACCESS_TOKEN_QS';
@@ -51,6 +52,10 @@ export const loadSummits = () => async (dispatch, getState) => {
 export const setSummit = (summit) => (dispatch, getState) => {
     dispatch(createAction(SET_SUMMIT)({summit}));
 };
+
+export const clearSummit = () => (dispatch) => {
+    dispatch(createAction(CLEAR_SUMMIT)({}));
+}
 
 export const getSummit = (summitSlug) => async (dispatch, getState) => {
     const { baseState: { accessTokenQS } } = getState();

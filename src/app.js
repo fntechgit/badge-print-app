@@ -71,7 +71,7 @@ class App extends React.PureComponent {
             getUserInfo
         } = this.props;
         const title = (summit) ? summit.name : T.translate("general.app_title");
-
+        const summit_logo = summit ? summit.logo : null;
         return (
             <Router history={history}>
                 <div>
@@ -80,7 +80,12 @@ class App extends React.PureComponent {
                         <div className="header-title row">
                             <div className="col-md-12 title">
                                 <LanguageSelect language={language} />
-                                { title }
+                                { summit_logo &&
+                                    <img alt="logo" className="header-logo" src={summit_logo} />
+                                }
+                                { !summit_logo &&
+                                     title
+                                }
                                 { isLoggedUser &&
                                 <a className="logout pull-right" onClick={initLogOut}>
                                     <i className="fa fa-sign-out" aria-hidden="true" />

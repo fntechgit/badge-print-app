@@ -111,7 +111,7 @@ class FindTicketPage extends React.Component {
      */
     processFindByEmailData = (data, useExternalFallback = true) => {
         const { userIsAdmin, summit, findExternalTicketsByEmail, setSelectedTicket } = this.props;
-
+        debugger;
         if (data.length === 1) {
             let ticket = data[0];
             if (!userIsAdmin) {
