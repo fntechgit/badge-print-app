@@ -71,6 +71,7 @@ class PrintPage extends React.Component {
         this.isFirstOfBatch = this.isFirstOfBatch.bind(this);
         this.isLastOfBatch = this.isLastOfBatch.bind(this);
         this.handleViewTypeChange = this.handleViewTypeChange.bind(this);
+        this.printBtnRef = React.createRef(null);
     };
 
     initPrintJob = (tickets = []) => {
@@ -251,8 +252,11 @@ class PrintPage extends React.Component {
 
     handlePrint = (callback = () => {}) => {
         if (!(callback instanceof Function)) throw Error;
-
+    
+        this.printBtnRef.current.disabled = true;
+        
         const afterPrint = () => {
+            this.printBtnRef.current.disabled = false;
             if (this.isBatchPrinting()) {
                 const { printJobStatus } = this.state;
                 const { badgeTicketId, badgeViewType } = this.props;
@@ -306,7 +310,7 @@ class PrintPage extends React.Component {
             batchItemsRef,
             autoProcessBatch,
             batchPrintingComplete,
-            viewTypeOverride,
+            viewTypeOverride
         } = this.state;
 
         const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType } = this.props;
@@ -329,7 +333,7 @@ class PrintPage extends React.Component {
         const viewTypeId = badgeViewType || badgeAllowedViewTypes.find((viewType) => viewType.is_default)?.id;
         const viewTypeName = badgeAllowedViewTypes.find((viewType) => viewType.id == viewTypeId)?.name;
         const badgeObj = new Badge(badge);
-
+        
         return (
             <div className="container print-page-wrapper">
                 { this.isBatchPrinting() &&
@@ -375,7 +379,7 @@ class PrintPage extends React.Component {
                 { !this.isBatchPrinting() &&
                   <div className="row print-buttons-wrapper">
                       <div className="col-md-4 col-md-offset-4">
-                          <button className="btn btn-primary" onClick={() => this.handlePrint(this.goToThankYou)}>
+                          <button className="btn btn-primary" onClick={() => this.handlePrint(this.goToThankYou)} ref={this.printBtnRef}>
                               {T.translate("preview.confirm")}
                           </button>
                           <button className="btn btn-danger" onClick={this.cancelPrint}>
