@@ -21,7 +21,7 @@ export const ExtraQuestionsPage = ({
 
 	useEffect(() => {
 		if(selectedTicket?.owner?.id) getExtraQuestions(summit, selectedTicket.owner.id);
-	}, [selectedTicket.owner]);
+	}, [selectedTicket?.owner]);
 
 	const userAnswers = selectedTicket ? selectedTicket.owner.extra_questions : [];
 
@@ -48,7 +48,7 @@ export const ExtraQuestionsPage = ({
 	const toggleDisclaimer = () => setOwner({ ...owner, disclaimer: !owner.disclaimer });
 
 	const goToPrintBadge = () =>
-		history.push(`/check-in/${summit.slug}/tickets/${selectedTicket.number}`);
+		history.push(`/check-in/${summit.slug}/tickets/${selectedTicket?.number}`);
 
 	const handleAnswerChanges = (answersForm) => {
 			const qs = new QuestionsSet(extraQuestions);
@@ -168,9 +168,7 @@ export const ExtraQuestionsPage = ({
 									<div className="col-md-12 text-center">
 										<button
 											className={`${styles.buttonSave} btn btn-primary`}
-											onClick={() => clearSelectedTicket().then(() =>
-												history.push(`/check-in/${summit.slug}/`)
-											)}
+											onClick={() => clearSelectedTicket()}
 										>
 											Cancel
 										</button>
