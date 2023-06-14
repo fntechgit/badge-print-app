@@ -36,11 +36,17 @@
 	position: absolute;
 }
 
+@media print {
+	.text-boxes {
+		margin: 85.5mm 7mm 0 !important;
+	}
+}
+
 .text-boxes {
 	display: flex;
 	position: relative;
 	flex-direction: column;
-	margin: 85.5mm 7mm 0;
+	margin: 85.5mm 7mm 0 !important;
 	color: #000 !important;
 	div {
 		color: #000 !important;
