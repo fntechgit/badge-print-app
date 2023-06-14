@@ -14,7 +14,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { getSummit, getMarketingSettings }  from '../actions/base-actions';
+import {getSummit, getMarketingSettings, clearSummit} from '../actions/base-actions';
 import FindTicketPage from '../pages/find-ticket-page';
 import ExtraQuestionsPage from '../pages/extra-questions-page';
 import SelectTicketPage from '../pages/select-ticket-page';
@@ -31,7 +31,9 @@ class SummitLayout extends React.Component {
         const summitSlug = match.params.summit_slug;
 
         if (!summit || !summit.id || summitSlug !== summit.slug) {
-            this.props.getSummit(summitSlug).then((newSummit) => this.props.getMarketingSettings(newSummit.id));
+            this.props.getSummit(summitSlug).then((newSummit) => this.props.getMarketingSettings(newSummit.id)).catch(() => {
+                this.props.clearSummit()
+            });
         } else {
             this.props.getMarketingSettings(summit.id);
         }
@@ -72,5 +74,6 @@ const mapStateToProps = ({ baseState }) => ({
 
 export default connect(mapStateToProps, {
     getSummit,
-    getMarketingSettings
+    getMarketingSettings,
+    clearSummit,
 })(SummitLayout);
