@@ -2,18 +2,19 @@ import React, {useEffect, useState} from 'react';
 import history from '../history'
 import { Dropdown } from 'openstack-uicore-foundation/lib/components'
 import { connect } from "react-redux";
-import { loadSummits, setSummit } from "../actions/base-actions";
+import {clearSummit, loadSummits, setSummit} from "../actions/base-actions";
 import T from "i18n-react/dist/i18n-react";
 
-const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loadSummits, setSummit }) => {
+const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loadSummits, setSummit, clearSummit }) => {
     const [showAllSummits, setShowAllSummits] = useState(false);
     const nowUtc = parseInt(new Date() / 1000);
     const filteredSummits = showAllSummits ? allSummits : allSummits.filter(s => s.end_date > nowUtc)
     const summits_ddl = filteredSummits.map(s => ({ label: s.name, value: s.id }));
     const value = summit ? summit.id : null;
-    
+
     useEffect(() => {
-        if ((isLoggedUser || accessTokenQS) && allSummits.length === 0) {
+        clearSummit();
+        if ((isLoggedUser || accessTokenQS)) {
             loadSummits();
         }
     }, []);
@@ -21,9 +22,8 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
     const onSelectSummit = (ev) => {
         const summitId = ev.target.value;
         const summit = allSummits.find(s => s.id === summitId);
-
         setSummit(summit);
-        history.push(`check-in/${summit.slug}`);
+        history.push(`/check-in/${summit.slug}`);
     };
     
     return (
@@ -56,7 +56,6 @@ const SelectSummitPage = ({ summit, isLoggedUser, accessTokenQS, allSummits, loa
     );
 }
 
-
 const mapStateToProps = ({ baseState, loggedUserState }) => ({
     isLoggedUser: loggedUserState.isLoggedUser,
     ...baseState
@@ -65,4 +64,5 @@ const mapStateToProps = ({ baseState, loggedUserState }) => ({
 export default connect(mapStateToProps, {
     loadSummits,
     setSummit,
+    clearSummit,
 })(SelectSummitPage)
