@@ -71,7 +71,6 @@ class PrintPage extends React.Component {
         this.isFirstOfBatch = this.isFirstOfBatch.bind(this);
         this.isLastOfBatch = this.isLastOfBatch.bind(this);
         this.handleViewTypeChange = this.handleViewTypeChange.bind(this);
-        this.printBtnRef = React.createRef(null);
     };
 
     initPrintJob = (tickets = []) => {
@@ -250,13 +249,12 @@ class PrintPage extends React.Component {
         }
     };
 
-    handlePrint = (callback = () => {}) => {
+    handlePrint = (event, callback = () => {}) => {
         if (!(callback instanceof Function)) throw Error;
-    
-        this.printBtnRef.current.disabled = true;
-        
+
+        const button = event.target;   
         const afterPrint = () => {
-            this.printBtnRef.current.disabled = false;
+            button.disabled = false;
             if (this.isBatchPrinting()) {
                 const { printJobStatus } = this.state;
                 const { badgeTicketId, badgeViewType } = this.props;
@@ -267,8 +265,8 @@ class PrintPage extends React.Component {
                 this.props.clearBadge().then(callback);
             }
         };
-
         if (this.state.embedded) {
+            button.disabled = true;
             const { badgeViewType } = this.props;
             const element = document.getElementById('badge-artboard');
             const payload = {
@@ -278,9 +276,7 @@ class PrintPage extends React.Component {
             };
             // call native printing then increment count
             this.props.printBadge(payload).then(() =>
-                this.incrementPrintCount().then(() => 
-                    afterPrint()
-                )
+                this.incrementPrintCount().then(afterPrint)
             );
         } else {
             this.incrementPrintCount().then(() => {
@@ -379,7 +375,7 @@ class PrintPage extends React.Component {
                 { !this.isBatchPrinting() &&
                   <div className="row print-buttons-wrapper">
                       <div className="col-md-4 col-md-offset-4">
-                          <button className="btn btn-primary" onClick={() => this.handlePrint(this.goToThankYou)} ref={this.printBtnRef}>
+                          <button className="btn btn-primary" onClick={(event) => this.handlePrint(event, this.goToThankYou)}>
                               {T.translate("preview.confirm")}
                           </button>
                           <button className="btn btn-danger" onClick={this.cancelPrint}>
@@ -411,12 +407,12 @@ class PrintPage extends React.Component {
                         </button>
                     </div>
                     <div className="col-md-2">
-                        <button className="btn btn-primary" onClick={() => this.handlePrint()}>
+                        <button className="btn btn-primary" onClick={this.handlePrint}>
                             {T.translate("Print")}
                         </button>
                     </div>
                     <div className="col-md-1">
-                        <button className="btn btn-primary" disabled={this.isLastOfBatch()} onClick={() => this.goToNextBadge()}>
+                        <button className="btn btn-primary" disabled={this.isLastOfBatch()} onClick={this.goToNextBadge}>
                             {T.translate(">")}
                         </button>
                     </div>
