@@ -110,7 +110,7 @@ export default ({ badge }) => {
         contentEditable
         suppressContentEditableWarning={true}
       >
-        {badge.getFeature("Partner Booth")}
+        Partner Booth
       </Textfit>
       }
     </div>
