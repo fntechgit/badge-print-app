@@ -102,7 +102,7 @@ export default ({ badge }) => {
         </Textfit>
         }
       </div>
-      {badge.getFeature("Booth Staff") &&
+      {badge.getFeature("Partner Booth") &&
       <Textfit
         min={26}
         className="booth-staff-feature"
@@ -110,7 +110,7 @@ export default ({ badge }) => {
         contentEditable
         suppressContentEditableWarning={true}
       >
-        {badge.getFeature("Booth Staff")}
+        {badge.getFeature("Partner Booth")}
       </Textfit>
       }
     </div>
