@@ -102,7 +102,7 @@ export default ({ badge }) => {
         </Textfit>
         }
       </div>
-      {badge.getFeature("Partner Booth") &&
+      {badge.getFeature("Booth Staff") &&
       <Textfit
         min={26}
         className="booth-staff-feature"
