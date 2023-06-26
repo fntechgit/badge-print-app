@@ -241,20 +241,18 @@ class PrintPage extends React.Component {
         const { printJobStatus } = this.state;
         const { badgeTicketId, badgeViewType } = this.props;
         if (!printJobStatus[badgeTicketId].isViewTypePrinted(badgeViewType)) {
-            this.handlePrint(() => {
-                setTimeout(() => this.goToNextBadge(PrintStatus.NotPrinted), RedirectTimeOut)
-            });
+            this.handlePrint(null,
+                () => setTimeout(() => this.goToNextBadge(PrintStatus.NotPrinted), RedirectTimeOut)
+            );
         } else {
             this.goToNextBadge(PrintStatus.NotPrinted);
         }
     };
 
-    handlePrint = (event, callback = () => {}) => {
+    handlePrint = (event = null, callback = () => {}) => {
         if (!(callback instanceof Function)) throw Error;
-
-        const button = event.target;   
         const afterPrint = () => {
-            button.disabled = false;
+            if (event.target) event.target.disabled = false;
             if (this.isBatchPrinting()) {
                 const { printJobStatus } = this.state;
                 const { badgeTicketId, badgeViewType } = this.props;
@@ -266,7 +264,7 @@ class PrintPage extends React.Component {
             }
         };
         if (this.state.embedded) {
-            button.disabled = true;
+            if (event.target) event.target.disabled = true;
             const { badgeViewType } = this.props;
             const element = document.getElementById('badge-artboard');
             const payload = {
