@@ -39,7 +39,7 @@ export const ZebraCardBadgeTypesColor = {
     [BadgeTypes.Attendee]: '#FFFFFF',
     [BadgeTypes.Speaker]: '#00C2FF',
     [BadgeTypes.ExternalSpeaker]: '#8447FF',
-    [BadgeTypes.Press]: '#00FF6C',
+    [BadgeTypes.Press]: '#00FF00',
     [BadgeTypes.Guest]: '#8447FF',
 };
 
