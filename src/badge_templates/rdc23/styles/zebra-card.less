@@ -1,0 +1,91 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "Builder Sans Regular";
+  src: local("Builder Sans Regular"), url('~fonts/Roblox/RobloxBETA-Regular-v1.007.otf');
+}
+@font-face {
+  font-family: "Builder Extended Bold";
+  src: local("Builder Extended Bold"), url('~fonts/Roblox/RobloxDisplayBETA-BoldExtended-v1.001.otf');
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #000 !important;
+	}
+}
+
+.zebra-card {
+	font-family: "Builder Sans Regular";
+
+	width: 89mm;
+	height: 142.2mm;
+	img { height: 100%; }
+
+	overflow: hidden;
+
+	.bdg-image {
+		position: absolute;
+	}
+
+	.bar {
+		position: absolute;
+		bottom: 0mm;
+		left: 0mm;
+		height: 15.52mm;
+		width: 100%;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		span {
+			padding: 0 7mm;
+			font-family: "Builder Extended Bold";
+			font-size: 24pt;
+			font-style: normal;
+			letter-spacing: 0.48px;
+			text-transform: uppercase;
+		}
+		.white {
+			color: #FFF !important;
+		}
+		.black {
+			color: #010101 !important;
+		}
+		@media print {
+			.white {
+				color: #FFF !important;
+			}
+			.black {
+				color: #010101 !important;
+			}
+		}
+	}
+	.text-boxes {
+		position: absolute;
+		bottom: 0mm;
+		left: 0mm;
+		width: 89mm;
+		padding: 0mm 7mm 20mm 7mm;
+		display: flex;
+		flex-direction: column;
+		color: #FFF !important;
+		div {
+			color: #FFF !important;
+		}
+		z-index: 1000;
+		.text-box {
+			display: flex;
+			align-items: center;
+			text-transform: capitalize;
+		}
+		.user-name,
+		.first-name {
+			font-family: "Builder Extended Bold";
+		}
+		.pronounce,
+		.company {
+			margin-top: -1mm;
+		}
+	}
+}
