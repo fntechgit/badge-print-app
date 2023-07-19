@@ -77,7 +77,7 @@ export default ({ badge }) => {
             }
             { badge.hasQRCode() &&
                 <div className="qrcode-box rotate-270">
-                    { badge.getQRCode({ fgColor: '#010101', size: 78 }) }
+                    { badge.getQRCode({ fgColor: '#100420', size: 78 }) }
                 </div>
             }
             <div

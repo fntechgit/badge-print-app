@@ -34,21 +34,33 @@ export const BadgeTypesDisplayName = {
 };
 
 export const ZebraCardBadgeTypesColor = {
-    [BadgeTypes.Staff]: '#010101',
-    [BadgeTypes.Volunteer]: '#00C2FF',
+    // elected to match Pantone Black 6 C - Page C 189
+    [BadgeTypes.Staff]: '#100420',
+    // elected to match Pantone 2995 C - Page C 107
+    [BadgeTypes.Volunteer]: '#00A9E0',
     [BadgeTypes.Attendee]: '#FFFFFF',
-    [BadgeTypes.Speaker]: '#00C2FF',
-    [BadgeTypes.ExternalSpeaker]: '#7747FF',
-    [BadgeTypes.Press]: '#0CFF20',
-    [BadgeTypes.Guest]: '#7747FF',
+    // elected to match Pantone 2995 C - Page C 107
+    [BadgeTypes.Speaker]: '#00A9E0',
+    // elected to match Pantone 2725 C - Page C 82
+    [BadgeTypes.ExternalSpeaker]: '#685BC7',
+    // elected to match Pantone 7488 C - Page C 143
+    [BadgeTypes.Press]: '#78D64B',
+    // elected to match Pantone 2725 C - Page C 82
+    [BadgeTypes.Guest]: '#685BC7',
 };
 
 export const WristbandBadgeTypesColor = {
-    [BadgeTypes.Staff]: '#010101',
-    [BadgeTypes.Volunteer]: '#00C2FF',
+    // elected to match Pantone Black 6 C - Page C 189
+    [BadgeTypes.Staff]: '#100420',
+    // elected to match Pantone 2995 C - Page C 107
+    [BadgeTypes.Volunteer]: '#00A9E0',
     [BadgeTypes.Attendee]: '#FFFFFF',
-    [BadgeTypes.Speaker]: '#00C2FF',
-    [BadgeTypes.ExternalSpeaker]: '#9547FF',
-    [BadgeTypes.Press]: '#00FF6C',
-    [BadgeTypes.Guest]: '#9547FF',
+    // elected to match Pantone 2995 C - Page C 107
+    [BadgeTypes.Speaker]: '#00A9E0',
+    // elected to match Pantone 2725 C - Page C 82
+    [BadgeTypes.ExternalSpeaker]: '#685BC7',
+    // elected to match Pantone 7488 C - Page C 143
+    [BadgeTypes.Press]: '#78D64B',
+    // elected to match Pantone 2725 C - Page C 82
+    [BadgeTypes.Guest]: '#685BC7',
 };
