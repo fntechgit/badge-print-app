@@ -70,8 +70,6 @@ export default ({ badge }) => {
                           "Speaker" : BadgeTypesDisplayName[badge.getBadgeTypeName()];
     const usernameOnBadge = !!badge.getExtraQuestionValue(ExtraQuestionsKeys.UsernameOnBadge);
     const firstName = badge.getExtraQuestionValue(ExtraQuestionsKeys.FirstName);
-    const nameMaxSize = badge.getBadgeTypeName() == BadgeTypes.Staff ||
-                        badge.getBadgeTypeName() == BadgeTypes.Press ? 48 : 34;
     return (
         <div id="badge-artboard" className="bdg-artboard zebra-card">
             <img id="badge-artboard-img" className="bdg-image" src={backgroundImage}/>
@@ -101,7 +99,7 @@ export default ({ badge }) => {
                 { !usernameOnBadge &&
                     <Textfit
                         mode="single"
-                        max={nameMaxSize}
+                        max={34}
                         className="text-box first-name"
                         onReady={() => window.dispatchEvent(new CustomEvent('resize'))}
                         contentEditable
