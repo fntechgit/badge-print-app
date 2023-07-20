@@ -53,10 +53,10 @@ export const WristbandBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
     [BadgeTypes.Staff]: '#100420',
     // elected to match Pantone 637 C - AKA Blue Speaker
-    [BadgeTypes.Volunteer]: '#4AC1E0',
+    [BadgeTypes.Volunteer]: '#00C1DE',
     [BadgeTypes.Attendee]: '#FFFFFF',
     // elected to match Pantone 637 C - AKA Blue Speaker
-    [BadgeTypes.Speaker]: '#4AC1E0',
+    [BadgeTypes.Speaker]: '#00C1DE',
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.ExternalSpeaker]: '#270089',
     // elected to match Pantone 367 C - AKA Green Media
