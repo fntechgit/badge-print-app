@@ -36,31 +36,31 @@ export const BadgeTypesDisplayName = {
 export const ZebraCardBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
     [BadgeTypes.Staff]: '#100420',
-    // elected to match Pantone 2995 C - Page C 107
-    [BadgeTypes.Volunteer]: '#00A9E0',
+    // elected to match Pantone 2985 C - AKA Blue Speaker
+    [BadgeTypes.Volunteer]: '#54C0E8',
     [BadgeTypes.Attendee]: '#FFFFFF',
-    // elected to match Pantone 2995 C - Page C 107
-    [BadgeTypes.Speaker]: '#00A9E0',
-    // elected to match Pantone 2725 C - Page C 82
+    // elected to match Pantone 2985 C- AKA Blue Speaker
+    [BadgeTypes.Speaker]: '#54C0E8',
+    // elected to match Pantone 2725 C - AKA Purple Speaker
     [BadgeTypes.ExternalSpeaker]: '#685BC7',
-    // elected to match Pantone 7488 C - Page C 143
-    [BadgeTypes.Press]: '#78D64B',
-    // elected to match Pantone 2725 C - Page C 82
+    // elected to match Pantone 7487 C - AKA Green Media
+    [BadgeTypes.Press]: '#89DC65',
+    // elected to match Pantone 2725 C - AKA Purple Speaker
     [BadgeTypes.Guest]: '#685BC7',
 };
 
 export const WristbandBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
     [BadgeTypes.Staff]: '#100420',
-    // elected to match Pantone 306 C - AKA Blue Speaker
-    [BadgeTypes.Volunteer]: '#00C1DE',
+    // elected to match Pantone 637 C - AKA Blue Speaker
+    [BadgeTypes.Volunteer]: '#4AC1E0',
     [BadgeTypes.Attendee]: '#FFFFFF',
-    // elected to match Pantone 306 C - AKA Blue Speaker
-    [BadgeTypes.Speaker]: '#00C1DE',
+    // elected to match Pantone 637 C - AKA Blue Speaker
+    [BadgeTypes.Speaker]: '#4AC1E0',
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.ExternalSpeaker]: '#270089',
-    // elected to match Pantone 375 C - AKA Green Media
-    [BadgeTypes.Press]: '#93D500',
+    // elected to match Pantone 367 C - AKA Green Media
+    [BadgeTypes.Press]: '#A2D45E',
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.Guest]: '#270089',
 };
