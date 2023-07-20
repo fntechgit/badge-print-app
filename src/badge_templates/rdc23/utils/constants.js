@@ -52,15 +52,15 @@ export const ZebraCardBadgeTypesColor = {
 export const WristbandBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
     [BadgeTypes.Staff]: '#100420',
-    // elected to match Pantone 2975 C - AKA Blue Speaker
-    [BadgeTypes.Volunteer]: '#95D4E9',
+    // elected to match Pantone 297 C - AKA Blue Speaker
+    [BadgeTypes.Volunteer]: '#6BC4E8',
     [BadgeTypes.Attendee]: '#FFFFFF',
-    // elected to match Pantone 2975 C - AKA Blue Speaker
-    [BadgeTypes.Speaker]: '#95D4E9',
+    // elected to match Pantone 297 C - AKA Blue Speaker
+    [BadgeTypes.Speaker]: '#6BC4E8',
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.ExternalSpeaker]: '#270089',
-    // elected to match Pantone 374 C - AKA Green Media
-    [BadgeTypes.Press]: '#C2E76B',
+    // elected to match Pantone 358 C - AKA Green Media
+    [BadgeTypes.Press]: '#AADA91',
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.Guest]: '#270089',
 };
