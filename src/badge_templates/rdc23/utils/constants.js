@@ -60,7 +60,7 @@ export const WristbandBadgeTypesColor = {
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.ExternalSpeaker]: '#270089',
     // elected to match Pantone 367 C - AKA Green Media
-    [BadgeTypes.Press]: '#A2D45E',
+    [BadgeTypes.Press]: '#65BD60',
     // elected to match Pantone 2735 C - AKA Purple Speaker
     [BadgeTypes.Guest]: '#270089',
 };
