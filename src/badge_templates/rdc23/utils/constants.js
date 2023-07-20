@@ -36,11 +36,11 @@ export const BadgeTypesDisplayName = {
 export const ZebraCardBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
     [BadgeTypes.Staff]: '#100420',
-    // elected to match Pantone 2985 C - AKA Blue Speaker
-    [BadgeTypes.Volunteer]: '#54C0E8',
+    // elected to match Pantone 2995 C - AKA Blue Speaker
+    [BadgeTypes.Volunteer]: '#00A7E1',
     [BadgeTypes.Attendee]: '#FFFFFF',
-    // elected to match Pantone 2985 C- AKA Blue Speaker
-    [BadgeTypes.Speaker]: '#54C0E8',
+    // elected to match Pantone 2995 C- AKA Blue Speaker
+    [BadgeTypes.Speaker]: '#00A7E1',
     // elected to match Pantone 2725 C - AKA Purple Speaker
     [BadgeTypes.ExternalSpeaker]: '#685BC7',
     // elected to match Pantone 7487 C - AKA Green Media
