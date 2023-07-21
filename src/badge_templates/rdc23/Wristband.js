@@ -54,13 +54,13 @@ export default ({ badge }) => {
             }
         }
     }, []);
-    const logo = badge.getBadgeTypeName() == BadgeTypes.Attendee ||
-                 badge.getBadgeTypeName() == BadgeTypes.Press ?
+    const logo = badge.getBadgeTypeName() == BadgeTypes.Attendee ?
                  logoBlack : logoWhite;
     const darkTheme = badge.getBadgeTypeName() == BadgeTypes.Staff ||
                  badge.getBadgeTypeName() == BadgeTypes.Speaker ||
                  badge.getBadgeTypeName() == BadgeTypes.Volunteer ||
                  badge.getBadgeTypeName() == BadgeTypes.ExternalSpeaker ||
+                 badge.getBadgeTypeName() == BadgeTypes.Press ||
                  badge.getBadgeTypeName() == BadgeTypes.Guest;
     const over21 = badge.getExtraQuestionValue(ExtraQuestionsKeys.Over21) === "Yes";
     return (

@@ -49,8 +49,7 @@ export default ({ badge }) => {
         }
     }, []);
     const pronouns = badge.getExtraQuestionValue(ExtraQuestionsKeys.Pronouns);
-    const darkTheme = badge.getBadgeTypeName() == BadgeTypes.Attendee ||
-                      badge.getBadgeTypeName() == BadgeTypes.Press;
+    const darkTheme = badge.getBadgeTypeName() == BadgeTypes.Attendee;
     let backgroundImage = background3_img;
     switch (badge.getBadgeTypeName()) {
       case BadgeTypes.Staff:
