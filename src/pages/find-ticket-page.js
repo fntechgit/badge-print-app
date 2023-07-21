@@ -52,7 +52,7 @@ class FindTicketPage extends React.Component {
                         return;
                     }
                 }
-                history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                history.push(`/check-in/${summit.slug}/tickets/${ticket.id}`);
             })
         }
     };
@@ -89,7 +89,7 @@ class FindTicketPage extends React.Component {
                                 return;
                             }
                         }
-                        history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+                        history.push(`/check-in/${summit.slug}/tickets/${ticket.id}`);
                     } else if (data.length > 1) {
                         history.push(`/check-in/${summit.slug}/select-ticket`);
                     } else {
@@ -125,7 +125,7 @@ class FindTicketPage extends React.Component {
                     return;
                 }
             }
-            history.push(`/check-in/${summit.slug}/tickets/${ticket.number}`);
+            history.push(`/check-in/${summit.slug}/tickets/${ticket.id}`);
         } else if (data.length > 1) {
             history.push(`/check-in/${summit.slug}/select-ticket`);
         } else {
