@@ -270,12 +270,15 @@ class PrintPage extends React.Component {
         const afterPrint = () => {
             if (event?.target) event.target.disabled = false;
             if (this.isBatchPrinting()) {
-                const { printJobStatus, embedded } = this.state;
+                const { embedded, printJobStatus, autoProcessBatch } = this.state;
                 const { badgeTicketId, badgeViewType } = this.props;
                 const newPrintJobStatus = { ...printJobStatus };
                 newPrintJobStatus[badgeTicketId][badgeViewType] = PrintStatus.Printed;
                 // if running embedded, we make it auto process batch
-                this.setState({ printJobStatus: newPrintJobStatus, autoProcessBatch: embedded }, callback);
+                this.setState({
+                    printJobStatus: newPrintJobStatus,
+                    autoProcessBatch: embedded ? true : autoProcessBatch
+                }, callback);
             }
         };
         if (this.state.embedded) {
