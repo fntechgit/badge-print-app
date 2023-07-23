@@ -98,31 +98,40 @@ class PrintPage extends React.Component {
 
     componentWillMount = () => {
         const { summit_slug: summitSlug } = this.props.match.params;
+        const { ticket_id: ticketId } = this.props.match.params;
 
-        const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
-        const filters = parsedQueryString['filter[]'];
-        const viewType = parsedQueryString['view_type'];
-        const checkIn = parsedQueryString['check_in'];
-        const order = parsedQueryString['order'];
+        if (!ticketId) {
+            const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+            const filters = parsedQueryString['filter[]'];
+            const viewType = parsedQueryString['view_type'];
+            const checkIn = parsedQueryString['check_in'];
+            const order = parsedQueryString['order'];
 
-        const newState = { ...this.state };
-        newState.summitSlug = summitSlug;
-        if (viewType) newState.viewTypeOverride = viewType;
-        if (checkIn) newState.willCheckIn = (checkIn === 'true');
-        console.log(`PrintPage::componentWillMount viewType ${viewType} checkIn ${checkIn}`);
+            const newState = { ...this.state };
+            newState.summitSlug = summitSlug;
+            if (viewType) newState.viewTypeOverride = viewType;
+            if (checkIn) newState.willCheckIn = (checkIn === 'true');
+            console.log(`PrintPage::componentWillMount viewType ${viewType} checkIn ${checkIn}`);
 
-        this.setState(newState, () => {
-            const { ticket_id: ticketId } = this.props.match.params;
-            // if no ticket id provided, we fetch all tickets
-            // thus start a batch printing
-            if (!ticketId) {           
+            this.setState(newState, () => {
                 this.props.getAllTickets({
                     filters,
                     order,
                     expand: 'badge,badge.type,badge.type.allowed_view_types'
                 }).then((tickets) => this.initPrintJob(tickets));
-            }
-        });
+            });
+        } else {
+            const filters = `id==${ticketId}`
+            const newState = { ...this.state };
+            newState.summitSlug = summitSlug;
+            newState.willCheckIn = true;
+            this.setState(newState, () => {
+                this.props.getAllTickets({
+                    filters,
+                    expand: 'badge,badge.type,badge.type.allowed_view_types'
+                }).then((tickets) => this.initPrintJob(tickets));
+            });
+        }
     };
 
     componentDidMount = () => {
@@ -139,7 +148,7 @@ class PrintPage extends React.Component {
 
         let shouldGetBadge = !!ticketId;
         if (prevProps) {
-            const { ticket_id: prevTicketId,view_type: prevViewType } = prevProps.match.params;
+            const { ticket_id: prevTicketId, view_type: prevViewType } = prevProps.match.params;
             shouldGetBadge &&=
                 ticketId != prevTicketId ||
                     (ticketId == prevTicketId && viewType != prevViewType);
@@ -172,6 +181,7 @@ class PrintPage extends React.Component {
 
     goToNextBadge = (printStatus = null) => {
         const {
+            embedded,
             summitSlug,
             batchItemsRef,
             printJobStatus,
@@ -184,10 +194,12 @@ class PrintPage extends React.Component {
         let nextIndex = currentIndex == batchItemsRef.length - 1 ? 0 : currentIndex + 1;
         let [nextTicketId, nextViewType] = batchItemsRef[nextIndex].split('|');
 
-        this.isBatchPrintingComplete();
         if (printStatus == PrintStatus.NotPrinted) {
             if (this.isBatchPrintingComplete()) {
-                this.setState({ batchPrintingComplete: true }, () => this.props.clearBadge());
+                this.setState({ batchPrintingComplete: true }, () => {
+                    this.props.clearBadge();
+                    this.goToThankYou();
+                });
                 return;
             }
             while (printJobStatus[nextTicketId].isViewTypePrinted(nextViewType)) {
@@ -230,13 +242,16 @@ class PrintPage extends React.Component {
         return batchItemsRef.indexOf(`${badgeTicketId}|${badgeViewType}`) == batchItemsRef.length - 1;
     };
 
-    handleProcessBatchChange = () => {
+    toggleAutoProcessBatch = () => {
         this.setState({ autoProcessBatch: !this.state.autoProcessBatch });
     };
 
     processBatch = () => {
         if (this.isBatchPrintingComplete()) {
-            this.setState({ batchPrintingComplete: true }, () => this.props.clearBadge());
+            this.setState({ batchPrintingComplete: true }, () => {
+                this.props.clearBadge();
+                this.goToThankYou();
+            });
             return;
         }
         const { printJobStatus } = this.state;
@@ -253,19 +268,21 @@ class PrintPage extends React.Component {
     handlePrint = (event = null, callback = () => {}) => {
         if (!(callback instanceof Function)) throw Error;
         const afterPrint = () => {
-            if (event.target) event.target.disabled = false;
+            if (event?.target) event.target.disabled = false;
             if (this.isBatchPrinting()) {
-                const { printJobStatus } = this.state;
+                const { embedded, printJobStatus, autoProcessBatch } = this.state;
                 const { badgeTicketId, badgeViewType } = this.props;
                 const newPrintJobStatus = { ...printJobStatus };
                 newPrintJobStatus[badgeTicketId][badgeViewType] = PrintStatus.Printed;
-                this.setState({ printJobStatus: newPrintJobStatus }, callback);
-            } else {
-                this.props.clearBadge().then(callback);
+                // if running embedded, we make it auto process batch
+                this.setState({
+                    printJobStatus: newPrintJobStatus,
+                    autoProcessBatch: embedded ? true : autoProcessBatch
+                }, callback);
             }
         };
         if (this.state.embedded) {
-            if (event.target) event.target.disabled = true;
+            if (event?.target) event.target.disabled = true;
             const { badgeViewType } = this.props;
             const element = document.getElementById('badge-artboard');
             const payload = {
@@ -306,14 +323,15 @@ class PrintPage extends React.Component {
             autoProcessBatch,
             batchPrintingComplete,
             viewTypeOverride,
-            badgeFetched
+            badgeFetched,
+            embedded
         } = this.state;
 
         const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType } = this.props;
 
         if (loading || (!badgeFetched && !badge)) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
-        if (summitSlug && !badgeTicketId && this.isBatchPrinting()) {
+        if (summitSlug && (!badgeTicketId || badgeTicketId && !badgeViewType) && this.isBatchPrinting()) {
             const [ticketId, viewType] = batchItemsRef[0].split('|');
             return <Redirect to={`/check-in/${summitSlug}/tickets/${ticketId}/views/${viewType}`} />;
         }
@@ -332,78 +350,25 @@ class PrintPage extends React.Component {
         
         return (
             <div className="container print-page-wrapper">
-                { this.isBatchPrinting() &&
-                    <>
-                        { batchItemsRef.indexOf(`${badgeTicketId}|${badgeViewType}`) + 1}
-                        /
-                        { batchItemsRef.length }
-                    </>
-                }
-                { !viewTypeOverride &&
-                      badgeAllowedViewTypes &&
-                          badgeAllowedViewTypes.length > 1 &&
-                              (this.isBatchPrinting() ? !autoProcessBatch : true) &&
+                { !embedded && this.isBatchPrinting() &&
                 <>
-                    <div className="row">
-                        <div className="col-md-4 col-md-offset-5">
-                            <ButtonToolbar>
-                                <ToggleButtonGroup
-                                    type="radio"
-                                    name="options"
-                                    onChange={this.handleViewTypeChange}
-                                    value={Number(viewTypeId)}
-                                >
-                                { badgeAllowedViewTypes.map((viewType) => (
-                                    <ToggleButton
-                                        key={viewType.id}
-                                        id={`view-type-${viewType.id}`}
-                                        type="radio"
-                                        name="radio"
-                                        value={viewType.id}
-                                    >
-                                        {viewType.name}
-                                    </ToggleButton>
-                                )) }
-                                </ToggleButtonGroup>
-                            </ButtonToolbar>
-                        </div>
-
-                    </div>
-                    <br/>
+                    { batchItemsRef.indexOf(`${badgeTicketId}|${badgeViewType}`) + 1}
+                    /
+                    { batchItemsRef.length }
                 </>
-                }
-                { !this.isBatchPrinting() &&
-                  <div className="row print-buttons-wrapper">
-                      <div className="col-md-4 col-md-offset-4">
-                          <button className="btn btn-primary" onClick={(event) => this.handlePrint(event, this.goToThankYou)}>
-                              {T.translate("preview.confirm")}
-                          </button>
-                          <button className="btn btn-danger" onClick={this.cancelPrint}>
-                              {T.translate("preview.cancel")}
-                          </button>
-                      </div>
-                  </div>
-                }
-                <div className="badge-wrapper">
-                    {badgeObj.renderTemplate(summitSlug, viewTypeName)}
-                </div>
-                <br/>
-                { this.isBatchPrinting() && !batchPrintingComplete &&
-                <div className="row print-buttons-wrapper">
-                    <div className="col-md-2 col-md-offset-5">
-                        <label>
-                            <input type="checkbox" checked={autoProcessBatch} onChange={this.handleProcessBatchChange} />
-                            <span>&nbsp; auto process batch</span>
-                        </label>
-                        <Timeout callback={this.processBatch} paused={!autoProcessBatch} />
-                    </div>
-                </div>
                 }
                 { this.isBatchPrinting() && !autoProcessBatch && !batchPrintingComplete &&
                 <div className="row print-buttons-wrapper">
-                    <div className="col-md-1 col-md-offset-4">
+                    <div className="col-md-1 col-md-offset-3">
+                        { !embedded &&
                         <button className="btn btn-danger" disabled={this.isFirstOfBatch()} onClick={this.goToPrevBadge}>
                             {T.translate("<")}
+                        </button>
+                        }
+                    </div>
+                    <div className="col-md-2">
+                        <button className="btn btn-danger" onClick={this.cancelPrint}>
+                          {T.translate("preview.cancel")}
                         </button>
                     </div>
                     <div className="col-md-2">
@@ -412,12 +377,30 @@ class PrintPage extends React.Component {
                         </button>
                     </div>
                     <div className="col-md-1">
+                        { !embedded &&
                         <button className="btn btn-primary" disabled={this.isLastOfBatch()} onClick={this.goToNextBadge}>
                             {T.translate(">")}
                         </button>
+                        }
                     </div>
                 </div>
                 }
+                { !embedded && this.isBatchPrinting() && !batchPrintingComplete &&
+                <div className="row print-buttons-wrapper">
+                    <div className="col-md-2 col-md-offset-5">
+                        <label>
+                            <input type="checkbox" checked={autoProcessBatch} onChange={this.toggleAutoProcessBatch} />
+                            <span>&nbsp; auto process batch</span>
+                        </label>
+                    </div>
+                </div>
+                }
+                { this.isBatchPrinting() && !batchPrintingComplete &&
+                <Timeout callback={this.processBatch} paused={!autoProcessBatch} />
+                }
+                <div className="badge-wrapper">
+                    {badgeObj.renderTemplate(summitSlug, viewTypeName)}
+                </div>
             </div>
         );
     };
