@@ -283,7 +283,7 @@ class PrintPage extends React.Component {
         };
         if (this.state.embedded) {
             if (event?.target) event.target.disabled = true;
-            const { badgeViewType } = this.props;
+            const { view_type: badgeViewType } = this.props.match.params;
             const element = document.getElementById('badge-artboard');
             const payload = {
                 height: element.clientHeight,
