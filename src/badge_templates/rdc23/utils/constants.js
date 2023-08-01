@@ -35,7 +35,7 @@ export const BadgeTypesDisplayName = {
 
 export const ZebraCardBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
-    [BadgeTypes.Staff]: '#000000',
+    [BadgeTypes.Staff]: '#010101',
     // elected to match Pantone 2995 C - AKA Blue Speaker
     [BadgeTypes.Volunteer]: '#00A7E1',
     [BadgeTypes.Attendee]: '#FFFFFF',
@@ -51,7 +51,7 @@ export const ZebraCardBadgeTypesColor = {
 
 export const WristbandBadgeTypesColor = {
     // elected to match Pantone Black 6 C - Page C 189
-    [BadgeTypes.Staff]: '#100420',
+    [BadgeTypes.Staff]: '#000000',
     // elected to match Pantone 637 C - AKA Blue Speaker
     [BadgeTypes.Volunteer]: '#00C1DE',
     [BadgeTypes.Attendee]: '#FFFFFF',
