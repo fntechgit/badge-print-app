@@ -299,9 +299,9 @@ class PrintPage extends React.Component {
                 view: badgeViewType ?? "Card",
             };
             // call native printing then increment count
-            this.props.printBadge(payload).then(() => {
-                this.incrementPrintCount(bypassCheckIn).then(afterPrint);
-            });
+            this.props.printBadge(payload).then(() =>
+                this.incrementPrintCount(bypassCheckIn).then(afterPrint)
+            );
         } else {
             this.incrementPrintCount(bypassCheckIn).then(() => {
                 // print after incrementing count
