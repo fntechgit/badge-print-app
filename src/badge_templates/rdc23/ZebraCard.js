@@ -84,7 +84,7 @@ export default ({ badge }) => {
                 { usernameOnBadge && username && 
                     <Textfit
                         mode="single"
-                        max={34}
+                        max={32}
                         className="text-box user-name"
                         onReady={() => window.dispatchEvent(new CustomEvent('resize'))}
                         contentEditable
@@ -96,7 +96,7 @@ export default ({ badge }) => {
                 { !usernameOnBadge &&
                     <Textfit
                         mode="single"
-                        max={34}
+                        max={32}
                         className="text-box first-name"
                         onReady={() => window.dispatchEvent(new CustomEvent('resize'))}
                         contentEditable

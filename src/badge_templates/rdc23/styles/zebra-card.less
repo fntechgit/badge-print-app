@@ -41,9 +41,11 @@
 		span {
 			padding: 0 7mm;
 			font-family: "Builder Extended Bold";
-			font-size: 24pt;
+			font-size: 24.1pt;
 			font-style: normal;
-			letter-spacing: 0.48px;
+			font-weight: 400;
+			line-height: 26px; /* 108.333% */
+			letter-spacing: 0.42px;
 			text-transform: uppercase;
 			margin-top: -1mm;
 		}
@@ -67,7 +69,7 @@
 		bottom: 0mm;
 		left: 0mm;
 		width: 89mm;
-		padding: 0mm 7mm 21mm 7mm;
+		padding: 0mm 7mm 21.5mm 7mm;
 		display: flex;
 		flex-direction: column;
 		color: #FFF !important;
@@ -83,9 +85,18 @@
 		.user-name,
 		.first-name {
 			font-family: "Builder Extended Bold";
+			font-style: normal;
+			font-weight: 900;
+			line-height: 32px; /* 133.333% */
+			letter-spacing: 0.48px;
 		}
-		.pronounce,
-		.company {
+		.user-name + .pronounce,
+		.user-name + .company,
+		.first-name + .pronounce,
+		.first-name + .company {
+			padding-top: 1mm;
+		}
+		.pronounce + .company {
 			margin-top: -1mm;
 		}
 	}
