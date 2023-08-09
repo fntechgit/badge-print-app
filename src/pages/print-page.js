@@ -52,6 +52,11 @@ const TicketStatusPrototype = {
             (printStatus) => printStatus == PrintStatus.Printed
         );
     },
+    oneViewTypePrintRemaining() {
+        return this.printStatuses.filter(
+            (printStatus) => printStatus == PrintStatus.NotPrinted
+        ).length == 1;
+    }
 };
 
 class PrintPage extends React.Component {
@@ -124,7 +129,6 @@ class PrintPage extends React.Component {
             const filters = `id==${ticketId}`
             const newState = { ...this.state };
             newState.summitSlug = summitSlug;
-            newState.willCheckIn = true;
             this.setState(newState, () => {
                 this.props.getAllTickets({
                     filters,
@@ -281,6 +285,10 @@ class PrintPage extends React.Component {
                 }, callback);
             }
         };
+        const { printJobStatus } = this.state;
+        const { badgeTicketId } = this.props;
+        // we should only checkin on last view type print
+        const bypassCheckIn = !printJobStatus[badgeTicketId].oneViewTypePrintRemaining();
         if (this.state.embedded) {
             if (event?.target) event.target.disabled = true;
             const { view_type: badgeViewType } = this.props.match.params;
@@ -291,11 +299,11 @@ class PrintPage extends React.Component {
                 view: badgeViewType ?? "Card",
             };
             // call native printing then increment count
-            this.props.printBadge(payload).then(() =>
-                this.incrementPrintCount().then(afterPrint)
-            );
+            this.props.printBadge(payload).then(() => {
+                this.incrementPrintCount(bypassCheckIn).then(afterPrint);
+            });
         } else {
-            this.incrementPrintCount().then(() => {
+            this.incrementPrintCount(bypassCheckIn).then(() => {
                 // print after incrementing count
                 window.print();
                 afterPrint();
@@ -303,11 +311,11 @@ class PrintPage extends React.Component {
         }
     };
 
-    incrementPrintCount = () => {
+    incrementPrintCount = (bypassCheckIn = false) => {
         const { summitSlug, willCheckIn } = this.state;
         const { badgeTicketId, badgeViewType } = this.props;
-        console.log(`PrintPage::incrementPrintCount summitSlug ${summitSlug} ticketId ${badgeTicketId} viewType ${badgeViewType} checkIn ${willCheckIn}`);
-        return this.props.incrementBadgePrintCount(summitSlug, badgeTicketId, { viewType: badgeViewType, checkIn: willCheckIn });
+        console.log(`PrintPage::incrementPrintCount summitSlug ${summitSlug} ticketId ${badgeTicketId} viewType ${badgeViewType} checkIn ${willCheckIn && !bypassCheckIn}`);
+        return this.props.incrementBadgePrintCount(summitSlug, badgeTicketId, { viewType: badgeViewType, checkIn: willCheckIn && !bypassCheckIn });
     };
 
     handleViewTypeChange(viewType) {
