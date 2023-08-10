@@ -1,199 +1,310 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import { connect } from 'react-redux';
-import history from '../history';
-import { Redirect } from 'react-router-dom';
-import QuestionsSet from 'openstack-uicore-foundation/lib/utils/questions-set';
-import ExtraQuestionsForm from 'openstack-uicore-foundation/lib/components/extra-questions';
-import { getExtraQuestions } from '../actions/base-actions';
-import { saveExtraQuestions, clearSelectedTicket } from '../actions/ticket-actions';
-import styles from '../styles/extra-questions.module.scss';
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import history from "../history";
+import { connect } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-export const ExtraQuestionsPage = ({
-	summit,
-	getExtraQuestions,
-	extraQuestions,
-	saveExtraQuestions,
-	selectedTicket,
-	clearSelectedTicket
-}) => {
+import { getExtraQuestions } from "../actions/base-actions";
+import { saveExtraQuestions, clearSelectedTicket } from "../actions/ticket-actions";
+import { Input, RegistrationCompanyInput, RawHTML } from "openstack-uicore-foundation/lib/components";
+import QuestionsSet from "openstack-uicore-foundation/lib/utils/questions-set";
+import ExtraQuestionsForm from "openstack-uicore-foundation/lib/components/extra-questions";
 
-	const formRef = useRef(null);
+import styles from "../styles/extra-questions.module.scss";
 
-	useEffect(() => {
-		if(selectedTicket?.owner?.id) getExtraQuestions(summit, selectedTicket.owner.id);
-	}, [selectedTicket?.owner]);
+const noOpFn = () => {};
 
-	const userAnswers = selectedTicket ? selectedTicket.owner.extra_questions : [];
+const scrollBehaviour = { behavior: "smooth", block: "start" };
 
-	const [owner, setOwner] = useState({
-			email: selectedTicket?.owner?.email || '',
-			first_name: selectedTicket?.owner?.first_name || '',
-			last_name: selectedTicket?.owner?.last_name || '',
-			company: selectedTicket?.owner?.company || '',
-			disclaimer: selectedTicket?.owner?.disclaimer_accepted || false,
-	});
-
-	// calculate state initial values
-	const [answers, setAnswers] = useState([]);
-
-	const checkAttendeeInformation = () =>
-		!!owner.first_name && !!owner.last_name && !!owner.company && !!owner.email;
-
-	const checkMandatoryDisclaimer = () =>
-			summit.registration_disclaimer_mandatory ? owner.disclaimer : true;
-
-	const disabledButton = useMemo(() => !checkAttendeeInformation() || !checkMandatoryDisclaimer(),
-				[owner.first_name, owner.last_name, owner.company, owner.email, owner.disclaimer]);
-
-	const toggleDisclaimer = () => setOwner({ ...owner, disclaimer: !owner.disclaimer });
-
-	const goToPrintBadge = () =>
-		history.push(`/check-in/${summit.slug}/tickets/${selectedTicket?.number}`);
-
-	const handleAnswerChanges = (answersForm) => {
-			const qs = new QuestionsSet(extraQuestions);
-			let newAnswers = [];
-			Object.keys(answersForm).forEach(name => {
-					let question = qs.getQuestionByName(name);
-					if (!question){
-							console.log(`missing question for answer ${name}.`);
-							return;
-					}
-					newAnswers.push({ id: question.id, value: answersForm[name]});
-			});
-			setAnswers(newAnswers);
-			saveExtraQuestions(newAnswers, owner).then(goToPrintBadge);
-	};
-
-	const getAnswer = (question) => answers.find(a => a.id === question.id).value;
-
-	const triggerFormSubmit = () => {
-    if (extraQuestions.length > 0) {
-      formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-      return;
-    }
-    saveExtraQuestions([], owner).then(goToPrintBadge);
-  }
-
-	if (!selectedTicket) return <Redirect to={`/check-in/${summit.slug}/`} />;;
-
-	return (
-		<>
-				<div className="container">
-						<div className="col-md-8 col-md-offset-2">
-								<h3>Attendee Information</h3>
-								<div className={styles.form}>
-										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-12'>Ticket assigned to {`${owner.email}`}</div>
-										</div>
-										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>First Name *</div>
-												<div className='col-md-8'>
-												{ selectedTicket.owner.first_name ?
-													selectedTicket.owner.first_name
-													:
-													<input
-														className={`${styles.inputField}`}
-														type="text"
-														placeholder="First Name"
-														onChange={e => setOwner({ ...owner, first_name: e.target.value })}
-														value={owner.first_name}
-													/>
-												}
-												</div>
-										</div>
-										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Last Name *</div>
-												<div className='col-md-8'>
-												{ selectedTicket.owner.last_name ?
-													selectedTicket.owner.last_name
-													:
-													<input
-														className={`${styles.inputField}`}
-														type="text"
-														placeholder="Last Name"
-														onChange={e => setOwner({ ...owner, last_name: e.target.value })}
-														value={owner.last_name}
-													/>
-												}
-												</div>
-										</div>
-										<div className={`row ${styles.inputRow}`}>
-												<div className='col-md-4'>Company *</div>
-												<div className='col-md-8'>
-														{ selectedTicket.owner.company ?
-															selectedTicket.owner.company
-															:
-															<input
-																className={`${styles.inputField}`}
-																type="text"
-																placeholder="Company"
-																onChange={e => setOwner({ ...owner, company: e.target.value })}
-																value={owner.company}
-															/>
-														}
-												</div>
-										</div>
-								</div>
-								{ extraQuestions.length > 0 &&
-									<>
-										<h3>Additional Information</h3>
-										<h5>
-												These extra questions are required before entering the event.
-										</h5>
-										<div>
-											<ExtraQuestionsForm
-												ref={formRef}
-											  className={styles.form}
-												extraQuestions={extraQuestions}
-												userAnswers={userAnswers}
-												onAnswerChanges={handleAnswerChanges}
-												questionContainerClassName={`row ${styles.inputRow}`}
-												questionLabelContainerClassName={'col-md-12'}
-												questionControlContainerClassName={`col-md-12 ${styles.inputField}`}
-											/>
-										</div>
-									</>
-								}
-								{ summit?.registration_disclaimer_content &&
-								<div className={`row ${styles.disclaimer}`}>
-									<div className="col-md-12">
-										<input type="checkbox" checked={owner.disclaimer} onChange={toggleDisclaimer} />
-										<b>{summit.registration_disclaimer_mandatory ? '*' : ''}</b>
-										<span dangerouslySetInnerHTML={{ __html: summit.registration_disclaimer_content }} />
-									</div>
-								</div>
-								}
-								<div className="row">
-									<div className="col-md-12 text-center">
-										<button
-											className={`${styles.buttonSave} btn btn-primary`}
-											onClick={() => clearSelectedTicket()}
-										>
-											Cancel
-										</button>
-										<button
-											className={`${styles.buttonSave} btn btn-primary`}
-											disabled={disabledButton}
-											onClick={() => triggerFormSubmit()}
-										>
-											Save and Continue
-										</button>
-									</div>
-								</div>
-						</div>
-				</div>
-		</>
-	)
+const TicketKeys = {
+  email: "attendee_email",
+  firstName: "attendee_first_name",
+  lastName: "attendee_last_name",
+  company: "attendee_company",
+  disclaimerAccepted: "disclaimer_accepted",
+  extraQuestions: "extra_questions"
 };
 
+export const ExtraQuestionsPage = ({
+  summit,
+  ticket,
+  extraQuestions,
+  saveExtraQuestions,
+  getExtraQuestions,
+  clearSelectedTicket,
+}) => {
+
+  const formRef = useRef(null);
+  const [triedSubmitting, setTriedSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (ticket) getExtraQuestions(summit, ticket.owner.id);
+  }, [ticket]);
+
+  const initialValues = useMemo(() => {
+    const {
+      email,
+      first_name,
+      last_name,
+      company,
+      disclaimer_accepted_date,
+      extra_questions
+    } = ticket?.owner || {};
+
+    const formattedExtraQuestions = extra_questions ?
+      extra_questions.map(({ question_id, value }) => (
+        { question_id: question_id, value }
+      )) : [];
+
+    return {
+      [TicketKeys.email]: email,
+      [TicketKeys.firstName]: first_name,
+      [TicketKeys.lastName]: last_name,
+      [TicketKeys.company]: { id: null, name: company },
+      [TicketKeys.disclaimerAccepted]: !!disclaimer_accepted_date,
+      [TicketKeys.extraQuestions]: formattedExtraQuestions
+    };
+  }, [ticket]);
+
+  const validationSchema = useMemo(() => Yup.object().shape({
+    [TicketKeys.firstName]: Yup.string().required(),
+    [TicketKeys.lastName]: Yup.string().required(),
+    [TicketKeys.company]: Yup.object().shape({
+      id: Yup.number().nullable(),
+      name: Yup.string().nullable().required(),
+    }),
+    ...(summit.registration_disclaimer_mandatory && {
+      [TicketKeys.disclaimerAccepted]: Yup.boolean().oneOf([true]).required()
+    })
+  }), [ticket, summit]);
+
+  const handleSubmit = (values, formikHelpers) => {
+    formikHelpers.setSubmitting(true);
+    saveExtraQuestions(values).then(() => {
+      formikHelpers.setSubmitting(false);
+      history.push(`/check-in/${summit.slug}/tickets/${ticket.id}`);
+    });
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+    // Note: We need `enableReinitialize` to be `true` so the extra questions aren"t cleared after saving.
+    enableReinitialize: true
+  });
+
+  const scrollToError = (error) => document.querySelector(`label[for="${error}"]`).scrollIntoView(scrollBehaviour);
+
+  const validateForm = (knownErrorRef = null) => {
+    // Validate the formik form
+    formik.validateForm().then((errors) => {
+      const errorKeys = Object.keys(errors);
+      // attendee data
+      if (errorKeys.length > 0 && errorKeys[0] != TicketKeys.disclaimerAccepted) {
+        scrollToError(errorKeys[0]);
+        return;
+      }
+      // extra question
+      if (knownErrorRef) {
+        knownErrorRef.scrollIntoView(scrollBehaviour);
+        return;
+      }
+      // disclaimer
+      if (errorKeys.length > 0) {
+        scrollToError(errorKeys[0]);
+        return;
+      }
+      // submit the formik form
+      formik.handleSubmit();
+    });
+  };
+
+  const hasExtraQuestions = extraQuestions.length > 0;
+
+  const triggerSubmit = () => {
+    setTriedSubmitting(true);
+    if (hasExtraQuestions) {
+      // TODO: We shouldn"t have to do this to get the changes from the `ExtraQuestionsForm`.
+      // We should just be able to pass an `onChange` event handler to the `ExtraQuestionsForm`.
+      formRef.current.doSubmit();
+      return;
+    }
+    validateForm();
+  };
+
+  const handleExtraQuestionError = (_, errorRef) => {
+    validateForm(errorRef);
+  }
+
+  const onExtraQuestionsAnswersSet = (answersForm) => {
+    const questionSet = new QuestionsSet(extraQuestions);
+    const newAnswers = Object.keys(answersForm).reduce((acc, name) => {
+      let question = questionSet.getQuestionByName(name);
+      if (!question) {
+        console.error(`Missing question for answer ${name}.`);
+        return acc;
+      }
+      if (answersForm[name] || answersForm[name].length > 0) {
+        acc.push({ question_id: question.id, answer: `${answersForm[name]}` });
+      }
+      return acc;
+    }, []);
+    // Set the extra question answers on the formik state.
+    formik.setFieldValue(TicketKeys.extraQuestions, newAnswers);
+    validateForm();
+  };
+
+  if (!ticket) {
+    history.push(`/check-in/${summit.slug}`);
+    return null;
+  }
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-8 col-md-offset-2">
+          <h2>Attendee Information</h2>
+          <div className={`${styles.extraQuestion}`}>
+            <label htmlFor={TicketKeys.firstName}>First Name</label>
+            <Input
+              id={TicketKeys.firstName}
+              name={TicketKeys.firstName}
+              className="form-control"
+              type="text"
+              placeholder={"Your First Name"}
+              value={formik.values[TicketKeys.firstName]}
+              onBlur={formik.handleBlur}
+              onChange={!!initialValues[TicketKeys.firstName] ? noOpFn : formik.handleChange}
+              disabled={!!initialValues[TicketKeys.firstName]}
+            />
+            {(formik.touched[TicketKeys.firstName] || triedSubmitting) && formik.errors[TicketKeys.firstName] &&
+            <p className={styles.errorLabel}>Required</p>
+            }
+          </div>
+          <div className={`${styles.extraQuestion}`}>
+            <label htmlFor={TicketKeys.lastName}>Last Name</label>
+            <Input
+              id={TicketKeys.lastName}
+              name={TicketKeys.lastName}
+              className="form-control"
+              type="text"
+              placeholder={"Your Last Name"}
+              value={formik.values[TicketKeys.lastName]}
+              onBlur={formik.handleBlur}
+              onChange={!!initialValues[TicketKeys.lastName] ? noOpFn : formik.handleChange}
+              disabled={!!initialValues[TicketKeys.lastName]}
+            />
+            {(formik.touched[TicketKeys.lastName] || triedSubmitting) && formik.errors[TicketKeys.lastName] &&
+            <p className={styles.errorLabel}>Required</p>
+            }
+          </div>
+          <div className={`${styles.extraQuestion}`}>
+            <label htmlFor={TicketKeys.email}>Email</label>
+            <Input
+              id={TicketKeys.email}
+              name={TicketKeys.email}
+              className="form-control"
+              type="text"
+              value={initialValues[TicketKeys.email]}
+              disabled={true}
+            />
+          </div>
+          <div className={`${styles.extraQuestion}`}>
+            <label htmlFor={TicketKeys.company}>Company</label>
+            <RegistrationCompanyInput
+              id={TicketKeys.company}
+              name={TicketKeys.company}
+              summitId={summit.id}
+              placeholder={"Your Company"}
+              value={formik.values[TicketKeys.company]}
+              onBlur={formik.handleBlur}
+              onChange={!!initialValues[TicketKeys.company].name ? noOpFn : formik.handleChange}
+              disabled={!!initialValues[TicketKeys.company].name}
+              tabSelectsValue={false}
+            />
+            {(formik.touched[TicketKeys.company] || triedSubmitting) && formik.errors[TicketKeys.company] &&
+            <p className={styles.errorLabel}>Required</p>
+            }
+          </div>
+        </div>
+      </div>
+      { hasExtraQuestions &&
+      <div className="row">
+        <div className="col-md-8 col-md-offset-2">
+          <h2>Additional Information</h2>
+          <p>Please answer these additional questions.</p>
+          <ExtraQuestionsForm
+            extraQuestions={extraQuestions}
+            userAnswers={formik.values[TicketKeys.extraQuestions]}
+            onAnswerChanges={onExtraQuestionsAnswersSet}
+            ref={formRef}
+            allowExtraQuestionsEdit={summit.allow_update_attendee_extra_questions}
+            questionContainerClassName={`${styles.extraQuestion}`}
+            //questionLabelContainerClassName={""}
+            //questionControlContainerClassName={""}
+            shouldScroll2FirstError={false}
+            onError={handleExtraQuestionError}
+          />
+        </div>
+      </div>
+      }
+      { summit.registration_disclaimer_content &&
+      <div className="row">
+        <div className={`col-md-8 col-md-offset-2 ${styles.extraQuestion} abc-checkbox`}>
+          <input
+            id={TicketKeys.disclaimerAccepted}
+            name={TicketKeys.disclaimerAccepted}
+            type="checkbox"
+            onBlur={formik.handleBlur}
+            onChange={(e) =>
+              formik.setFieldTouched(TicketKeys.disclaimerAccepted, true) && formik.handleChange(e)
+            }
+            checked={formik.values[TicketKeys.disclaimerAccepted]}
+          />
+          <label htmlFor={TicketKeys.disclaimerAccepted}>
+            {summit.registration_disclaimer_mandatory && <b> *</b>}
+          </label>
+          {(formik.touched[TicketKeys.disclaimerAccepted] || triedSubmitting) && formik.errors[TicketKeys.disclaimerAccepted] &&
+          <p className={styles.errorLabel}>Required</p>
+          }
+          <div>
+            <RawHTML>
+              {summit.registration_disclaimer_content}
+            </RawHTML>
+          </div>
+        </div>
+      </div>
+      }
+      <div className="row">
+        <div className="col-md-8 col-md-offset-2">
+          <button
+            className={`${styles.buttonCancel} btn btn-primary`}
+            onClick={() => clearSelectedTicket()}
+          >
+            Go Back
+          </button>
+          <button
+            className={`${styles.buttonSave} btn btn-primary`}
+            disabled={formik.isSubmitting}
+            onClick={triggerSubmit}>
+            {!formik.isSubmitting && <>Save and Continue</>}
+            {formik.isSubmitting && <>Saving...</>}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+};
 
 const mapStateToProps = ({ baseState }) => ({
-	...baseState
+  summit: baseState.summit,
+  ticket: baseState.selectedTicket,
+  extraQuestions: baseState.extraQuestions
 });
 
 export default connect(mapStateToProps, {
 	getExtraQuestions,
 	saveExtraQuestions,
 	clearSelectedTicket,
-})(ExtraQuestionsPage)
+})(ExtraQuestionsPage);

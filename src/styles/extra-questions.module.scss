@@ -1,39 +1,63 @@
-.form {
-  margin-bottom: 30px;
-  :global {
-    button {
-      display: none;
-    }
-    .checkboxes-div .abc-checkbox label {
-      padding-left: 15px;
-    }
-  }
-}
-.input-row {
-  margin-top: 35px;
-  margin-bottom: 35px;
-}
-.input-field {
-  margin-top: 12px;
-  margin-bottom: 5px;
-  :global {
-    h4 {
-      font-size: 14px;
-      line-height: 20px;
-    }
-  }
-}
-.disclaimer {
-  margin: 25px 5px 0 5px;
-  > div {
+
+.extra-question {
+  label {
+    font-weight: 600;
     b {
-      margin-left: 5px;
+      color: red;
+    }
+    max-width: 98%;
+  }
+  [id^=rl_wrapper] div {
+    padding-top: 5px;
+    &~ div {
+      padding-top: 10px;
     }
   }
-  ul {
-    list-style: inside;
+  input[type="checkbox"] {
+    margin-right: 14px;
+    &~ label {
+      padding-left: 13px !important;
+    }
+  }
+  h4 {
+    font-weight: 400;
+    font-size: 1em !important;
+    line-height: 1;
+    padding-top: 4px;
+    margin-bottom: 0px;
   }
 }
+
+.error-label {
+  color: red;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin: auto 0;
+  padding: 0;
+  &::before {
+    content: "\f071";
+    font-family: FontAwesome;
+    padding-right: 5px;
+  }
+}
+
 .button-save {
-  margin: 30px 15px;
+  float: right;
+  margin-top: 20px;
+}
+
+.button-cancel {
+  float: left;
+  margin-top: 20px;
+}
+
+.mandatoryDisclaimer::after {
+  content: "*";
+  position: relative;
+  bottom: 2px;
+  left: 20px;
+  color: red;
+  font-size: 1em;
+  font-weight: 700;
 }
