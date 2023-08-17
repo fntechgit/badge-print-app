@@ -6,7 +6,9 @@ import * as Yup from "yup";
 
 import { getExtraQuestions } from "../actions/base-actions";
 import { saveExtraQuestions, clearSelectedTicket } from "../actions/ticket-actions";
-import { Input, RegistrationCompanyInput, RawHTML } from "openstack-uicore-foundation/lib/components";
+import Input  from "openstack-uicore-foundation/lib/components/inputs/text-input";
+import RegistrationCompanyInput from "openstack-uicore-foundation/lib/components/inputs/registration-company-input";
+import RawHTML from "openstack-uicore-foundation/lib/components/raw-html";
 import QuestionsSet from "openstack-uicore-foundation/lib/utils/questions-set";
 import ExtraQuestionsForm from "openstack-uicore-foundation/lib/components/extra-questions";
 

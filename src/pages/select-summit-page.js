@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import history from '../history'
-import { Dropdown } from 'openstack-uicore-foundation/lib/components'
+import Dropdown from 'openstack-uicore-foundation/lib/components/inputs/dropdown'
 import { connect } from "react-redux";
 import {clearSummit, loadSummits, setSummit} from "../actions/base-actions";
 import T from "i18n-react/dist/i18n-react";
