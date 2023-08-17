@@ -5,18 +5,17 @@
     b {
       color: red;
     }
-    max-width: 98%;
   }
   [id^=rl_wrapper] div {
     padding-top: 5px;
+    padding-left: 7px !important;
     &~ div {
       padding-top: 10px;
     }
   }
   input[type="checkbox"] {
-    margin-right: 14px;
-    &~ label {
-      padding-left: 13px !important;
+    ~ label {
+      padding-left: 14px !important;
     }
   }
   h4 {
@@ -29,7 +28,6 @@
 }
 
 .error-label {
-  color: red;
   display: block;
   font-size: 12px;
   font-weight: 700;
@@ -50,14 +48,4 @@
 .button-cancel {
   float: left;
   margin-top: 20px;
-}
-
-.mandatoryDisclaimer::after {
-  content: "*";
-  position: relative;
-  bottom: 2px;
-  left: 20px;
-  color: red;
-  font-size: 1em;
-  font-weight: 700;
 }

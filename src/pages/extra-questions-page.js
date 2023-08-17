@@ -11,6 +11,7 @@ import QuestionsSet from "openstack-uicore-foundation/lib/utils/questions-set";
 import ExtraQuestionsForm from "openstack-uicore-foundation/lib/components/extra-questions";
 
 import styles from "../styles/extra-questions.module.scss";
+import "../styles/extra-questions.less";
 
 const noOpFn = () => {};
 
@@ -240,7 +241,7 @@ export const ExtraQuestionsPage = ({
             onAnswerChanges={onExtraQuestionsAnswersSet}
             ref={formRef}
             allowExtraQuestionsEdit={summit.allow_update_attendee_extra_questions}
-            questionContainerClassName={`${styles.extraQuestion}`}
+            questionContainerClassName={styles.extraQuestion}
             //questionLabelContainerClassName={""}
             //questionControlContainerClassName={""}
             shouldScroll2FirstError={false}
@@ -263,7 +264,7 @@ export const ExtraQuestionsPage = ({
             checked={formik.values[TicketKeys.disclaimerAccepted]}
           />
           <label htmlFor={TicketKeys.disclaimerAccepted}>
-            {summit.registration_disclaimer_mandatory && <b> *</b>}
+            {summit.registration_disclaimer_mandatory && <b>*</b>}
           </label>
           {(formik.touched[TicketKeys.disclaimerAccepted] || triedSubmitting) && formik.errors[TicketKeys.disclaimerAccepted] &&
           <p className={styles.errorLabel}>Required</p>
