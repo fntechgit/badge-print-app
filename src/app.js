@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Redirect, Router } from 'react-router-dom';
 import PrimaryLayout from './layouts/primary-layout';
-import { AjaxLoader } from 'openstack-uicore-foundation/lib/components';
+import AjaxLoader  from 'openstack-uicore-foundation/lib/components/ajaxloader';
 import { resetLoading } from "openstack-uicore-foundation/lib/utils/actions";
 import { onUserAuth, doLogout, getUserInfo } from 'openstack-uicore-foundation/lib/security/actions';
 import { initLogOut } from 'openstack-uicore-foundation/lib/security/methods';
