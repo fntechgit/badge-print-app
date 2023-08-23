@@ -71,8 +71,7 @@ class PrintPage extends React.Component {
             printJobStatus: null,
             viewTypeOverride: null,
             autoProcessBatch: false,
-            batchPrintingComplete: false,
-            badgeFetched: false,
+            batchPrintingComplete: false
         };
         this.isFirstOfBatch = this.isFirstOfBatch.bind(this);
         this.isLastOfBatch = this.isLastOfBatch.bind(this);
@@ -159,9 +158,9 @@ class PrintPage extends React.Component {
         }
         if (shouldGetBadge) {
             if (viewTypeOverride || viewType) {
-                this.props.getBadge(summitSlug, ticketId, { viewType: viewTypeOverride || viewType }).then(() => this.setState({...this.state, badgeFetched: true}));
+                this.props.getBadge(summitSlug, ticketId, { viewType: viewTypeOverride || viewType });
             } else {
-                this.props.getBadge(summitSlug, ticketId).then(() => this.setState({...this.state, badgeFetched: true}));
+                this.props.getBadge(summitSlug, ticketId);
             }
         }
     };
@@ -331,13 +330,12 @@ class PrintPage extends React.Component {
             autoProcessBatch,
             batchPrintingComplete,
             viewTypeOverride,
-            badgeFetched,
             embedded
         } = this.state;
 
         const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType } = this.props;
 
-        if (loading || (!badgeFetched && !badge)) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
+        if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (summitSlug && (!badgeTicketId || badgeTicketId && !badgeViewType) && this.isBatchPrinting()) {
             const [ticketId, viewType] = batchItemsRef[0].split('|');
