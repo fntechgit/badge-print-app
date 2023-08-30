@@ -104,37 +104,27 @@ class PrintPage extends React.Component {
         const { summit_slug: summitSlug } = this.props.match.params;
         const { ticket_id: ticketId } = this.props.match.params;
 
-        if (!ticketId) {
-            const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
-            const filters = parsedQueryString['filter[]'];
-            const viewType = parsedQueryString['view_type'];
-            const checkIn = parsedQueryString['check_in'];
-            const order = parsedQueryString['order'];
+        const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
 
-            const newState = { ...this.state };
-            newState.summitSlug = summitSlug;
-            if (viewType) newState.viewTypeOverride = viewType;
-            if (checkIn) newState.willCheckIn = (checkIn === 'true');
-            console.log(`PrintPage::componentWillMount viewType ${viewType} checkIn ${checkIn}`);
+        const viewType = parsedQueryString['view_type'];
+        const checkIn = parsedQueryString['check_in'];
+        const filters = !ticketId ? parsedQueryString['filter[]'] : `id==${ticketId}`;
+        const order = parsedQueryString['order'];
 
-            this.setState(newState, () => {
-                this.props.getAllTickets({
-                    filters,
-                    order,
-                    expand: 'badge,badge.type,badge.type.allowed_view_types'
-                }).then((tickets) => this.initPrintJob(tickets));
-            });
-        } else {
-            const filters = `id==${ticketId}`
-            const newState = { ...this.state };
-            newState.summitSlug = summitSlug;
-            this.setState(newState, () => {
-                this.props.getAllTickets({
-                    filters,
-                    expand: 'badge,badge.type,badge.type.allowed_view_types'
-                }).then((tickets) => this.initPrintJob(tickets));
-            });
-        }
+        const newState = { ...this.state };
+        newState.summitSlug = summitSlug;
+
+        if (viewType) newState.viewTypeOverride = viewType;
+        if (checkIn) newState.willCheckIn = (checkIn === 'true');
+        console.log(`PrintPage::componentWillMount viewType ${viewType} checkIn ${checkIn}`);
+
+        this.setState(newState, () => {
+            this.props.getAllTickets({
+                filters,
+                order,
+                expand: 'badge,badge.type,badge.type.allowed_view_types'
+            }).then((tickets) => this.initPrintJob(tickets));
+        });
     };
 
     componentDidMount = () => {
