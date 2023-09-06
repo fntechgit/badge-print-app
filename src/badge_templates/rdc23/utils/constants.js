@@ -29,7 +29,7 @@ export const BadgeTypesDisplayName = {
     [BadgeTypes.Attendee]: 'Attendee',
     [BadgeTypes.Speaker]: 'Speaker',
     [BadgeTypes.ExternalSpeaker]: 'Speaker',
-    [BadgeTypes.Press]: 'Media',
+    [BadgeTypes.Press]: 'Press',
     [BadgeTypes.Guest]: 'Attendee',
 };
 
