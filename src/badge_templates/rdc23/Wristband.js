@@ -63,6 +63,8 @@ export default ({ badge }) => {
                  badge.getBadgeTypeName() == BadgeTypes.Press ||
                  badge.getBadgeTypeName() == BadgeTypes.Guest;
     const over21 = badge.getExtraQuestionValue(ExtraQuestionsKeys.Over21) === "Yes";
+    const firstName = badge.getExtraQuestionValue(ExtraQuestionsKeys.FirstName);
+    const lastName = badge.getExtraQuestionValue(ExtraQuestionsKeys.LastName);
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard wristband" ref={artboardRef}>
@@ -94,13 +96,25 @@ export default ({ badge }) => {
                     contentEditable>{username}
                 </div>
             }
-            { badge.getFirstName() &&
+            { firstName &&
+                <div
+                    className={`name first-name text-vertical ${darkTheme ? 'white' : 'black'}`}
+                    contentEditable>{firstName}
+                </div>
+            }
+            { !firstName && badge.getFirstName() &&
                 <div
                     className={`name first-name text-vertical ${darkTheme ? 'white' : 'black'}`}
                     contentEditable>{badge.getFirstName()}
                 </div>
             }
-            { badge.getLastName() &&
+            { lastName &&
+                <div
+                    className={`name last-name text-vertical ${darkTheme ? 'white' : 'black'}`}
+                    contentEditable>{badge.getLastName()}
+                </div>
+            }
+            { !lastName && badge.getLastName() &&
                 <div
                     className={`name last-name text-vertical ${darkTheme ? 'white' : 'black'}`}
                     contentEditable>{badge.getLastName()}
