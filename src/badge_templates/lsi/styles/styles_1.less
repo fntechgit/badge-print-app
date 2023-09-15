@@ -1,0 +1,81 @@
+/* -- general styles -- */
+
+@font-face {
+	font-family: "SamsungSharpSans-Medium";
+	src: url('~fonts/Samsung/SamsungSharpSans-Medium.ttf') format('truetype');
+}
+@font-face {
+	font-family: "SamsungSharpSans-Bold";
+	src: url('~fonts/Samsung/SamsungSharpSans-Bold.ttf') format('truetype');
+	}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #000;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #000 !important;
+	}
+}
+
+#badge-artboard {
+	width: 88mm; 
+	height: 140mm;
+	position: relative;
+}
+
+.bdg-artboard {
+	font-family: "SamsungSharpSans-Bold";
+}
+
+.bdg-image {
+	position: absolute;
+}
+
+.text-boxes {
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	inset: 79mm 6.5mm 0;
+	color: #000 !important;
+	div {
+		color: #000 !important;
+	}
+	.full-name {
+		margin-top: 1mm;
+		line-height: 1.3;
+		font-size: 24pt;
+	}
+	.name {
+		line-height: 1.3;
+		letter-spacing: 0.25px;
+	}
+	.company {
+		padding-right: 10mm;
+		line-height: 1.3;
+	}
+	.job-title {
+		margin-top: 1mm;
+		font-family: "SamsungSharpSans-Medium";
+		line-height: 1.3;
+	}
+}
+
+.speaker-feature {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	padding: 2.2mm 0;
+	background-color: #102892;
+	text-align: center;
+	letter-spacing: 1px;
+	color: #fff !important;
+	div {
+		color: #fff !important;
+	}
+}
+
