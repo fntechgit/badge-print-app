@@ -95,7 +95,6 @@ export default ({ badge }) => {
       <Textfit
         min={30}
         className="speaker-feature"
-        onInput={forceUpdate}
         contentEditable
         suppressContentEditableWarning={true}
       >
