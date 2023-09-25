@@ -79,7 +79,7 @@ export default ({ badge }) => {
           {badge.getCompany()}
         </span>
         }
-        {badge.getExtraQuestionValue("jobTitle") &&
+        {/*badge.getExtraQuestionValue("jobTitle") &&
         <Textfit
           min={17}
           className="job-title"
@@ -88,7 +88,7 @@ export default ({ badge }) => {
           suppressContentEditableWarning={true}
         >
           {badge.getExtraQuestionValue("jobTitle")}
-        </Textfit>
+        </Textfit>*/
         }
       </div>
       {badge.getFeature("Speaker") &&
