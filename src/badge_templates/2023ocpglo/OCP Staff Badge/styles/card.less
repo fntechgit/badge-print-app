@@ -1,0 +1,123 @@
+@font-face {
+	font-family: "MuseoSansRounded";
+	src: url("~fonts/MuseoSansRounded/MuseoSansRounded300.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 300;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family: "MuseoSansRounded";
+	src: url("~fonts/MuseoSansRounded/MuseoSansRounded500.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 500;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family: "MuseoSansRounded";
+	src: url("~fonts/MuseoSansRounded/MuseoSansRounded700.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 700;
+	font-stretch: normal;
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #000000;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #000000 !important;
+	}
+}
+
+.card {
+	width: 94mm; 
+	height: 140mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+.bdg-artboard {
+	font-family: "MuseoSansRounded", sans-serif;
+	font-weight: 300;
+}
+
+.bdg-image-front {
+	height: 140mm!important;
+}
+
+.bdg-image-back {
+	top: 140mm;
+	height: 140mm!important;
+}
+
+.text-box {
+	position: absolute;
+	top: 6.5mm;
+	padding: 0 5.5mm;
+	display: flex;
+	flex-direction: column;
+	color: white !important;
+	width: 100%;
+	div {
+		color: white !important;
+	}
+	.first-name {
+		font-size: 38pt;
+		line-height: 1;
+	}
+	.last-name {
+		font-size: 24pt;
+	}
+	.attendee-title {
+		font-size: 15.5pt;
+		font-weight: 500;
+		margin-left: 1mm;
+		color: #71BF4D !important;
+		div {
+			color: #71BF4D !important;
+		}
+		margin-left: 20.5mm;
+		line-height: 1;
+	}
+	.last-name + .attendee-title {
+		margin-top: 8px;
+	}
+}
+.pipe {
+	font-size: 16pt;
+	font-weight: 700;
+	color: #71BF4D !important;
+	position: absolute;
+	top: 32.7mm;
+	left: 23.1mm;
+}
+.qrcode-box {
+	position: absolute;
+	background-color: white !important;
+	top: 113mm;
+	left: 6.2mm;
+	padding: 1mm;
+	height: 78px;
+}
+
+.icon-feature {
+	position: absolute;
+	width: 75px;
+	top: 430px;
+	left: 109px;
+	& ~ .icon-feature {
+		top: 345px;
+		& ~ .icon-feature {
+			left: 22px;
+		}
+	}
+}
