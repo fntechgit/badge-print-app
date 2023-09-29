@@ -9,6 +9,16 @@ import './styles/card.less';
 
 import background_img from './images/staff94x140.png';
 
+const shirtSize = {
+    'Unisex XS': '.',
+    'Unisex S': '..',
+    'Unisex M': '...',
+    'Unisex L': '....',
+    'Unisex XL': '....-',
+    'Unisex 2XL': '....--',
+    'Unisex 3XL': '....---',
+}
+
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     return (
@@ -30,6 +40,9 @@ export default ({badge}) => {
             </div>
             {badge.getExtraQuestionValue('Job Title') &&
             <span className="pipe"> | </span>
+            }
+            {badge.getExtraQuestionValue('T-shirt Size') &&
+            <div id="t-shirt-size" className="bdg-content">{shirtSize[badge.getExtraQuestionValue('T-shirt Size')]}</div>
             }
         </div>
     </>

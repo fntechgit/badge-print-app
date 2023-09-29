@@ -13,6 +13,15 @@ import lead_img from './images/lead94x140.png';
 import steering_img from './images/steering94x140.png';
 import symposium_img from './images/symposium94x140.png';
 
+const shirtSize = {
+    'Unisex XS': '.',
+    'Unisex S': '..',
+    'Unisex M': '...',
+    'Unisex L': '....',
+    'Unisex XL': '....-',
+    'Unisex 2XL': '....--',
+    'Unisex 3XL': '....---',
+}
 
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
@@ -62,6 +71,9 @@ export default ({badge}) => {
             <div className="bdg-content icon-feature">
                 <img className="bdg-image" src={badge.getFeature('Media').image}/>
             </div>
+            }
+            {badge.getExtraQuestionValue('T-shirt Size') &&
+            <div id="t-shirt-size" className="bdg-content">{shirtSize[badge.getExtraQuestionValue('T-shirt Size')]}</div>
             }
         </div>
     </>
