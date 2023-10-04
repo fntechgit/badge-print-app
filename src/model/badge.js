@@ -137,7 +137,7 @@ class Badge {
         return this._badge.qr_code;
     }
 
-    getQRCode(settings, level='M') {
+    getQRCode(settings, level='L') {
         const {qr_code} = this._badge;
         let qr = null;
 
