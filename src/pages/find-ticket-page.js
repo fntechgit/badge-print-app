@@ -239,7 +239,32 @@ class FindTicketPage extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <div className="row">
-                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME) && 
+                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL) &&
+                                <div className="col-md-12 find-tix-wrapper">
+                                    <div className="find-tix-label">
+                                        {T.translate("find_ticket.email_title")}
+                                    </div>
+                                    <div className="find-tix-form">
+                                        <input
+                                            className={`form-control input ${error === 'email' && 'error'}`}
+                                            id="email"
+                                            type="email"
+                                            placeholder={T.translate("find_ticket.email")}
+                                            ref={el => this.email = el}
+                                            onChange={() => this.setState({error: ''})}
+                                        />
+                                        { error === 'email' &&
+                                        <p className="error">{T.translate("find_ticket.valid_email")}</p>
+                                        }
+                                    </div>
+                                    <div className="find-tix-button">
+                                        <button className="btn btn-primary" onClick={this.handleFindByEmail}>
+                                            {T.translate("general.continue")}
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME) &&
                                 <div className="col-md-12 find-tix-wrapper">
                                     <div className="find-tix-label">
                                         {T.translate("find_ticket.name_title")}
@@ -264,36 +289,11 @@ class FindTicketPage extends React.Component {
                                             onChange={() => this.setState({error: ''})}
                                         />
                                         { error === 'name' &&
-                                        <p className="error">{T.translate("find_ticket.valid_name")}</p>
+                                            <p className="error">{T.translate("find_ticket.valid_name")}</p>
                                         }
                                     </div>
                                     <div className="find-tix-button">
                                         <button className="btn btn-primary" onClick={this.handleFindByName}>
-                                            {T.translate("general.continue")}
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL) && 
-                                <div className="col-md-12 find-tix-wrapper">
-                                    <div className="find-tix-label">
-                                        {T.translate("find_ticket.email_title")}
-                                    </div>
-                                    <div className="find-tix-form">
-                                        <input
-                                            className={`form-control input ${error === 'email' && 'error'}`}
-                                            id="email"
-                                            type="email"
-                                            placeholder={T.translate("find_ticket.email")}
-                                            ref={el => this.email = el}
-                                            onChange={() => this.setState({error: ''})}
-                                        />
-                                        { error === 'email' &&
-                                        <p className="error">{T.translate("find_ticket.valid_email")}</p>
-                                        }
-                                    </div>
-                                    <div className="find-tix-button">
-                                        <button className="btn btn-primary" onClick={this.handleFindByEmail}>
                                             {T.translate("general.continue")}
                                         </button>
                                     </div>
