@@ -226,7 +226,7 @@ export const ExtraQuestionsPage = ({
               disabled={!!initialValues[TicketKeys.company].name}
               tabSelectsValue={false}
             />
-            {(formik.touched[TicketKeys.company] || triedSubmitting) && formik.errors[TicketKeys.company] &&
+            {(formik.touched[TicketKeys.company] || triedSubmitting) && formik.errors[TicketKeys.company] && !formik.values[TicketKeys.company].name &&
             <p className={styles.errorLabel}>Required</p>
             }
           </div>
