@@ -14,6 +14,7 @@ import LogOutCallbackRoute from './routes/logout-callback-route';
 import { clearBadge } from "./actions/badge-actions";
 import T from 'i18n-react';
 import LanguageSelect from './components/language-select';
+import * as Sentry from "@sentry/react";
 
 
 // move all env var to global scope so ui core has access to this
@@ -24,7 +25,8 @@ window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];
 window.MARKETING_API_BASE_URL = process.env['MARKETING_API_BASE_URL'];
-
+window.SENTRY_DSN          = process.env['SENTRY_DSN'];
+window.SENTRY_TRACE_SAMPLE_RATE = process.env['SENTRY_TRACE_SAMPLE_RATE'];
 // admin groups allowed to bypass user checks on find and select ticket pages
 export const ADMIN_GROUPS = ['super-admins', 'administrators'];
 
@@ -50,6 +52,36 @@ try {
     T.setTexts(require(`./i18n/en.json`));
 }
 
+// Initialize Sentry
+Sentry.init({
+    dsn: window.SENTRY_DSN,
+    integrations: [
+      new Sentry.BrowserTracing({
+        // See docs for support of different versions of variation of react router
+        // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
+        routingInstrumentation: Sentry.reactRouterV6Instrumentation(
+          React.useEffect,
+          useLocation,
+          useNavigationType,
+          createRoutesFromChildren,
+          matchRoutes
+        ),
+      }),
+      new Sentry.Replay()
+    ],
+  
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    tracesSampleRate: window.SENTRY_TRACE_SAMPLE_RATE,
+  
+    // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
+    // tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+  
+    // Capture Replay for 10% of all sessions,
+    // plus for 100% of sessions with an error
+    // replaysSessionSampleRate: 0.1,
+    // replaysOnErrorSampleRate: 1.0,
+});
 
 class App extends React.PureComponent {
     constructor(props) {
