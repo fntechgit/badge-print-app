@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Switch, Redirect, Router } from 'react-router-dom';
+import { Switch, Redirect, Router, Route } from 'react-router-dom';
 import PrimaryLayout from './layouts/primary-layout';
 import AjaxLoader  from 'openstack-uicore-foundation/lib/components/ajaxloader';
 import { resetLoading } from "openstack-uicore-foundation/lib/utils/actions";
@@ -52,20 +52,24 @@ try {
     T.setTexts(require(`./i18n/en.json`));
 }
 
+// Create Custom Sentry Route component
+export const SentryRoute = Sentry.withSentryRouting(Route);
+
 // Initialize Sentry
 Sentry.init({
     dsn: window.SENTRY_DSN,
+    beforeSend(event) {
+        // Modify the event here
+        console.log('before send...', event)
+        return event;
+    },
     integrations: [
       new Sentry.BrowserTracing({
         // See docs for support of different versions of variation of react router
         // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
-        routingInstrumentation: Sentry.reactRouterV6Instrumentation(
-          React.useEffect,
-          useLocation,
-          useNavigationType,
-          createRoutesFromChildren,
-          matchRoutes
-        ),
+        routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
+        // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
+        tracePropagationTargets: ["localhost"],
       }),
       new Sentry.Replay()
     ],
@@ -74,13 +78,10 @@ Sentry.init({
     // of transactions for performance monitoring.
     tracesSampleRate: window.SENTRY_TRACE_SAMPLE_RATE,
   
-    // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
-    // tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
-  
     // Capture Replay for 10% of all sessions,
     // plus for 100% of sessions with an error
-    // replaysSessionSampleRate: 0.1,
-    // replaysOnErrorSampleRate: 1.0,
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
 });
 
 class App extends React.PureComponent {

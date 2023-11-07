@@ -17,6 +17,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AbstractAuthorizationCallbackRoute from "openstack-uicore-foundation/lib/security/abstract-auth-callback-route";
 import { getUserInfo } from "openstack-uicore-foundation/lib/security/actions";
+import { SentryRoute } from '../app';
 
 class AuthorizationCallbackRoute extends AbstractAuthorizationCallbackRoute {
 
@@ -30,7 +31,7 @@ class AuthorizationCallbackRoute extends AbstractAuthorizationCallbackRoute {
 
     _redirect2Error(error){
         return (
-            <Route render={ props => {
+            <SentryRoute render={ props => {
                 return <Redirect to={`/error?error=${error}`} />
             }} />
         )
