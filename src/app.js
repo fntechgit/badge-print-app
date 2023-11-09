@@ -15,6 +15,7 @@ import { clearBadge } from "./actions/badge-actions";
 import T from 'i18n-react';
 import LanguageSelect from './components/language-select';
 import * as Sentry from "@sentry/react";
+import { SentryFallbackFunction } from './components/SentryErrorComponent';
 
 
 // move all env var to global scope so ui core has access to this
@@ -106,35 +107,37 @@ class App extends React.PureComponent {
         const title = (summit) ? summit.name : T.translate("general.app_title");
         const summit_logo = summit ? summit.logo : null;
         return (
-            <Router history={history}>
-                <div>
-                    <AjaxLoader show={loading} size={ 120 }/>
-                    <div className="header">
-                        <div className="header-title row">
-                            <div className="col-md-12 title">
-                                <LanguageSelect language={language} />
-                                { summit_logo &&
-                                    <img alt="logo" className="header-logo" src={summit_logo} />
-                                }
-                                { !summit_logo &&
-                                     title
-                                }
-                                { isLoggedUser &&
-                                <a className="logout pull-right" onClick={initLogOut}>
-                                    <i className="fa fa-sign-out" aria-hidden="true" />
-                                </a>
-                                }
+            <Sentry.ErrorBoundary fallback={SentryFallbackFunction({componentName: "Badge Print App"})}>
+                <Router history={history}>
+                    <div>
+                        <AjaxLoader show={loading} size={ 120 }/>
+                        <div className="header">
+                            <div className="header-title row">
+                                <div className="col-md-12 title">
+                                    <LanguageSelect language={language} />
+                                    { summit_logo &&
+                                        <img alt="logo" className="header-logo" src={summit_logo} />
+                                    }
+                                    { !summit_logo &&
+                                        title
+                                        }
+                                    { isLoggedUser &&
+                                    <a className="logout pull-right" onClick={initLogOut}>
+                                        <i className="fa fa-sign-out" aria-hidden="true" />
+                                    </a>
+                                    }
+                                </div>
                             </div>
                         </div>
+                        <Switch>
+                            <AuthorizedRoute path="/check-in" component={PrimaryLayout} />
+                            <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
+                            <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
+                            <Redirect to="/check-in" />
+                        </Switch>
                     </div>
-                    <Switch>
-                        <AuthorizedRoute path="/check-in" component={PrimaryLayout} />
-                        <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
-                        <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
-                        <Redirect to="/check-in" />
-                    </Switch>
-                </div>
-            </Router>
+                </Router>
+            </Sentry.ErrorBoundary>
         );
     }
 }
