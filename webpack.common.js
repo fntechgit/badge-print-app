@@ -1,3 +1,4 @@
+const {sentryWebpackPlugin} = require("@sentry/webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
@@ -7,22 +8,46 @@ const path = require('path')
 
 module.exports = {
   entry: "./src/index.js",
+
   plugins: [
     new Dotenv({
       expand: true
-    }),
-    // Work around for Buffer is undefined:
+    }), // Work around for Buffer is undefined:
     // https://github.com/webpack/changelog-v5/issues/10
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
       process: 'process/browser',
-    }),
-    new CleanWebpackPlugin(),
+    }), 
+    new CleanWebpackPlugin(), 
     new HtmlWebpackPlugin({
       title: 'Badge Print App',
       template: './src/index.ejs'
-    }),
+    }),     
+    // upload source maps only if we have an sentry auth token and we are at production
+    ...("SENTRY_AUTH_TOKEN" in process.env && process.env.NODE_ENV === "production") ?[
+      new SentryWebpackPlugin({
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        ignore: ["app-*", "polyfill-*", "framework-*", "webpack-runtime-*", "~partytown"],
+        // Specify the directory containing build artifacts
+        include: [
+          {
+            paths: ["src","public",".cache"],
+            urlPrefix: "~/",
+          },        
+          {
+            paths: ["node_modules/openstack-uicore-foundation/lib"],
+            urlPrefix: "~/node_modules/openstack-uicore-foundation/lib",
+          }
+        ],
+        // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
+        // and needs the `project:releases` and `org:read` scopes
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        // Optionally uncomment the line below to override automatic release name detection
+        release: process.env.SENTRY_RELEASE,
+      })]:[],
   ],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -38,6 +63,7 @@ module.exports = {
       process: require.resolve("process"),
     }
   },
+
   module: {
     rules: [
       {
@@ -134,4 +160,6 @@ module.exports = {
       }
     ]
   },
+
+  devtool: "source-map"
 };
