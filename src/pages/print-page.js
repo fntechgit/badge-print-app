@@ -1,35 +1,35 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import history from '../history';
-import qs from 'query-string';
-import T from 'i18n-react/dist/i18n-react';
+import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import history from "../history";
+import qs from "query-string";
+import T from "i18n-react/dist/i18n-react";
 import {
     getBadge,
     incrementBadgePrintCount,
     clearBadge,
     printBadge
-} from '../actions/badge-actions';
-import { getAllTickets } from '../actions/ticket-actions';
-import Timeout from '../components/Timeout';
-import Badge from '../model/badge';
-import ErrorPage from './error-page';
+} from "../actions/badge-actions";
+import { getAllTickets } from "../actions/ticket-actions";
+import Timeout from "../components/Timeout";
+import Badge from "../model/badge";
+import ErrorPage from "./error-page";
 
 import {
     ButtonToolbar,
     ToggleButtonGroup,
     ToggleButton
-} from 'react-bootstrap';
+} from "react-bootstrap";
 
-import '../styles/badge-common.less';
-import '../styles/print-page.less';
+import "../styles/badge-common.less";
+import "../styles/print-page.less";
 
 const RedirectTimeOut = 7000;
 
 const PrintStatus = {
-    NotPrinted: 'NotPrinted',
-    Printed: 'Printed',
-    Error: 'Error',
+    NotPrinted: "NotPrinted",
+    Printed: "Printed",
+    Error: "Error",
 };
 
 const TicketStatusPrototype = {
@@ -106,23 +106,23 @@ class PrintPage extends React.Component {
 
         const parsedQueryString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
 
-        const viewType = parsedQueryString['view_type'];
-        const checkIn = parsedQueryString['check_in'];
-        const filters = !ticketId ? parsedQueryString['filter[]'] : `id==${ticketId}`;
-        const order = parsedQueryString['order'];
+        const viewType = parsedQueryString["view_type"];
+        const checkIn = parsedQueryString["check_in"];
+        const filters = !ticketId ? parsedQueryString["filter[]"] : `id==${ticketId}`;
+        const order = parsedQueryString["order"];
 
         const newState = { ...this.state };
         newState.summitSlug = summitSlug;
 
         if (viewType) newState.viewTypeOverride = viewType;
-        if (checkIn) newState.willCheckIn = (checkIn === 'true');
+        if (checkIn) newState.willCheckIn = (checkIn === "true");
         console.log(`PrintPage::componentWillMount viewType ${viewType} checkIn ${checkIn}`);
 
         this.setState(newState, () => {
             this.props.getAllTickets({
                 filters,
                 order,
-                expand: 'badge,badge.type,badge.type.allowed_view_types'
+                expand: "badge,badge.type,badge.type.allowed_view_types"
             }).then((tickets) => this.initPrintJob(tickets));
         });
     };
@@ -148,7 +148,7 @@ class PrintPage extends React.Component {
         }
         if (shouldGetBadge) {
             if (viewTypeOverride || viewType) {
-                this.props.getBadge(summitSlug, ticketId, { viewType: viewTypeOverride || viewType });
+                this.props.getBadge(summitSlug, ticketId, viewTypeOverride || viewType);
             } else {
                 this.props.getBadge(summitSlug, ticketId);
             }
@@ -167,7 +167,7 @@ class PrintPage extends React.Component {
 
         const currentIndex = batchItemsRef.indexOf(`${badgeTicketId}|${badgeViewType}`);
         const prevIndex = currentIndex == 0 ? batchItemsRef.length - 1 : currentIndex - 1;
-        const [prevTicketId, prevViewType] = batchItemsRef[prevIndex].split('|');
+        const [prevTicketId, prevViewType] = batchItemsRef[prevIndex].split("|");
 
         history.push(`/check-in/${summitSlug}/tickets/${prevTicketId}/views/${prevViewType}`);
     };
@@ -185,7 +185,7 @@ class PrintPage extends React.Component {
 
         const currentIndex = batchItemsRef.indexOf(`${badgeTicketId}|${badgeViewType}`);
         let nextIndex = currentIndex == batchItemsRef.length - 1 ? 0 : currentIndex + 1;
-        let [nextTicketId, nextViewType] = batchItemsRef[nextIndex].split('|');
+        let [nextTicketId, nextViewType] = batchItemsRef[nextIndex].split("|");
 
         if (printStatus == PrintStatus.NotPrinted) {
             if (this.isBatchPrintingComplete()) {
@@ -197,7 +197,7 @@ class PrintPage extends React.Component {
             }
             while (printJobStatus[nextTicketId].isViewTypePrinted(nextViewType)) {
                 nextIndex = nextIndex == batchItemsRef.length - 1 ? 0 : nextIndex + 1;
-                [nextTicketId, nextViewType] = batchItemsRef[nextIndex].split('|');
+                [nextTicketId, nextViewType] = batchItemsRef[nextIndex].split("|");
             }
         }
 
@@ -206,7 +206,7 @@ class PrintPage extends React.Component {
 
     goToThankYou = () => history.push(`/check-in/${this.state.summitSlug}/thank-you`);
 
-    goToFindTicketPage = () => history.push(`/check-in/${this.state.summitSlug || ''}`);
+    goToFindTicketPage = () => history.push(`/check-in/${this.state.summitSlug || ""}`);
 
     cancelPrint = () => {
         this.props.clearBadge().then(() => {
@@ -281,7 +281,7 @@ class PrintPage extends React.Component {
         if (this.state.embedded) {
             if (event?.target) event.target.disabled = true;
             const { view_type: badgeViewType } = this.props.match.params;
-            const element = document.getElementById('badge-artboard');
+            const element = document.getElementById("badge-artboard");
             const payload = {
                 height: element.clientHeight,
                 width: element.clientWidth,
@@ -304,7 +304,7 @@ class PrintPage extends React.Component {
         const { summitSlug, willCheckIn } = this.state;
         const { badgeTicketId, badgeViewType } = this.props;
         console.log(`PrintPage::incrementPrintCount summitSlug ${summitSlug} ticketId ${badgeTicketId} viewType ${badgeViewType} checkIn ${willCheckIn && !bypassCheckIn}`);
-        return this.props.incrementBadgePrintCount(summitSlug, badgeTicketId, { viewType: badgeViewType, checkIn: willCheckIn && !bypassCheckIn });
+        return this.props.incrementBadgePrintCount(summitSlug, badgeTicketId, badgeViewType, willCheckIn && !bypassCheckIn);
     };
 
     handleViewTypeChange(viewType) {
@@ -328,7 +328,7 @@ class PrintPage extends React.Component {
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (summitSlug && (!badgeTicketId || badgeTicketId && !badgeViewType) && this.isBatchPrinting()) {
-            const [ticketId, viewType] = batchItemsRef[0].split('|');
+            const [ticketId, viewType] = batchItemsRef[0].split("|");
             return <Redirect to={`/check-in/${summitSlug}/tickets/${ticketId}/views/${viewType}`} />;
         }
 
