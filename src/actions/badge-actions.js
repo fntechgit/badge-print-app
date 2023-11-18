@@ -6,8 +6,11 @@ import {
   startLoading,
   authErrorHandler
 } from "openstack-uicore-foundation/lib/utils/actions";
+import {
+  getAccessTokenSafely,
+  retryNetworkErrorInBackground
+} from "../utils/utils";
 import { exec } from "../services/wkbridge";
-import { retryNetworkErrorInBackground } from "../utils/utils";
 
 import Swal from "sweetalert2";
 
