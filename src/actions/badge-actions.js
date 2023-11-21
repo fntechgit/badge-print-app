@@ -8,11 +8,15 @@ import {
 } from "openstack-uicore-foundation/lib/utils/actions";
 import {
   getAccessTokenSafely,
+  retryNetworkError,
   retryNetworkErrorInBackground
 } from "../utils/utils";
-import { exec } from "../services/wkbridge";
+import {
+  customAuthErrorHandler,
+  handleCustomErrorAndRethrow
+} from "../utils/errorHandling";
 
-import Swal from "sweetalert2";
+import { exec } from "../services/wkbridge";
 
 export const REQUEST_BADGE = "REQUEST_BADGE";
 export const BADGE_RECEIVED = "BADGE_RECEIVED";
@@ -29,9 +33,11 @@ export const getBadge = (
 ) => async (dispatch, getState) => {
   const { baseState } = getState();
   const { summit, accessTokenQS } = baseState;
-  const accessToken = await getAccessTokenSafely(accessTokenQS);
+  const viewPath = viewType ? `/${viewType}` : "";
 
-  if (!summit || !ticketId) throw Error();
+  if (!summit || !ticketId) throw Error("Invalid summit or ticketId. Unable to get badge for printing.");
+
+  const accessToken = await getAccessTokenSafely(accessTokenQS);
 
   dispatch(startLoading());
 
@@ -40,17 +46,15 @@ export const getBadge = (
     expand: "ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels, type.allowed_view_types"
   };
 
-  const viewPath = viewType ? `/${viewType}` : "";
-
-  return getRequest(
-    createAction(REQUEST_BADGE),
-    createAction(BADGE_RECEIVED),
-    `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}/badge/current${viewPath}/print`,
-    authErrorHandler,
-    { viewType }
-  )(params)(dispatch).then(() =>
-    dispatch(stopLoading())
-  );
+  return retryNetworkError(() =>
+    getRequest(
+      createAction(REQUEST_BADGE),
+      createAction(BADGE_RECEIVED),
+     `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}/badge/current${viewPath}/print`,
+      customAuthErrorHandler,
+      { viewType }
+    )(params)(dispatch)
+  ).catch(handleCustomErrorAndRethrow);
 };
 
 export const incrementBadgePrintCount = (
@@ -83,17 +87,6 @@ export const incrementBadgePrintCount = (
     )(params)(dispatch)
   );
 };
-
-export const showMessage = (payload, callback = null) => (dispatch) => {
-  const hasCallback = callback && typeof callback === "function";
-  if (payload.httpCode) {
-    Swal.fire(payload).then(result => hasCallback && callback());
-  } else if (hasCallback)
-    callback();
-};
-
-export const customAuthErrorHandler = (error, response) => (dispatch) =>
-  authErrorHandler(error, response, showMessage)(dispatch);
 
 export const printBadge = (params) => (dispatch) =>
   exec(
