@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { getAccessToken } from "openstack-uicore-foundation/lib/security/methods"
+import { getAccessToken } from "openstack-uicore-foundation/lib/security/methods";
 import { initLogOut } from "openstack-uicore-foundation/lib/security/methods";
+import { NetworkError } from "./errorHandling";
 
 export const useForceUpdate = () => {
   const [value, setValue] = useState(0);
@@ -79,7 +80,7 @@ export const retryRequest = async (
     }
   }
   console.error("Max retries reached. Unable to complete the API request.");
-  throw new Error("Max retries reached.");
+  throw new NetworkError("Max retries reached.");
 };
 
 export const retryNetworkError = async (
