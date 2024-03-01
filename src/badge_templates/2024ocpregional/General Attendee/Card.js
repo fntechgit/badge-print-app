@@ -7,11 +7,11 @@ import {
 
 import './styles/card.less';
 
-import background_img from './images/general94x140.png';
-import board_img from './images/board94x140.png';
-import lead_img from './images/lead94x140.png';
-import steering_img from './images/steering94x140.png';
-import symposium_img from './images/symposium94x140.png';
+import background_img from './images/general267x396.png';
+import board_img from './images/board267x396.png';
+import lead_img from './images/lead267x396.png';
+import steering_img from './images/steering267x396.png';
+import symposium_img from './images/symposium267x396.png';
 
 const shirtSize = {
     'Unisex XS': '.',
@@ -24,7 +24,6 @@ const shirtSize = {
 }
 
 export default ({badge}) => {
-    console.log('BADGE', badge);
     const forceUpdate = useForceUpdate();
     let backgroundImage = background_img;
     if (badge.getFeature('Board Member Title')) {
@@ -45,12 +44,12 @@ export default ({badge}) => {
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImage}/>
             <div className="text-box">
                 <Textfit mode="single" max={50} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
-                <Textfit mode="single" max={32} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
-                <Textfit mode="single" max={21} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
-            </div>
+                <Textfit mode="single" max={50} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
+                <Textfit mode="single" max={30} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
+            </div> 
             {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content qrcode-box">
-                {badge.getQRCode({ fgColor: '#000000', bgColor: '#ffffff', size: 70 })}
+                {badge.getQRCode({ fgColor: '#ffffff', bgColor: '#19194D', size: 70 })}
             </div>
             }
             {badge.getFeature('Expo Sponsor Staff') &&

@@ -1,0 +1,68 @@
+@font-face {
+	font-family: "MuseoSansRounded";
+	src: url("~fonts/MuseoSansRounded/MuseoSansRounded300.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 300;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family: "MuseoSansRounded";
+	src: url("~fonts/MuseoSansRounded/MuseoSansRounded500.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 500;
+	font-stretch: normal;
+}
+
+@font-face {
+	font-family: "MuseoSansRounded";
+	src: url("~fonts/MuseoSansRounded/MuseoSansRounded700.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 700;
+	font-stretch: normal;
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #002554;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #002554 !important;
+	}
+}
+
+#badge-artboard {
+	width: 94mm; 
+	height: 140mm;
+	img { height: 100%; }
+}
+
+.content-wrapper {
+	font-family: "MuseoSansRounded";
+	position: absolute;
+	top: 73mm;
+	padding: 0 8.5mm;
+	display: flex;
+	flex-direction: column;
+	color: black !important;
+	width: 100%;
+	text-align: center;
+	font-weight: 300;
+	div {
+		color: black !important;
+	}
+	.first-name {
+		font-size: 38pt;
+		line-height: 1;
+	}
+	.last-name {
+		font-size: 24pt;
+	}
+}
