@@ -28,16 +28,15 @@ export default ({badge}) => {
             <div className="text-box">
                 <Textfit mode="single" max={42} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={42} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
-                {/* {badge.getExtraQuestionValue('Job Title') && */}
+                {badge.getExtraQuestionValue('Job Title') &&
                 <span
                   className="attendee-title"
                   contentEditable
                   suppressContentEditableWarning={true}
                 >
-                  {/* {badge.getExtraQuestionValue('Job Title')} */}
-                  Senior Software Engineer
+                  {badge.getExtraQuestionValue('Job Title')}
                 </span>
-                {/* } */}
+                }
             </div>
             {badge.getExtraQuestionValue('Job Title') &&
             <span className="pipe"> | </span>
