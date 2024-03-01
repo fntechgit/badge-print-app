@@ -24,7 +24,6 @@ const shirtSize = {
 }
 
 export default ({badge}) => {
-    console.log('BADGE', badge);
     const forceUpdate = useForceUpdate();
     let backgroundImage = background_img;
     if (badge.getFeature('Board Member Title')) {
