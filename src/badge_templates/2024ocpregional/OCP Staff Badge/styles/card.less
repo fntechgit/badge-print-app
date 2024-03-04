@@ -1,0 +1,113 @@
+@font-face {
+	font-family: "Museo Sans";
+	src: url("~fonts/MuseoSans/MuseoSans_500.otf") format("opentype");
+	font-display: auto;
+	font-style: normal;
+	font-weight: 500;
+	font-stretch: normal;
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #000000;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #000000 !important;
+	}
+}
+
+.card {
+	width: 94mm; 
+	height: 140mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+
+.bdg-artboard {
+	font-family: "Museo Sans", sans-serif;
+	font-weight: 300;
+}
+
+.bdg-image-front {
+	height: 140mm!important;
+}
+
+.bdg-image-back {
+	top: 140mm;
+	height: 140mm!important;
+}
+
+.text-box {
+	position: absolute;
+	top: 6.5mm;
+	padding: 0 5.5mm;
+	display: flex;
+	flex-direction: column;
+	color: #19194D !important;
+	width: 100%;
+	div {
+		color: #19194D !important;
+	}
+	.first-name {
+		font-size: 38pt;
+		line-height: 1;
+	}
+	.last-name {
+		font-size: 24pt;
+	}
+	.attendee-title {
+		font-size: 15.5pt;
+		font-weight: 500;
+		margin-left: 1mm;
+		color: #71BF4D !important;
+		div {
+			color: #71BF4D !important;
+		}
+		line-height: 1;
+	}
+	.last-name + .attendee-title {
+		margin-top: 40px;
+	}
+}
+.pipe {
+	font-size: 16pt;
+	font-weight: 700;
+	color: #71BF4D !important;
+	position: absolute;
+	top: 32.7mm;
+	left: 23.1mm;
+}
+.qrcode-box {
+	position: absolute;
+	background-color: white !important;
+	top: 113mm;
+	left: 6.2mm;
+	padding: 1mm;
+	height: 78px;
+}
+
+.icon-feature {
+	position: absolute;
+	width: 75px;
+	top: 430px;
+	left: 109px;
+	& ~ .icon-feature {
+		top: 345px;
+		& ~ .icon-feature {
+			left: 22px;
+		}
+	}
+}
+
+#t-shirt-size {
+	position: absolute;
+	left: 6.7mm;
+	bottom: 0.7mm;
+	color: white !important;
+	letter-spacing: 0.5em;
+	margin-right: -0.5em;
+}
