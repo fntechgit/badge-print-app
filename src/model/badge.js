@@ -170,6 +170,19 @@ class Badge {
         return feature;
     }
 
+    getFeatureCircles() {
+        const { features } = this._badge;
+        const circleFeatures = [];
+
+        features.map(f => {
+            if(f.name === "Media" || f.name === "Expo Sponsor Staff" || f.name === "Speaker" || f.name === "Keynote") {
+                circleFeatures.push(f);
+            }
+        });
+
+        return circleFeatures;
+    }
+
     getExtraQuestionValue(extraQuestionName) {
         const { owner: { extra_questions } } = this._badge.ticket;
         let extraQuestionValue = null;

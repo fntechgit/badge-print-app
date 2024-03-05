@@ -46,35 +46,30 @@ export default ({badge}) => {
                 <Textfit mode="single" max={50} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={50} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>
                 <Textfit mode="single" max={30} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
-            </div> 
+            </div>
             {badge.hasQRCode() &&
             <div id="qrcode" className="bdg-content qrcode-box">
                 {badge.getQRCode({ fgColor: '#19194D', bgColor: '#ffffff', size: 70 })}
             </div>
             }
-            {badge.getFeature('Expo Sponsor Staff') &&
-            <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Expo Sponsor Staff').image}/>
-            </div>
-            }
-            {badge.getFeature('Speaker') && !badge.getFeature('Keynote') &&
-            <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Speaker').image}/>
-            </div>
-            }
-            {badge.getFeature('Keynote') &&
-            <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Keynote').image}/>
-            </div>
-            }
-            {badge.getFeature('Media') &&
-            <div className="bdg-content icon-feature">
-                <img className="bdg-image" src={badge.getFeature('Media').image}/>
-            </div>
-            }
-            {badge.getExtraQuestionValue('T-shirt Size') &&
-            <div id="t-shirt-size" className="bdg-content">{shirtSize[badge.getExtraQuestionValue('T-shirt Size')]}</div>
-            }
+            {badge.getFeatureCircles().length < 3 ?
+                <div id="circle_feature_two">
+                    {badge.getFeatureCircles()[0] && <div className="bdg-content icon-feature-2">
+                        <img className="bdg-image" src={badge.getFeatureCircles()[0].image}/>
+                    </div>}
+                    {badge.getFeatureCircles()[1] && <div className="bdg-content icon-feature-2">
+                        <img className="bdg-image" src={badge.getFeatureCircles()[1].image}/>
+                    </div>}
+                </div>
+                :
+                <div id="circle_feature_all">
+                    {badge.getFeatureCircles().map(feature => 
+                    <div className="bdg-content icon-feature">
+                        <img className="bdg-image" src={feature.image}/>
+                    </div>
+                    )}
+                </div>
+            };
         </div>
     </>
     );
