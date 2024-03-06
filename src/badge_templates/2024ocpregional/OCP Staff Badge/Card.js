@@ -38,9 +38,6 @@ export default ({badge}) => {
                 </span>
                 }
             </div>
-            {badge.getExtraQuestionValue('Job Title') &&
-            <span className="pipe"> | </span>
-            }
             {badge.getExtraQuestionValue('T-shirt Size') &&
             <div id="t-shirt-size" className="bdg-content">{shirtSize[badge.getExtraQuestionValue('T-shirt Size')]}</div>
             }
