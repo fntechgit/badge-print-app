@@ -23,7 +23,16 @@ const shirtSize = {
     'Unisex 3XL': '....---',
 }
 
+const getFeatureCirclesLogic = (badge) => {
+    const features = badge.getFeatureCircles();
+    if (features.some(f => f.name === "Speaker") && features.some(f => f.name === "Keynote")) {
+        return features.filter(f => f.name !== "Speaker");
+    }
+    return features;
+}
+
 export default ({badge}) => {
+    const featuresCircles = getFeatureCirclesLogic(badge);
     const forceUpdate = useForceUpdate();
     let backgroundImage = background_img;
     if (badge.getFeature('Board Member Title')) {
@@ -35,7 +44,7 @@ export default ({badge}) => {
     if (badge.getFeature('Project Lead Title') && !badge.getFeature('Steering Committee Title') && !badge.getFeature('Board Member Title')) {
         backgroundImage = lead_img;
     }
-    if (badge.getFeature('OCP Future Tech Symposium Title') && !badge.getFeature('Project Lead Title') && !badge.getFeature('Steering Committee Title') && !badge.getFeature('Board Member Title')) {
+    if (badge.getFeature('Symposium Title') && !badge.getFeature('Project Lead Title') && !badge.getFeature('Steering Committee Title') && !badge.getFeature('Board Member Title')) {
         backgroundImage = symposium_img;
     }
     return (
@@ -52,18 +61,18 @@ export default ({badge}) => {
                 {badge.getQRCode({ fgColor: '#19194D', bgColor: '#ffffff', size: 70 })}
             </div>
             }
-            {badge.getFeatureCircles().length < 3 ?
+            {featuresCircles.length < 3 ?
                 <div id="circle_feature_two">
-                    {badge.getFeatureCircles()[0] && <div className="bdg-content icon-feature-2">
-                        <img className="bdg-image" src={badge.getFeatureCircles()[0].image}/>
+                    {featuresCircles[0] && <div className="bdg-content icon-feature-2">
+                        <img className="bdg-image" src={featuresCircles[0].image}/>
                     </div>}
-                    {badge.getFeatureCircles()[1] && <div className="bdg-content icon-feature-2">
-                        <img className="bdg-image" src={badge.getFeatureCircles()[1].image}/>
+                    {featuresCircles[1] && <div className="bdg-content icon-feature-2">
+                        <img className="bdg-image" src={featuresCircles[1].image}/>
                     </div>}
                 </div>
                 :
                 <div id="circle_feature_all">
-                    {badge.getFeatureCircles().map(feature => 
+                    {featuresCircles.map(feature => 
                     <div className="bdg-content icon-feature">
                         <img className="bdg-image" src={feature.image}/>
                     </div>
