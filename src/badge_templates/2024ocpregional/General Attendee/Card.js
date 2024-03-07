@@ -78,7 +78,7 @@ export default ({badge}) => {
                     </div>
                     )}
                 </div>
-            };
+            }
         </div>
     </>
     );
