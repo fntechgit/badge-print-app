@@ -159,6 +159,11 @@ class Badge {
         return access_level;
     }
 
+    getAllFeatures() {
+        const { features } = this._badge;
+        return features;
+    }
+
     getFeature(featureName) {
         const {features} = this._badge;
         let feature = null;

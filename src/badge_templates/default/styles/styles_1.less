@@ -1,38 +1,133 @@
 /* -- general styles -- */
 
 #badge-artboard {
-	width:92mm; 
+	width:95mm; 
 	height:140mm;
+	font-family: 'Helvetica' !important;
+	background-color: #DDDDDD;
 }
 
-.bdg-artboard .box-content {
-	font-family: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
-	font-weight: normal;
-	left: 2.5mm;
+.bdg-artboard {
+	.box-content {
+		left: 2.5mm;
+	}
+}
+
+#logo-wrapper {
+	position: absolute;
+	top: 5mm;
+	left: 7mm;
+	.logo-placeholder {
+		background-color: #AAAAAA;
+		border-radius: 30px;
+		height: 17mm;
+		width: 50mm;
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		color: #000000 !important;
+		font-size: 9px;
+		text-transform: uppercase;
+	}
 }
 
 .text-box {
-  position: absolute;
-	height: 8mm;
+	position: absolute;
+	height: 58mm;
 	width: 81mm;
+	left: 7mm;
+	top: 25mm;
+	font-weight: 500 !important;
+	.first-name {
+		line-height: 1.2;
+	}
+	.last-name {
+		line-height: 1.3;
+	}
+	.company {
+		line-height: 1.5;
+	}
+	.title {
+		line-height: 1.5;
+	}
+}
+
+#badge-feature {
+	position: absolute;
+	top: 82mm;
+	left: 7mm;
+	.badge-feature-placeholder {
+		background-color: #AAAAAA;
+		border-radius: 25px;
+		width: 80mm;
+		height: 30px;
+		padding: 10px;
+		color: #000000 !important;
+		line-height: 1;
+		font-size: 8px;
+		text-transform: uppercase;
+		display: table-cell; 
+		vertical-align: middle;
+	}
+}
+
+.qrcode-box {
+	position: absolute;
+	bottom: 5mm;
 	left: 5mm;
 }
 
-.text-box.text-box-1 {top: 62mm;}
-
-.text-box.text-box-2 {top: 78mm;}
-
-.qrcode-box {
-  position: absolute;
-	top: 111mm;
-	right: 5mm;
+.icon-feature {
+	width: 20%;
+	position: absolute; 
+	bottom: 8mm;
+	left: 28mm;
+	img {
+		width: 100%;
+	}
+	& ~ .icon-feature {
+		left: 49mm;
+		& ~ .icon-feature {
+			left:70mm;
+		}
+	}
 }
 
-.icon-feature {top: 115mm;}
+#icon-feature-1 {
+	position: absolute; 
+	left: 28mm;
+}
 
-#icon-feature-1 {left: 36mm;}
+#icon-feature-2 {
+	position: absolute; 
+	left: 49mm;
+}
 
-#icon-feature-2 {left: 54mm;}
+#icon-feature-3 {
+	position: absolute; 
+	left: 70mm;
+}
 
-#icon-feature-3 {left: 72mm;}
+.circle-feature-placeholders {
+	color: #000000 !important;
+	width: 70px;
+    height: 70px;
+	border-radius: 50%;
+	background-color: #AAAAAA;
+	text-align: center;
+	padding: 9px;
+	vertical-align: middle;
+	display: table-cell;
+	.badge-num {
+		line-height: 1.2;
+		font-size: 16px;
+		display: block;
+	}
+	.badge-text {
+		display: block;
+		line-height: 1;
+		font-size: 8px;
+		text-transform: uppercase;
+	}
+}
 
