@@ -23,7 +23,7 @@ export default ({badge, marketingSettings}) => {
     } = badgeSettings;
     const forceUpdate = useForceUpdate();
     const featureCirlces = badge.getFeatureCircles();
-    const background_img = background.file || default_background_img;
+    const background_img = background?.file || default_background_img;
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">

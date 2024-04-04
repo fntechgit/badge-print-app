@@ -66,21 +66,21 @@ export const getMarketingBadgeSettings = (marketingSettings) => {
     const companyColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_COMPANY_COLOR")[0];
     return {
         background: {
-            file: background.file,
-            type: background.type,
-            value: background.value
+            file: background?.file,
+            type: background?.type,
+            value: background?.value
         },
         firstnameColor: {
-            type: firstnameColor.type,
-            value: firstnameColor.value
+            type: firstnameColor?.type,
+            value: firstnameColor?.value
         },
         lastnameColor: {
-            type: lastnameColor.type,
-            value: lastnameColor.value
+            type: lastnameColor?.type,
+            value: lastnameColor?.value
         },
         companyColor: {
-            type: companyColor.type,
-            value: companyColor.value
+            type: companyColor?.type,
+            value: companyColor?.value
         },
     }
 }
