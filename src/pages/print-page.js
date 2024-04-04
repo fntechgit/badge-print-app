@@ -323,7 +323,7 @@ class PrintPage extends React.Component {
             embedded
         } = this.state;
 
-        const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType } = this.props;
+        const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType, marketingSettings } = this.props;
 
         if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
@@ -395,7 +395,7 @@ class PrintPage extends React.Component {
                 <Timeout callback={this.processBatch} paused={!autoProcessBatch} />
                 }
                 <div className="badge-wrapper">
-                    {badgeObj.renderTemplate(summitSlug, viewTypeName)}
+                    {badgeObj.renderTemplate(summitSlug, viewTypeName, marketingSettings)}
                 </div>
             </div>
         );
@@ -408,6 +408,7 @@ const mapStateToProps = ({ baseState }) => ({
     badgeTicketId: baseState.badge?.ticket.id,
     badgeAllowedViewTypes: baseState.badge?.type.allowed_view_types,
     badgeViewType: baseState.badgeViewType,
+    marketingSettings: baseState.marketingSettings
 });
 
 export default connect(mapStateToProps, {

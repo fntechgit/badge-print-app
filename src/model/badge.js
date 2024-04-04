@@ -28,7 +28,7 @@ class Badge {
             .catch(() => this.importTemplate(templatePaths, { atIndex: index }));
     }
 
-    renderTemplate(summitSlug, viewTypeName = DefaultBadgeViewType) {
+    renderTemplate(summitSlug, viewTypeName = DefaultBadgeViewType, marketingSettings = []) {
         const { type } = this._badge;
 
         const badgeTemplatePaths = [
@@ -45,7 +45,7 @@ class Badge {
 
         return (
             <React.Suspense fallback={<div></div>}>
-                <PrintableBadge badge={this} />
+                <PrintableBadge badge={this} marketingSettings={marketingSettings} />
             </React.Suspense>
         );
     }

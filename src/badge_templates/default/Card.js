@@ -2,19 +2,28 @@ import React from 'react';
 import { Textfit } from 'react-textfit';
 
 import {
-    useForceUpdate
+    useForceUpdate,
+    getMarketingBadgeSettings
 } from '@/utils/utils';
 
 
 import './styles/styles_1.less';
-import background_img from './images/gen_background.png';
+import default_background_img from './images/gen_background.png';
 import access_level_1_img from './images/access_level_1.png';
 import feature_1_img from './images/feature_1.png';
 
 
-export default ({badge}) => {
+export default ({badge, marketingSettings}) => {
+    const badgeSettings = getMarketingBadgeSettings(marketingSettings);
+    const { 
+        background,
+        firstnameColor,
+        lastnameColor,
+        companyColor
+    } = badgeSettings;
     const forceUpdate = useForceUpdate();
     const featureCirlces = badge.getFeatureCircles();
+    const background_img = background.file || default_background_img;
     return (
     <>
         <div id="badge-artboard" className="bdg-artboard">
@@ -26,10 +35,22 @@ export default ({badge}) => {
             </div>
 
             <div id="text-on-badge" className="bdg-content text-box">
-                <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName() || "First Name"}</Textfit>
-                <Textfit mode="single" max={40} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName() || "Last Name"}</Textfit>
-                <Textfit mode="single" max={35} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany() || "Company"}</Textfit>
-                <Textfit mode="single" max={30} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Job Title') || 'Title'}</Textfit>
+                <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>
+                    <span style={{color: firstnameColor.value}}>
+                        {badge.getFirstName() || "First Name"}
+                    </span>
+                </Textfit>
+                <Textfit mode="single" max={40} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>
+                    <span style={{color: lastnameColor.value}}>
+                        {badge.getLastName() || "Last Name"}
+                    </span>
+                </Textfit>
+                <Textfit mode="single" max={35} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>
+                    <span style={{color: companyColor.value}}>
+                        {badge.getCompany() || "Company"}
+                    </span>
+                </Textfit>
+                <Textfit mode="single" max={30} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Job Title')}</Textfit>
             </div>
 
             <div id="badge-feature">

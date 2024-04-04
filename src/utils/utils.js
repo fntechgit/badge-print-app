@@ -58,3 +58,29 @@ export const getAccessTokenSafely = async (accessTokenQS) => {
         initLogOut();
     }
 };
+
+export const getMarketingBadgeSettings = (marketingSettings) => {
+    const background = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_BACKGROUND_IMG")[0];
+    const firstnameColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_FIRST_NAME_COLOR")[0];
+    const lastnameColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_LAST_NAME_COLOR")[0];
+    const companyColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_COMPANY_COLOR")[0];
+    return {
+        background: {
+            file: background.file,
+            type: background.type,
+            value: background.value
+        },
+        firstnameColor: {
+            type: firstnameColor.type,
+            value: firstnameColor.value
+        },
+        lastnameColor: {
+            type: lastnameColor.type,
+            value: lastnameColor.value
+        },
+        companyColor: {
+            type: companyColor.type,
+            value: companyColor.value
+        },
+    }
+}

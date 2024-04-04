@@ -117,7 +117,8 @@ export const getMarketingSettings = (summitId) => (dispatch) => {
 
     let params = {
       per_page: 100,
-      page: 1
+      page: 1,
+      key__contains : 'BADGE_TEMPLATE',
     };
   
     return getRequest(
