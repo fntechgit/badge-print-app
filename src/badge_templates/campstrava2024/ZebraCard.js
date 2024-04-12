@@ -5,7 +5,7 @@ import {
   useForceUpdate
 } from "@/utils/utils";
 
-import './styles/card.less';
+import './styles/zebra-card.less';
 
 import background_img from './images/general_attendee.png';
 import staff_background_img from './images/staff.png';
