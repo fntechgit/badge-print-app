@@ -64,7 +64,7 @@ export default ({badge}) => {
               <div className="qr-code-wrapper">
                 <span>Follow me on Strava</span>
                 <div id="qrcode" className="bdg-content qrcode-box">
-                  {badge.getCustomQRCode(profileLink,{ fgColor: '#19194D', bgColor: '#ffffff', size: 70 })}
+                  {badge.getCustomQRCode(profileLink,{ fgColor: '#000000', bgColor: '#ffffff', size: 70 })}
                 </div>
               </div>
             }
