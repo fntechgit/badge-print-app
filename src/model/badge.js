@@ -148,6 +148,10 @@ class Badge {
         return qr;
     }
 
+    getCustomQRCode(customValue, settings, level='L') {
+        return <QRCodeSVG value={customValue} level={level} {...settings}/>
+    }
+
     getAccessLevel(accessLevelName) {
         const {access_levels} = this._badge.type;
         let access_level = null;
