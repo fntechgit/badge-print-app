@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { Textfit } from 'react-textfit';
 
 import {
@@ -7,8 +7,10 @@ import {
 
 import './styles/zebra-card.less';
 
-import background_img from './images/general_attendee.png';
+import general_background_img from './images/general_attendee.png';
 import staff_background_img from './images/staff.png';
+import speaker_background_img from './images/speaker.png';
+import media_background_img from './images/media.png'
 
 const shirtSize = {
     'Unisex XS': '.',
@@ -29,27 +31,32 @@ const BadgeTypes = {
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     const badgeType = badge.getBadgeTypeName();
-    const [backgroundImg, setBackgroundImg] = useState(background_img);
+    const [backgroundImg, setBackgroundImg] = useState(general_background_img);
     const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes")
     const showProfileLink = !!profileLink
     useLayoutEffect(() => {
       if (badgeType == null) return;
       switch (badgeType) {
       case BadgeTypes.generalAttendee:
-        setBackgroundImg(background_img);
+        setBackgroundImg(general_background_img);
         break;
       case BadgeTypes.staff:
         setBackgroundImg(staff_background_img);
         break;
+      case BadgeTypes.media: 
+        setBackgroundImg(media_background_img);
+        break;
       }
     }, [badgeType]);
+
+    useEffect(() => {
+      if(badge.getFeature('Speaker') && badgeType !== "Media Badge") {
+        setBackgroundImg(speaker_background_img);
+      }
+    },[]);
     return (
     <>
         <div id="badge-artboard" className={`bdg-artboard card ${badgeType === "Staff/Employee Badge" ? "staff-badge" : ""}`}>
-            <div className="badge-feature-wrapper">
-                {badge.getFeature('Speaker') && badgeType !== "Media Badge" && <div className="badge-feature speaker">Speaker</div>}
-                {badgeType === "Media Badge" && !badge.getFeature('Speaker') && <div className="badge-feature media">Media</div>}
-            </div>
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
                 <Textfit mode="single" max={50} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
