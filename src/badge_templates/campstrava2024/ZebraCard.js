@@ -7,7 +7,7 @@ import {
 
 import './styles/zebra-card.less';
 
-import general_background_img from './images/general_attendee.png';
+import general_background_img from './images/general.png';
 import staff_background_img from './images/staff.png';
 import speaker_background_img from './images/speaker.png';
 import media_background_img from './images/media.png'
