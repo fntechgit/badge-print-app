@@ -40,6 +40,7 @@ export default ({badge}) => {
     const [backgroundImg, setBackgroundImg] = useState(general_background_img);
     const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes");
     const showProfileLink = !!profileLink;
+    const isStaffBadge = (badgeType === BadgeTypes.staff) && !badge.getFeature('Speaker');
     let general_background = general_background_img;
     let staff_background = staff_background_img;
     let speaker_background = speaker_background_img;
@@ -73,7 +74,7 @@ export default ({badge}) => {
     },[]);
     return (
     <>
-        <div id="badge-artboard" className={`bdg-artboard card ${badgeType === "Staff/Employee Badge" ? "staff-badge" : ""}`}>
+        <div id="badge-artboard" className={`bdg-artboard card ${isStaffBadge ? "staff-badge" : ""}`}>
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
                 <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
