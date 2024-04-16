@@ -12,6 +12,12 @@ import staff_background_img from './images/staff.png';
 import speaker_background_img from './images/speaker.png';
 import media_background_img from './images/media.png'
 
+// NO QR
+import general_background_img_noqr from './images/noqr_general.png';
+import staff_background_img_noqr from './images/noqr_staff.png';
+import speaker_background_img_noqr from './images/noqr_speaker.png';
+import media_background_img_noqr from './images/noqr_media.png';
+
 const shirtSize = {
     'Unisex XS': '.',
     'Unisex S': '..',
@@ -32,26 +38,37 @@ export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     const badgeType = badge.getBadgeTypeName();
     const [backgroundImg, setBackgroundImg] = useState(general_background_img);
-    const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes")
-    const showProfileLink = !!profileLink
+    const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes");
+    const showProfileLink = !!profileLink;
+    let general_background = general_background_img;
+    let staff_background = staff_background_img;
+    let speaker_background = speaker_background_img;
+    let media_background = media_background_img;
+
+    if(!profileLink) {
+      general_background = general_background_img_noqr;
+      staff_background = staff_background_img_noqr;
+      speaker_background = speaker_background_img_noqr
+      media_background = media_background_img_noqr;
+    }
     useLayoutEffect(() => {
       if (badgeType == null) return;
       switch (badgeType) {
       case BadgeTypes.generalAttendee:
-        setBackgroundImg(general_background_img);
+        setBackgroundImg(general_background);
         break;
       case BadgeTypes.staff:
-        setBackgroundImg(staff_background_img);
+        setBackgroundImg(staff_background);
         break;
       case BadgeTypes.media: 
-        setBackgroundImg(media_background_img);
+        setBackgroundImg(media_background);
         break;
       }
     }, [badgeType]);
 
     useEffect(() => {
-      if(badge.getFeature('Speaker') && badgeType !== "Media Badge") {
-        setBackgroundImg(speaker_background_img);
+      if(badge.getFeature('Speaker') && badgeType && badgeType !== BadgeTypes.staff && badgeType !== BadgeTypes.media) {
+        setBackgroundImg(speaker_background);
       }
     },[]);
     return (
@@ -59,13 +76,13 @@ export default ({badge}) => {
         <div id="badge-artboard" className={`bdg-artboard card ${badgeType === "Staff/Employee Badge" ? "staff-badge" : ""}`}>
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
-                <Textfit mode="single" max={50} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
-                <Textfit mode="single" max={50} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
-                <Textfit mode="single" max={16} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue("Pronouns") || badge.getExtraQuestionValue("Pronouns - VIP")}</Textfit>                       
+                <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
+                <Textfit mode="single" max={45} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
+                <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue("Pronouns") || badge.getExtraQuestionValue("Pronouns - VIP")}</Textfit>                       
             </div>
             <div className="title-company">
-                {badge.getExtraQuestionValue("Role/Title") && <Textfit mode="single" max={20} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
-                <Textfit mode="single" max={20} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
+                {badge.getExtraQuestionValue("Role/Title") && <Textfit mode="single" max={19} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
+                <Textfit mode="single" max={19} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
             </div>
             {showProfileLink &&
               <div className="qr-code-wrapper">
