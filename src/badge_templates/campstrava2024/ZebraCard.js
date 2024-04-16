@@ -67,7 +67,7 @@ export default ({badge}) => {
     }, [badgeType]);
 
     useEffect(() => {
-      if(badge.getFeature('Speaker') && badgeType && badgeType !== BadgeTypes.staff && badgeType !== BadgeTypes.media) {
+      if(badge.getFeature('Speaker')) {
         setBackgroundImg(speaker_background);
       }
     },[]);
@@ -86,7 +86,6 @@ export default ({badge}) => {
             </div>
             {showProfileLink &&
               <div className="qr-code-wrapper">
-                {/* <Textfit mode="single" max={8} className="follow" onInput={forceUpdate} suppressContentEditableWarning={true}>Follow me on Strava</Textfit> */}
                 <div id="qrcode" className="bdg-content qrcode-box">
                   {badge.getCustomQRCode(profileLink,{ fgColor: '#000000', bgColor: '#ffffff', size: 70 })}
                 </div>
