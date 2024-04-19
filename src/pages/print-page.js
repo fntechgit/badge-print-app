@@ -323,9 +323,9 @@ class PrintPage extends React.Component {
             embedded
         } = this.state;
 
-        const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType, marketingSettings } = this.props;
+        const { loading, retrying, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType, marketingSettings } = this.props;
 
-        if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
+        if (loading || retrying) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (summitSlug && (!badgeTicketId || badgeTicketId && !badgeViewType) && this.isBatchPrinting()) {
             const [ticketId, viewType] = batchItemsRef[0].split("|");
@@ -404,6 +404,7 @@ class PrintPage extends React.Component {
 
 const mapStateToProps = ({ baseState }) => ({
     loading: baseState.loading,
+    retrying: baseState.retrying,
     badge: baseState.badge,
     badgeTicketId: baseState.badge?.ticket.id,
     badgeAllowedViewTypes: baseState.badge?.type.allowed_view_types,
