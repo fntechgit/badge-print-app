@@ -204,14 +204,16 @@ class PrintPage extends React.Component {
         history.push(`/check-in/${summitSlug}/tickets/${nextTicketId}/views/${nextViewType}`);
     };
 
-    goToThankYou = () => history.push(`/check-in/${this.state.summitSlug}/thank-you`);
+    goToThankYou = () => {
+        this.props.clearBadge().then(() =>
+            history.push(`/check-in/${this.state.summitSlug}/thank-you`)
+        )
+    };
 
-    goToFindTicketPage = () => history.push(`/check-in/${this.state.summitSlug || ""}`);
-
-    cancelPrint = () => {
-        this.props.clearBadge().then(() => {
-            history.push(`/check-in/${this.state.summitSlug}`);
-        })
+    goToFindTicketPage = () => {
+        this.props.clearBadge().then(() =>
+            history.push(`/check-in/${this.state.summitSlug || ""}`)
+        )
     };
 
     isBatchPrinting = () => this.state.batchItemsRef.length > 0;
@@ -364,7 +366,7 @@ class PrintPage extends React.Component {
                         }
                     </div>
                     <div className="col-md-2">
-                        <button className="btn btn-danger" onClick={this.cancelPrint}>
+                        <button className="btn btn-danger" onClick={this.goToFindTicketPage}>
                           {T.translate("preview.cancel")}
                         </button>
                     </div>
