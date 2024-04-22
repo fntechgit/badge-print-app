@@ -39,8 +39,6 @@ export const getBadge = (
 
   const accessToken = await getAccessTokenSafely(accessTokenQS);
 
-  dispatch(startLoading());
-
   const params = {
     access_token: accessToken,
     expand: "ticket, ticket.order, ticket.owner, ticket.owner.extra_questions, ticket.owner.extra_questions.question, ticket.owner.extra_questions.question.values, ticket.owner.member, features, type, type.access_levels, type.allowed_view_types"
@@ -54,12 +52,7 @@ export const getBadge = (
       customAuthErrorHandler,
       { viewType }
     )(params)(dispatch)
-  )(dispatch).then(() => 
-    dispatch(stopLoading())
-  ).catch((e) => {
-    dispatch(stopLoading())
-    handleCustomErrorAndRethrow(e);
-  });
+  )(dispatch).catch(handleCustomErrorAndRethrow);
 };
 
 export const incrementBadgePrintCount = (

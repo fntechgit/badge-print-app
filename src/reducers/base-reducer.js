@@ -6,8 +6,6 @@ import { START_LOADING, STOP_LOADING, RESET_LOADING } from "openstack-uicore-fou
 import { LOGOUT_USER, RECEIVE_USER_INFO } from 'openstack-uicore-foundation/lib/security/actions';
 
 import {
-    START_RETRYING,
-    STOP_RETRYING,
     RECEIVE_SUMMITS,
     RECEIVE_SUMMIT,
     SET_SUMMIT,
@@ -44,7 +42,6 @@ const DEFAULT_STATE = {
     badgeViewType: null,
     accessTokenQS: null,
     loading: false,
-    retrying: false,
     selectedTicket: null,
     userIsAdmin: false,
     marketingSettings: [],
@@ -71,10 +68,6 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
             return { ...state, loading: true };
         case STOP_LOADING:
             return { ...state, loading: false };
-        case START_RETRYING:
-            return { ...state, retrying: true };
-        case STOP_RETRYING:
-            return { ...state, retrying: false };
         case RECEIVE_SUMMITS:
             return { ...state, allSummits: payload.response.data, summit:null };
         case RECEIVE_SUMMIT:

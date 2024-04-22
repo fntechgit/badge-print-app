@@ -9,8 +9,6 @@ import { clearAccessToken } from "openstack-uicore-foundation/lib/security/metho
 
 import {getAccessTokenSafely} from '../utils/utils';
 
-export const START_RETRYING      = 'START_RETRYING';
-export const STOP_RETRYING       = 'STOP_RETRYING';
 export const REQUEST_SUMMITS     = 'REQUEST_SUMMITS';
 export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
 export const SET_SUMMIT          = 'SET_SUMMIT';

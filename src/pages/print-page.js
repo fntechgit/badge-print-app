@@ -325,7 +325,7 @@ class PrintPage extends React.Component {
             embedded
         } = this.state;
 
-        const { loading, retrying, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType, marketingSettings } = this.props;
+        const { loading, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType, marketingSettings } = this.props;
         const { ticket_id: urlTicketId, view_type: urlViewType } = this.props.match.params;
 
         if (summitSlug && (!urlTicketId || urlTicketId && !urlViewType) && this.isBatchPrinting()) {
@@ -333,7 +333,7 @@ class PrintPage extends React.Component {
             return <Redirect to={`/check-in/${summitSlug}/tickets/${ticketId}/views/${viewType}`} />;
         }
 
-        if (loading || retrying) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
+        if (loading) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (!summitSlug || !urlTicketId) {
             return <ErrorPage message={T.translate("preview.summit_missing")} onLinkClick={this.goToFindTicketPage} />;
@@ -407,7 +407,6 @@ class PrintPage extends React.Component {
 
 const mapStateToProps = ({ baseState }) => ({
     loading: baseState.loading,
-    retrying: baseState.retrying,
     badge: baseState.badge,
     badgeTicketId: baseState.badge?.ticket.id,
     badgeAllowedViewTypes: baseState.badge?.type.allowed_view_types,

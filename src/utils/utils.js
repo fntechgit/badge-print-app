@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { getAccessToken, initLogOut } from "openstack-uicore-foundation/lib/security/methods";
-import { createAction } from "openstack-uicore-foundation/lib/utils/actions";
-import { NetworkError } from "./errorHandling";
 import {
-  START_RETRYING,
-  STOP_RETRYING
-} from "../actions/base-actions";
+  getAccessToken,
+  initLogOut
+} from "openstack-uicore-foundation/lib/security/methods";
+import {
+  createAction,
+  startLoading,
+  stopLoading
+} from "openstack-uicore-foundation/lib/utils/actions";
+import { NetworkError } from "./errorHandling";
 
 export const useForceUpdate = () => {
   const [value, setValue] = useState(0);
@@ -73,21 +76,21 @@ export const retryRequest = (
   baseDelay = BASE_DELAY,
   inBackground = false,
 ) => async (dispatch) => {
-  if (!inBackground) dispatch(createAction(START_RETRYING)());
   for (let retries = 1; retries <= maxRetries; retries++) {
     const delay = baseDelay * 2 ** retries; // exponential backoff
     console.log(`Retrying in ${delay} ms (${retries}/${maxRetries})...`);
+    if (!inBackground) dispatch(startLoading());
     await new Promise((resolve) => setTimeout(resolve, delay));
     try {
       const response = await request();
-      if (!inBackground) dispatch(createAction(STOP_RETRYING)());
+      if (!inBackground) dispatch(stopLoading());
       return response;
     } catch (error) {
       console.error(`API request error: ${error.err}`);
       if (error.err.status) throw error;
     }
   }
-  dispatch(createAction(STOP_RETRYING)());
+  if (!inBackground) dispatch(stopLoading());
   console.error("Max retries reached. Unable to complete the API request.");
   throw new NetworkError("Max retries reached.");
 };
