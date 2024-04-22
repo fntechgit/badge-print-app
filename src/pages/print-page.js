@@ -335,7 +335,7 @@ class PrintPage extends React.Component {
 
         if (loading || retrying) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
-        if (!summitSlug || !badgeTicketId) {
+        if (!summitSlug || !urlTicketId) {
             return <ErrorPage message={T.translate("preview.summit_missing")} onLinkClick={this.goToFindTicketPage} />;
         }
 
