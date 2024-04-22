@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Switch, Redirect, Router, Route } from 'react-router-dom';
+import { Switch, Redirect, Router } from 'react-router-dom';
 import PrimaryLayout from './layouts/primary-layout';
 import AjaxLoader  from 'openstack-uicore-foundation/lib/components/ajaxloader';
 import { resetLoading } from "openstack-uicore-foundation/lib/utils/actions";
@@ -53,8 +53,6 @@ try {
     T.setTexts(require(`./i18n/en.json`));
 }
 
-// Create Custom Sentry Route component
-export const SentryRoute = Sentry.withSentryRouting(Route);
 
 // Initialize Sentry
 Sentry.init({

@@ -13,10 +13,10 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import qs from 'query-string';
 import LoginPage from '../pages/login-page';
 import { setAccessTokenQS } from '../actions/base-actions';
-import { SentryRoute } from '../app';
 
 class AuthorizedRoute extends React.Component {
 
@@ -25,7 +25,7 @@ class AuthorizedRoute extends React.Component {
         if (accessToken) {
             this.props.setAccessTokenQS(accessToken);
         }
-    }    
+    }
 
     render() {
         const {
@@ -37,7 +37,7 @@ class AuthorizedRoute extends React.Component {
         } = this.props;
 
         return (
-            <SentryRoute {...rest} render={ props => {
+            <Route {...rest} render={ props => {
                 if (isLoggedUser || accessTokenQS) {
                     return (<Component {...props} />);
                 } else {

@@ -23,29 +23,11 @@ module.exports = {
       title: 'Badge Print App',
       template: './src/index.ejs'
     }),     
-    // upload source maps only if we have an sentry auth token and we are at production
-    ...("SENTRY_AUTH_TOKEN" in process.env && process.env.NODE_ENV === "production") ?[
-      new SentryWebpackPlugin({
-        org: process.env.SENTRY_ORG,
-        project: process.env.SENTRY_PROJECT,
-        ignore: ["app-*", "polyfill-*", "framework-*", "webpack-runtime-*", "~partytown"],
-        // Specify the directory containing build artifacts
-        include: [
-          {
-            paths: ["src","public",".cache"],
-            urlPrefix: "~/",
-          },        
-          {
-            paths: ["node_modules/openstack-uicore-foundation/lib"],
-            urlPrefix: "~/node_modules/openstack-uicore-foundation/lib",
-          }
-        ],
-        // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
-        // and needs the `project:releases` and `org:read` scopes
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        // Optionally uncomment the line below to override automatic release name detection
-        release: process.env.SENTRY_RELEASE,
-      })]:[],
+    sentryWebpackPlugin({
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+    }),
   ],
 
   resolve: {

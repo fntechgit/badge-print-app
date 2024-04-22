@@ -31,7 +31,7 @@ class AuthorizationCallbackRoute extends AbstractAuthorizationCallbackRoute {
 
     _redirect2Error(error){
         return (
-            <SentryRoute render={ props => {
+            <Route render={ props => {
                 return <Redirect to={`/error?error=${error}`} />
             }} />
         )
