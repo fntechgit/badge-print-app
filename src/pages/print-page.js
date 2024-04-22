@@ -324,13 +324,14 @@ class PrintPage extends React.Component {
         } = this.state;
 
         const { loading, retrying, badge, badgeTicketId, badgeAllowedViewTypes, badgeViewType, marketingSettings } = this.props;
+        const { ticket_id: urlTicketId, view_type: urlViewType } = this.props.match.params;
 
-        if (loading || retrying) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
-
-        if (summitSlug && (!badgeTicketId || badgeTicketId && !badgeViewType) && this.isBatchPrinting()) {
+        if (summitSlug && (!urlTicketId || urlTicketId && !urlViewType) && this.isBatchPrinting()) {
             const [ticketId, viewType] = batchItemsRef[0].split("|");
             return <Redirect to={`/check-in/${summitSlug}/tickets/${ticketId}/views/${viewType}`} />;
         }
+
+        if (loading || retrying) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
 
         if (!summitSlug || !badgeTicketId) {
             return <ErrorPage message={T.translate("preview.summit_missing")} onLinkClick={this.goToFindTicketPage} />;
