@@ -71,15 +71,16 @@ export const retryRequest = (
   request,
   maxRetries = MAX_RETRIES,
   baseDelay = BASE_DELAY,
+  inBackground = false,
 ) => async (dispatch) => {
-  dispatch(createAction(START_RETRYING)());
+  if (!inBackground) dispatch(createAction(START_RETRYING)());
   for (let retries = 1; retries <= maxRetries; retries++) {
     const delay = baseDelay * 2 ** retries; // exponential backoff
     console.log(`Retrying in ${delay} ms (${retries}/${maxRetries})...`);
     await new Promise((resolve) => setTimeout(resolve, delay));
     try {
       const response = await request();
-      dispatch(createAction(STOP_RETRYING)());
+      if (!inBackground) dispatch(createAction(STOP_RETRYING)());
       return response;
     } catch (error) {
       console.error(`API request error: ${error.err}`);
@@ -105,7 +106,7 @@ export const retryOnNetworkError = (
     if (error.err.status) throw error;
     // if its a network error and retryInBackground, first resolve and then keep trying
     if (!error.err.status && retryInBackground) {
-      const backgroundRetry = retryRequest(request, maxRetries, baseDelay)(dispatch);
+      const backgroundRetry = retryRequest(request, maxRetries, baseDelay, retryInBackground)(dispatch);
       return Promise.race([Promise.resolve(), backgroundRetry]);
     }
     // if its a network error and !retryInBackground, keep trying
