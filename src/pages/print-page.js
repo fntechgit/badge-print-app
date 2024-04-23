@@ -187,10 +187,7 @@ class PrintPage extends React.Component {
 
         if (printStatus == PrintStatus.NotPrinted) {
             if (this.isBatchPrintingComplete()) {
-                this.setState({ batchPrintingComplete: true }, () => {
-                    this.props.clearBadge();
-                    this.goToThankYou();
-                });
+                this.setState({ batchPrintingComplete: true }, this.goToThankYou);
                 return;
             }
             while (printJobStatus[nextTicketId].isViewTypePrinted(nextViewType)) {
@@ -241,10 +238,7 @@ class PrintPage extends React.Component {
 
     processBatch = () => {
         if (this.isBatchPrintingComplete()) {
-            this.setState({ batchPrintingComplete: true }, () => {
-                this.props.clearBadge();
-                this.goToThankYou();
-            });
+            this.setState({ batchPrintingComplete: true }, this.goToThankYou);
             return;
         }
         const { printJobStatus } = this.state;
