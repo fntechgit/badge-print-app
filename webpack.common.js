@@ -22,12 +22,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Badge Print App',
       template: './src/index.ejs'
-    }),     
-    sentryWebpackPlugin({
-      org: process.env.SENTRY_ORG,
-      project: process.env.SENTRY_PROJECT,
-      authToken: process.env.SENTRY_AUTH_TOKEN,
     }),
+    ...("SENTRY_AUTH_TOKEN" in process.env && 
+        "SENTRY_PROJECT" in process.env && 
+        "SENTRY_ORG" in process.env) ? 
+      [
+        sentryWebpackPlugin({
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+        }),
+      ] : []
   ],
 
   resolve: {
