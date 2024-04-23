@@ -139,7 +139,7 @@ class PrintPage extends React.Component {
         const { summitSlug, viewTypeOverride } = this.state;
         const { ticket_id: ticketId, view_type: viewType } = this.props.match.params;
 
-        let shouldGetBadge = !!ticketId;
+        let shouldGetBadge = !!ticketId && !!viewType;
         if (prevProps) {
             const { ticket_id: prevTicketId, view_type: prevViewType } = prevProps.match.params;
             shouldGetBadge &&=
