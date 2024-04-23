@@ -147,11 +147,7 @@ class PrintPage extends React.Component {
                     (ticketId == prevTicketId && viewType != prevViewType);
         }
         if (shouldGetBadge) {
-            if (viewTypeOverride || viewType) {
-                this.props.getBadge(summitSlug, ticketId, viewTypeOverride || viewType);
-            } else {
-                this.props.getBadge(summitSlug, ticketId);
-            }
+            this.props.getBadge(summitSlug, ticketId, viewTypeOverride || viewType);
         }
     };
 
