@@ -353,12 +353,22 @@ class PrintPage extends React.Component {
         return (
             <div className="container print-page-wrapper">
                 { !embedded && this.isPrintJobInitialized() &&
-                <>
+                <div className="row">
+                    <div className="col-md-6">
                     { printJob.indexOf(`${badgeTicketId}|${badgeViewType}`) + 1}
                     /
                     { printJob.length }
-                </>
-                }
+                    </div>
+                    { !printJobComplete &&
+                    <div className="col-md-6 text-right">
+                        <label>
+                            <input type="checkbox" checked={autoPrintMode} onChange={this.toggleAutoPrintMode} />
+                            <span>&nbsp; auto print mode</span>
+                        </label>
+                    </div>
+                    }
+                </div>
+                }                
                 { this.isPrintJobInitialized() && !autoPrintMode && !printJobComplete &&
                 <div className="row print-buttons-wrapper">
                     <div className="col-md-1 col-md-offset-3">
@@ -384,16 +394,6 @@ class PrintPage extends React.Component {
                             {T.translate(">")}
                         </button>
                         }
-                    </div>
-                </div>
-                }
-                { !embedded && this.isPrintJobInitialized() && !printJobComplete &&
-                <div className="row print-buttons-wrapper">
-                    <div className="col-md-2 col-md-offset-5">
-                        <label>
-                            <input type="checkbox" checked={autoPrintMode} onChange={this.toggleAutoPrintMode} />
-                            <span>&nbsp; auto print mode</span>
-                        </label>
                     </div>
                 </div>
                 }

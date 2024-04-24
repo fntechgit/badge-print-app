@@ -1,5 +1,4 @@
 import Swal from "sweetalert2";
-
 import {
     getRequest,
     putRequest,
@@ -8,19 +7,18 @@ import {
     startLoading,
     authErrorHandler
 } from "openstack-uicore-foundation/lib/utils/actions";
-
-import {getAccessTokenSafely} from '../utils/utils';
-import {QR_SEARCH_CRITERIA} from '../utils/constants';
 import { Base64 } from 'js-base64';
-export const REQUEST_TICKET            = 'REQUEST_TICKET';
-export const RECEIVE_TICKET            = 'RECEIVE_TICKET';
-export const REQUEST_TICKETS           = 'REQUEST_TICKETS';
-export const RECEIVE_TICKETS           = 'RECEIVE_TICKETS';
-export const SET_SELECTED_TICKET       = 'SET_SELECTED_TICKET';
-export const CLEAR_SELECTED_TICKET     = 'CLEAR_SELECTED_TICKET';
-export const TICKET_UPDATED            = 'TICKET_UPDATED';
+import { getAccessTokenSafely } from "../utils/utils";
+import { QR_SEARCH_CRITERIA } from "../utils/constants";
+export const REQUEST_TICKET            = "REQUEST_TICKET";
+export const RECEIVE_TICKET            = "RECEIVE_TICKET";
+export const REQUEST_TICKETS           = "REQUEST_TICKETS";
+export const RECEIVE_TICKETS           = "RECEIVE_TICKETS";
+export const SET_SELECTED_TICKET       = "SET_SELECTED_TICKET";
+export const CLEAR_SELECTED_TICKET     = "CLEAR_SELECTED_TICKET";
+export const TICKET_UPDATED            = "TICKET_UPDATED";
 
-const DefaultPageSize = 100;
+const DefaultPageSize = 50;
 
 export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
 
@@ -32,7 +30,7 @@ export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
 
     const params = {
         access_token : accessToken,
-        expand: 'badge, badge.features, promo_code, ticket_type, owner, owner.member, owner.extra_questions'
+        expand: "badge, badge.features, promo_code, ticket_type, owner, owner.member, owner.extra_questions"
     };
 
     let encodedQRCode = Base64.encode(qrCode);
@@ -42,7 +40,7 @@ export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
         createAction(RECEIVE_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${encodedQRCode}`,
         authErrorHandler,
-        { search_term: QR_SEARCH_CRITERIA} // we send hardcode string bc the search criteria is an opaque string
+        { search_term: QR_SEARCH_CRITERIA } // we send hardcode string bc the search criteria is an opaque string
     )(params)(dispatch).then((payload) => {
             dispatch(stopLoading());
             return payload.response;
@@ -69,9 +67,9 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
     const params = {
         access_token : accessToken,
         page         : 1,
-        per_page     : 20,
-        'filter[]'   : [`owner_name==${name}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
-        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions'
+        per_page     : DefaultPageSize,
+        "filter[]"   : [`owner_name==${name}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
+        expand       : "owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions"
     };
 
     return getRequest(
@@ -95,9 +93,9 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
     const params = {
         access_token : accessToken,
         page         : 1,
-        per_page     : 20,
-        'filter[]'   : [`owner_email==${email}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
-        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions'
+        per_page     : DefaultPageSize,
+        "filter[]"   : [`owner_email==${email}`,`is_active==1`,`access_level_type_name==IN_PERSON`],
+        expand       : "owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions"
     };
 
     return getRequest(
@@ -121,9 +119,9 @@ export const findExternalTicketsByEmail = (email) => async (dispatch, getState) 
     const params = {
         access_token : accessToken,
         page         : 1,
-        per_page     : 20,
-        'filter[]'   : [`owner_email==${email}`],
-        expand       : 'owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions'
+        per_page     : DefaultPageSize,
+        "filter[]"   : [`owner_email==${email}`],
+        expand       : "owner,order,ticket_type,badge,badge.type,promo_code,owner.extra_questions"
     };
 
     return getRequest(
@@ -137,7 +135,6 @@ export const findExternalTicketsByEmail = (email) => async (dispatch, getState) 
         return payload.response.data;
     });
 };
-
 export const getAllTickets = ({
     filters = [],
     fields,
@@ -145,7 +142,7 @@ export const getAllTickets = ({
     relations,
     order,
     page = 1,
-    perPage = 5,
+    perPage = DefaultPageSize,
 }) => async (dispatch, getState) => {
     const { baseState: { summit, accessTokenQS } } = getState();
     const accessToken = await getAccessTokenSafely(accessTokenQS);
@@ -158,41 +155,44 @@ export const getAllTickets = ({
         per_page: perPage,
     };
 
-    if (filters) params['filter[]'] = filters;
-    if (fields) params['fields'] = fields;
-    if (expand) params['expand'] = expand;
-    if (relations) params['relations'] = relations;
-    if (order) params['order'] = order;
+    if (filters) params["filter[]"] = filters;
+    if (fields) params["fields"] = fields;
+    if (expand) params["expand"] = expand;
+    if (relations) params["relations"] = relations;
+    if (order) params["order"] = order;
 
-    return getRequest(
-        createAction(REQUEST_TICKETS),
-        createAction(RECEIVE_TICKETS),
-        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        authErrorHandler,
-        { search_term: filters.toString() }
-    )(params)(dispatch).then((payload) => {
+    try {
+        const payload = await getRequest(
+            createAction(REQUEST_TICKETS),
+            createAction(RECEIVE_TICKETS),
+            `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
+            authErrorHandler,
+            { search_term: filters.toString() }
+        )(params)(dispatch);
+
         const { response: { last_page } } = payload;
         const allPages = Array.from({ length: last_page}, (_, i) => i + 1);
-        const dispatchCalls = allPages.map(p =>
-            dispatch(
+
+        let allTickets = [];
+
+        for (const p of allPages) {
+            const ticketsPage = await dispatch(
                 getTickets(
                     { filters, fields, expand, relations, page: p, perPage, order },
                     { dispatchLoader: false }
                 )
-            )
-        );
-        return Promise.all([...dispatchCalls]).then(allTickets => {
-            dispatch(stopLoading());
-            return allTickets.flat();
-        }).catch(e => {
-            dispatch(stopLoading())
-            return Promise.reject(e);
-        });
-    }).catch(e => {
-        dispatch(stopLoading())
+            );
+            allTickets = [...allTickets, ...ticketsPage];
+        }
+
+        dispatch(stopLoading());
+        return allTickets;
+    } catch (e) {
+        dispatch(stopLoading());
         return Promise.reject(e);
-    });
-}
+    }
+};
+
 
 export const getTickets = ({
     filters = [],
@@ -214,11 +214,11 @@ export const getTickets = ({
         per_page: perPage,
     };
 
-    if (filters) params['filter[]'] = filters;
-    if (fields) params['fields'] = fields;
-    if (expand) params['expand'] = expand;
-    if (relations) params['relations'] = relations;
-    if (order) params['order'] = order;
+    if (filters) params["filter[]"] = filters;
+    if (fields) params["fields"] = fields;
+    if (expand) params["expand"] = expand;
+    if (relations) params["relations"] = relations;
+    if (order) params["order"] = order;
 
     return getRequest(
         createAction(REQUEST_TICKETS),
@@ -242,15 +242,15 @@ export const saveExtraQuestions = (values) => async (dispatch, getState) => {
 
     const normalizedEntity = {...values};
     if (!values.attendee_company.id) {
-        normalizedEntity['attendee_company'] = values.attendee_company.name;
+        normalizedEntity["attendee_company"] = values.attendee_company.name;
     } else {
-        delete(normalizedEntity['attendee_company']);
-        normalizedEntity['attendee_company_id'] = values.attendee_company.id;
+        delete(normalizedEntity["attendee_company"]);
+        normalizedEntity["attendee_company_id"] = values.attendee_company.id;
     }
 
     const params = {
         access_token: accessToken,
-        expand: 'owner, owner.extra_questions'
+        expand: "owner, owner.extra_questions"
     };
 
     dispatch(startLoading());
@@ -265,7 +265,7 @@ export const saveExtraQuestions = (values) => async (dispatch, getState) => {
         return payload;
     }).catch(e => {
         dispatch(stopLoading());
-        Swal.fire('Error', "Error saving your questions. Please retry.", "warning");
+        Swal.fire("Error", "Error saving your questions. Please retry.", "warning");
         return Promise.reject(e);
     });
 };
