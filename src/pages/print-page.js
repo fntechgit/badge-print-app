@@ -24,7 +24,7 @@ import {
 import "../styles/badge-common.less";
 import "../styles/print-page.less";
 
-const RedirectTimeOut = 7000;
+const RedirectTimeOut = 2000;
 
 const PrintStatus = {
     NotPrinted: "NotPrinted",
@@ -374,6 +374,7 @@ class PrintPage extends React.Component {
                             <input type="checkbox" checked={autoPrintMode} onChange={this.toggleAutoPrintMode} />
                             <span>&nbsp; auto print mode</span>
                         </label>
+                        <Timeout callback={this.processPrintJob} paused={!autoPrintMode} />
                     </div>
                     }
                 </div>
@@ -405,9 +406,6 @@ class PrintPage extends React.Component {
                         }
                     </div>
                 </div>
-                }
-                { this.isPrintJobInitialized() && !printJobComplete &&
-                <Timeout callback={this.processPrintJob} paused={!autoPrintMode} />
                 }
                 <div className="badge-wrapper">
                     {badgeObj.renderTemplate(summitSlug, viewTypeName, marketingSettings)}
