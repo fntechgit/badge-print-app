@@ -51,7 +51,8 @@
     "loading"           : "Loading badge...",
     "summit_missing"    : "Show slug or Ticket missing in url. Please contact help-desk.",
     "token_missing"     : "Access Token missing in url. Please contact help-desk.",
-    "error_retrieving"  : "This badge cannot be printed.",
+    "error_retrieving_tickets"  : "Tickets not found.",
+    "error_retrieving_badge"  : "This badge cannot be printed.",
     "contact_help"      : "Please see a staff member for assistance if you need an additional badge printed."
   },
   "select_ticket": {
