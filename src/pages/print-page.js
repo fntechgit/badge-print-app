@@ -392,7 +392,7 @@ class PrintPage extends React.Component {
                     <div className="col-md-2 col-md-offset-5">
                         <label>
                             <input type="checkbox" checked={autoPrintMode} onChange={this.toggleAutoPrintMode} />
-                            <span>&nbsp; auto process batch</span>
+                            <span>&nbsp; auto print mode</span>
                         </label>
                     </div>
                 </div>
