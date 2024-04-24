@@ -72,6 +72,7 @@ class PrintPage extends React.Component {
             viewTypeOverride: null,
             autoPrintMode: false,
             printJobComplete: false,
+            retrievingTickets: false,
             errorRetrievingBadge: false,
             errorRetrievingTickets: false
         };
@@ -112,23 +113,29 @@ class PrintPage extends React.Component {
         const order = parsedQueryString["order"];
 
         const newState = { ...this.state };
+        newState.retrievingTickets = true;
         if (viewType) newState.viewTypeOverride = viewType;
         if (checkIn) newState.willCheckIn = (checkIn === "true");
         console.log(`PrintPage::componentWillMount viewType ${viewType} checkIn ${checkIn}`);
 
         this.setState(newState, () => {
+            const newState = { retrievingTickets: false };
             this.props.getAllTickets({
                 filters,
                 order,
                 expand: "badge,badge.type,badge.type.allowed_view_types"
             }).then((tickets) => {
                 if (tickets?.length == 0) {
-                    const newState = ticketId ? { errorRetrievingBadge: true } : { errorRetrievingTickets: true };
+                    if (ticketId) {
+                        newState.errorRetrievingBadge = true;
+                    } else {
+                        newState.errorRetrievingTickets = true;
+                    }
                     this.setState(newState);
                     return;
                 }
-                this.initPrintJob(tickets);
-            }).catch((e) => this.setState({ errorRetrievingTickets: true }));
+                this.setState(newState, () => this.initPrintJob(tickets));
+            }).catch((e) => this.setState({ ...newState, errorRetrievingTickets: true }));
         });
     };
 
@@ -316,6 +323,7 @@ class PrintPage extends React.Component {
             printJobComplete,
             viewTypeOverride,
             embedded,
+            retrievingTickets,
             errorRetrievingBadge,
             errorRetrievingTickets
         } = this.state;
@@ -344,7 +352,8 @@ class PrintPage extends React.Component {
             return <ErrorPage title={T.translate("preview.error_retrieving_badge")} message={T.translate("preview.contact_help")} onLinkClick={this.goToFindTicketPage} />;
         }
 
-        if (loading || !badge) return (<div className="loading-badge">{T.translate("preview.loading")}</div>);
+        if (retrievingTickets) return (<div className="loading-badge">{T.translate("preview.loading_tickets")}</div>);
+        if (loading || !badge) return (<div className="loading-badge">{T.translate("preview.loading_badge")}</div>);
 
         const viewTypeId = badgeViewType || badgeAllowedViewTypes.find((viewType) => viewType.is_default)?.id;
         const viewTypeName = badgeAllowedViewTypes.find((viewType) => viewType.id == viewTypeId)?.name;

@@ -47,7 +47,8 @@
   "preview": {
     "confirm"           : "Confirmar e Imprimir",
     "cancel"            : "Cancelar",
-    "loading"           : "Cargando credencial...",
+    "loading_badge"     : "Cargando credencial...",
+    "loading_tickets"   : "Cargando tickets...",
     "summit_missing"    : "Show o Ticket faltante en url. Por favor contacta mesa de entrada.",
     "token_missing"     : "Access Token faltante en url. Por favor contacta mesa de entrada.",
     "error_retrieving_tickets"  : "No se han encontrado tickets.",
