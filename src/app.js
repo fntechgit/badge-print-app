@@ -14,6 +14,8 @@ import LogOutCallbackRoute from './routes/logout-callback-route';
 import { clearBadge } from "./actions/badge-actions";
 import T from 'i18n-react';
 import LanguageSelect from './components/language-select';
+import * as Sentry from "@sentry/react";
+import { SentryFallbackFunction } from './components/SentryErrorComponent';
 
 
 // move all env var to global scope so ui core has access to this
@@ -24,7 +26,8 @@ window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];
 window.MARKETING_API_BASE_URL = process.env['MARKETING_API_BASE_URL'];
-
+window.SENTRY_DSN          = process.env['SENTRY_DSN'];
+window.SENTRY_TRACE_SAMPLE_RATE = process.env['SENTRY_TRACE_SAMPLE_RATE'];
 // admin groups allowed to bypass user checks on find and select ticket pages
 export const ADMIN_GROUPS = ['super-admins', 'administrators'];
 
@@ -50,6 +53,37 @@ try {
     T.setTexts(require(`./i18n/en.json`));
 }
 
+if (window.SENTRY_DSN && window.SENTRY_DSN !== '') {
+    console.log("app init sentry ...")
+    // Initialize Sentry
+    Sentry.init({
+        dsn: window.SENTRY_DSN,
+        beforeSend(event) {
+            // Modify the event here
+            console.log('before send...', event)
+            return event;
+        },
+        integrations: [
+          new Sentry.BrowserTracing({
+            // See docs for support of different versions of variation of react router
+            // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
+            routingInstrumentation: Sentry.reactRouterV4Instrumentation(history),
+            // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
+            tracePropagationTargets: ["localhost"],
+          }),
+          new Sentry.Replay()
+        ],
+
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        tracesSampleRate: window.SENTRY_TRACE_SAMPLE_RATE,
+
+        // Capture Replay for 10% of all sessions,
+        // plus for 100% of sessions with an error
+        replaysSessionSampleRate: 0.1,
+        replaysOnErrorSampleRate: 1.0,
+    });
+}
 
 class App extends React.PureComponent {
     constructor(props) {
@@ -73,35 +107,37 @@ class App extends React.PureComponent {
         const title = (summit) ? summit.name : T.translate("general.app_title");
         const summit_logo = summit ? summit.logo : null;
         return (
-            <Router history={history}>
-                <div>
-                    <AjaxLoader show={loading} size={ 120 }/>
-                    <div className="header">
-                        <div className="header-title row">
-                            <div className="col-md-12 title">
-                                <LanguageSelect language={language} />
-                                { summit_logo &&
-                                    <img alt="logo" className="header-logo" src={summit_logo} />
-                                }
-                                { !summit_logo &&
-                                     title
-                                }
-                                { isLoggedUser &&
-                                <a className="logout pull-right" onClick={initLogOut}>
-                                    <i className="fa fa-sign-out" aria-hidden="true" />
-                                </a>
-                                }
+            <Sentry.ErrorBoundary fallback={SentryFallbackFunction({componentName: "Badge Print App"})}>
+                <Router history={history}>
+                    <div>
+                        <AjaxLoader show={loading} size={ 120 }/>
+                        <div className="header">
+                            <div className="header-title row">
+                                <div className="col-md-12 title">
+                                    <LanguageSelect language={language} />
+                                    { summit_logo &&
+                                        <img alt="logo" className="header-logo" src={summit_logo} />
+                                    }
+                                    { !summit_logo &&
+                                        title
+                                        }
+                                    { isLoggedUser &&
+                                    <a className="logout pull-right" onClick={initLogOut}>
+                                        <i className="fa fa-sign-out" aria-hidden="true" />
+                                    </a>
+                                    }
+                                </div>
                             </div>
                         </div>
+                        <Switch>
+                            <AuthorizedRoute path="/check-in" component={PrimaryLayout} />
+                            <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
+                            <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
+                            <Redirect to="/check-in" />
+                        </Switch>
                     </div>
-                    <Switch>
-                        <AuthorizedRoute path="/check-in" component={PrimaryLayout} />
-                        <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
-                        <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
-                        <Redirect to="/check-in" />
-                    </Switch>
-                </div>
-            </Router>
+                </Router>
+            </Sentry.ErrorBoundary>
         );
     }
 }
