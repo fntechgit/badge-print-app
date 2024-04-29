@@ -54,6 +54,7 @@ try {
 }
 
 if (window.SENTRY_DSN && window.SENTRY_DSN !== '') {
+    console.log("app init sentry ...")
     // Initialize Sentry
     Sentry.init({
         dsn: window.SENTRY_DSN,
@@ -66,17 +67,17 @@ if (window.SENTRY_DSN && window.SENTRY_DSN !== '') {
           new Sentry.BrowserTracing({
             // See docs for support of different versions of variation of react router
             // https://docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/react-router/
-            routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
+            routingInstrumentation: Sentry.reactRouterV4Instrumentation(history),
             // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
             tracePropagationTargets: ["localhost"],
           }),
           new Sentry.Replay()
         ],
-      
+
         // Set tracesSampleRate to 1.0 to capture 100%
         // of transactions for performance monitoring.
         tracesSampleRate: window.SENTRY_TRACE_SAMPLE_RATE,
-      
+
         // Capture Replay for 10% of all sessions,
         // plus for 100% of sessions with an error
         replaysSessionSampleRate: 0.1,

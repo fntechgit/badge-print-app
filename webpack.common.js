@@ -5,6 +5,10 @@ const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require('webpack');
 const path = require('path')
+// load env file so sentry plugin could be feed...
+const env = require("dotenv").config({
+  path: `.env`,
+});
 
 module.exports = {
   entry: "./src/index.js",
@@ -17,20 +21,34 @@ module.exports = {
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
       process: 'process/browser',
-    }), 
-    new CleanWebpackPlugin(), 
+    }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Badge Print App',
       template: './src/index.ejs'
     }),
-    ...("SENTRY_AUTH_TOKEN" in process.env && 
-        "SENTRY_PROJECT" in process.env && 
-        "SENTRY_ORG" in process.env) ? 
+    ...("SENTRY_AUTH_TOKEN" in process.env &&
+        "SENTRY_PROJECT" in process.env &&
+        "SENTRY_ORG" in process.env) ?
       [
         sentryWebpackPlugin({
           org: process.env.SENTRY_ORG,
           project: process.env.SENTRY_PROJECT,
+          // Specify the directory containing build artifacts
+          include: [
+            {
+              paths: ["dist"],
+              urlPrefix: "~/",
+            },
+            {
+              paths: ["node_modules/openstack-uicore-foundation/lib"],
+              urlPrefix: "~/node_modules/openstack-uicore-foundation/lib",
+            },
+          ],
+          // and needs the `project:releases` and `org:read` scopes
           authToken: process.env.SENTRY_AUTH_TOKEN,
+          // Optionally uncomment the line below to override automatic release name detection
+          release: process.env.SENTRY_RELEASE,
         }),
       ] : []
   ],
