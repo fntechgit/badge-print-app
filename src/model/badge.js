@@ -226,7 +226,6 @@ class Badge {
                 }
             }
         })
-        // const validChoice = pronoun.includes(selectedChoice) ? selectedChoice : ""
         return pronoun;
     }
 }
