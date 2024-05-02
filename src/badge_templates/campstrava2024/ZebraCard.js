@@ -79,7 +79,7 @@ export default ({badge}) => {
             <div className="text-box">
                 <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={45} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
-                <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue("Pronouns") || badge.getExtraQuestionValue("Pronouns - VIP")}</Textfit>                       
+                <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getPronouns() || badge.getExtraQuestionValue("Pronouns - VIP")}</Textfit>                       
             </div>
             <div className="title-company">
                 {badge.getExtraQuestionValue("Role/Title") && <Textfit mode="single" max={19} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
