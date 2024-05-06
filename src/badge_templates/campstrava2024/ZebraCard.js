@@ -10,7 +10,8 @@ import './styles/zebra-card.less';
 import general_background_img from './images/general.png';
 import staff_background_img from './images/staff.png';
 import speaker_background_img from './images/speaker.png';
-import media_background_img from './images/media.png'
+import media_background_img from './images/media.png';
+import partner_background_img from './images/partner.png';
 
 // NO QR
 import general_background_img_noqr from './images/noqr_general.png';
@@ -31,13 +32,14 @@ const shirtSize = {
 const BadgeTypes = {
     generalAttendee: "General Attendee Badge",
     staff: "Staff/Employee Badge",
-    media: "Media Badge"
+    media: "Media Badge",
   };
 
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     const badgeType = badge.getBadgeTypeName();
     const [backgroundImg, setBackgroundImg] = useState(general_background_img);
+    const [isPartnerFeature, setIsPartnerFeature] = useState(false);
     const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes");
     const showProfileLink = !!profileLink;
     const isStaffBadge = (badgeType === BadgeTypes.staff) && !badge.getFeature('Speaker');
@@ -71,6 +73,10 @@ export default ({badge}) => {
       if(badge.getFeature('Speaker')) {
         setBackgroundImg(speaker_background);
       }
+      if(badge.getFeature('Partner Support')) {
+        setBackgroundImg(partner_background_img);
+        setIsPartnerFeature(true);
+      }
     },[]);
     return (
     <>
@@ -79,13 +85,13 @@ export default ({badge}) => {
             <div className="text-box">
                 <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={45} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
-                <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getPronouns() || badge.getExtraQuestionValue("Pronouns - VIP")}</Textfit>                       
+                {!setIsPartnerFeature && <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getPronouns() || badge.getExtraQuestionValue("Pronouns - VIP")}</Textfit>}                       
             </div>
-            <div className="title-company">
+            {!isPartnerFeature && <div className="title-company">
                 {badge.getExtraQuestionValue("Role/Title") && <Textfit mode="single" max={19} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
                 <Textfit mode="single" max={19} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
-            </div>
-            {showProfileLink &&
+            </div>}
+            {showProfileLink && !isPartnerFeature &&
               <div className="qr-code-wrapper">
                 <div id="qrcode" className="bdg-content qrcode-box">
                   {badge.getCustomQRCode(profileLink,{ fgColor: '#000000', bgColor: '#ffffff', size: 70 })}
