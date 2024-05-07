@@ -214,7 +214,7 @@ class Badge {
     getPronouns() {
         const validPronouns = ["she/her", "he/him", "they/them"];
         const { owner: { extra_questions } } = this._badge.ticket;
-        const pronounItem = extra_questions?.find(eq => eq.question?.name === "Pronouns");
+        const pronounItem = extra_questions?.find(eq => eq.question?.name.includes("Pronoun"));
         const selectedChoice = pronounItem?.value; 
         let pronoun = '';
 
