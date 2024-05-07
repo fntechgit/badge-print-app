@@ -214,15 +214,15 @@ class Badge {
     getPronouns() {
         const validPronouns = ["she/her", "he/him", "they/them"];
         const { owner: { extra_questions } } = this._badge.ticket;
-        const pronounItem = extra_questions.find(eq => eq.question.name === "Pronouns");
-        const selectedChoice = pronounItem.value; 
+        const pronounItem = extra_questions?.find(eq => eq.question?.name === "Pronouns");
+        const selectedChoice = pronounItem?.value; 
         let pronoun = '';
 
         pronounItem.question.values.map(v => {
             const val = v.value.toLowerCase()
-            if(validPronouns.includes(val)) {
-                if(v.id.toString() === selectedChoice) {
-                    pronoun = v.value;
+            if(validPronouns?.includes(val)) {
+                if(v.id?.toString() === selectedChoice) {
+                    pronoun = v?.value;
                 }
             }
         })
