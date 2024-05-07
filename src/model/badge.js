@@ -218,7 +218,7 @@ class Badge {
         const selectedChoice = pronounItem?.value; 
         let pronoun = '';
 
-        pronounItem.question.values.map(v => {
+        pronounItem?.question?.values?.map(v => {
             const val = v.value.toLowerCase()
             if(validPronouns?.includes(val)) {
                 if(v.id?.toString() === selectedChoice) {
