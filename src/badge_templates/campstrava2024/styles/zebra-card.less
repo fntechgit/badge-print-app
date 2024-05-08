@@ -4,6 +4,12 @@
 	font-weight: 300;
 }
 
+@font-face {
+	font-family: "Maison Neue Extended";
+  	src: url('~fonts/Maison Neue/MaisonNeueExtended-Bold.otf') format('opentype');
+	font-weight: 600;
+}
+
 @media screen {
 	#badge-artboard {
 		border: thin solid #000000;
@@ -67,7 +73,7 @@
 }
 .text-box {
 	position: absolute;
-	top: 80.5mm;
+	top: 78.5mm;
 	padding: 0 5.5mm;
 	display: flex;
 	flex-direction: column;
@@ -77,10 +83,12 @@
 		color: #ffffff !important;
 	}
 	.first-name {
+		font-weight: 600;
 		font-size: 38pt;
 		line-height: 1;
 	}
 	.last-name {
+		font-weight: 600;
 		font-size: 38pt;
 		line-height: 1;
 	}
@@ -88,14 +96,37 @@
 		line-height: 1.2;
 	}
 }
-.title-company {
+
+.title-section {
 	display: inline-block;
 	position: absolute;
-	left: 6.2mm;
-	bottom: 11mm;
+	left: 5.8mm;
+	bottom: 19.2mm;
+	line-height: 1;
+	max-width: 310px;
+	width: 310px;
+	max-height: 100px;
+    height: 37px;
+    overflow: hidden;
+	div {
+		color: #ffffff !important;
+	}
+}
+.with-qr {
 	max-width: 210px;
-	width: 190px;
-	line-height: 1.5;
+	width: 210px;
+}
+.company-section {
+	display: inline-block;
+	position: absolute;
+	left: 5.8mm;
+	bottom: 8.2mm;
+	line-height: 1;
+	max-width: 310px;
+	width: 310px;
+	max-height: 100px;
+    height: 37px;
+    overflow: hidden;
 	div {
 		color: #ffffff !important;
 	}

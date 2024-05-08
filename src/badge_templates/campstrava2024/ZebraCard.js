@@ -48,6 +48,9 @@ export default ({badge}) => {
     let speaker_background = speaker_background_img;
     let media_background = media_background_img;
 
+    let titleCompanyMinFontSize = (showProfileLink) ? 15 : 19;
+    let textMode = (showProfileLink) ? 'single' : 'multi';
+
     if(!profileLink) {
       general_background = general_background_img_noqr;
       staff_background = staff_background_img_noqr;
@@ -87,10 +90,16 @@ export default ({badge}) => {
                 <Textfit mode="single" max={45} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
                 {!isPartnerFeature && <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getPronouns()}</Textfit>}                       
             </div>
-            {!isPartnerFeature && <div className="title-company">
-                {badge.getExtraQuestionValue("Role/Title") && <Textfit mode="single" max={19} className="title" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
-                <Textfit mode="single" max={19} className="company" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
-            </div>}
+            {!isPartnerFeature && 
+              <>
+                <div className={`title-section `}>
+                    {badge.getExtraQuestionValue("Role/Title") && <Textfit mode={'multi'} min={18} max={19} className={`title ${showProfileLink ? 'with-qr' : ''}`} onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
+                </div>
+                <div className={`company-section ${showProfileLink && 'with-qr'}`}>
+                  <Textfit mode={'multi'} min={18} max={19} className={`company ${showProfileLink ? 'with-qr' : ''}`} onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
+                </div>
+              </>
+            }
             {showProfileLink && !isPartnerFeature &&
               <div className="qr-code-wrapper">
                 <div id="qrcode" className="bdg-content qrcode-box">
