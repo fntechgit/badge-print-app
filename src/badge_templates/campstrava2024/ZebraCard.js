@@ -29,13 +29,8 @@ const useForceUpdate = () => {
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     const badgeType = badge.getBadgeTypeName();
-    const badgeTitle = badge.getExtraQuestionValue('Role/Title');
-    const badgeCompany = badge.getCompany();
-
     const [backgroundImg, setBackgroundImg] = useState(general_background_img);
     const [isPartnerFeature, setIsPartnerFeature] = useState(false);
-    const [titleText, setTitleText] = useState(badgeTitle);
-    const [companyText, setCompanyText] = useState(badgeCompany);
     const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes");
     const showProfileLink = !!profileLink;
     const isStaffBadge = (badgeType === BadgeTypes.staff) && !badge.getFeature('Speaker');
@@ -97,7 +92,7 @@ export default ({badge}) => {
                         suppressContentEditableWarning={true} 
                         style={{ height: "35px" }}
                       >
-                        {titleText}
+                        {badge.getExtraQuestionValue('Role/Title')}
                       </Textfit>}
                 </div>
                 <div className={`company-section ${showProfileLink && 'with-qr'}`}>
@@ -110,7 +105,7 @@ export default ({badge}) => {
                     suppressContentEditableWarning={true} 
                     style={{ height: "35px" }}
                   >
-                    {companyText}
+                    {badge.getCompany()}
                   </Textfit>
                 </div>
               </>
