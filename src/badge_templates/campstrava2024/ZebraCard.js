@@ -1,10 +1,6 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { Textfit } from 'react-textfit';
 
-import {
-  useForceUpdate
-} from "@/utils/utils";
-
 import './styles/zebra-card.less';
 
 import general_background_img from './images/general.png';
@@ -19,27 +15,27 @@ import staff_background_img_noqr from './images/noqr_staff.png';
 import speaker_background_img_noqr from './images/noqr_speaker.png';
 import media_background_img_noqr from './images/noqr_media.png';
 
-const shirtSize = {
-    'Unisex XS': '.',
-    'Unisex S': '..',
-    'Unisex M': '...',
-    'Unisex L': '....',
-    'Unisex XL': '....-',
-    'Unisex 2XL': '....--',
-    'Unisex 3XL': '....---',
-}
-
 const BadgeTypes = {
     generalAttendee: "General Attendee Badge",
     staff: "Staff/Employee Badge",
     media: "Media Badge",
   };
 
+const useForceUpdate = () => {
+  const [value, setValue] = useState(0);
+  return () => setValue(value => value + 1);
+}
+
 export default ({badge}) => {
     const forceUpdate = useForceUpdate();
     const badgeType = badge.getBadgeTypeName();
+    const badgeTitle = badge.getExtraQuestionValue('Role/Title');
+    const badgeCompany = badge.getCompany();
+
     const [backgroundImg, setBackgroundImg] = useState(general_background_img);
     const [isPartnerFeature, setIsPartnerFeature] = useState(false);
+    const [titleText, setTitleText] = useState(badgeTitle);
+    const [companyText, setCompanyText] = useState(badgeCompany);
     const profileLink = badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes_VIP") || badge.getExtraQuestionValue("Strava Profile Link_SUBQUESTION_Yes");
     const showProfileLink = !!profileLink;
     const isStaffBadge = (badgeType === BadgeTypes.staff) && !badge.getFeature('Speaker');
@@ -47,9 +43,6 @@ export default ({badge}) => {
     let staff_background = staff_background_img;
     let speaker_background = speaker_background_img;
     let media_background = media_background_img;
-
-    let titleCompanyMinFontSize = (showProfileLink) ? 15 : 19;
-    let textMode = (showProfileLink) ? 'single' : 'multi';
 
     if(!profileLink) {
       general_background = general_background_img_noqr;
@@ -81,22 +74,44 @@ export default ({badge}) => {
         setIsPartnerFeature(true);
       }
     },[]);
+
     return (
     <>
         <div id="badge-artboard" className={`bdg-artboard card ${isStaffBadge ? "staff-badge" : ""}`}>
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
-                <Textfit mode="single" max={45} className="first-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
+                <Textfit mode="single" max={45} className="first-name" contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 <Textfit mode="single" max={45} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
                 {!isPartnerFeature && <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getPronouns()}</Textfit>}                       
             </div>
             {!isPartnerFeature && 
               <>
                 <div className={`title-section `}>
-                    {badge.getExtraQuestionValue("Role/Title") && <Textfit mode={'multi'} min={18} max={19} className={`title ${showProfileLink ? 'with-qr' : ''}`} onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getExtraQuestionValue('Role/Title')}</Textfit>}
+                    {badge.getExtraQuestionValue("Role/Title") && 
+                      <Textfit 
+                        mode={'multi'} 
+                        max={17} 
+                        className={`title ${showProfileLink ? 'with-qr' : ''}`} 
+                        onInput={forceUpdate} 
+                        contentEditable 
+                        suppressContentEditableWarning={true} 
+                        style={{ height: "35px" }}
+                      >
+                        {titleText}
+                      </Textfit>}
                 </div>
                 <div className={`company-section ${showProfileLink && 'with-qr'}`}>
-                  <Textfit mode={'multi'} min={18} max={19} className={`company ${showProfileLink ? 'with-qr' : ''}`} onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getCompany()}</Textfit>
+                  <Textfit 
+                    mode={'multi'} 
+                    max={17} 
+                    className={`company ${showProfileLink ? 'with-qr' : ''}`} 
+                    onInput={forceUpdate} 
+                    contentEditable 
+                    suppressContentEditableWarning={true} 
+                    style={{ height: "35px" }}
+                  >
+                    {companyText}
+                  </Textfit>
                 </div>
               </>
             }
