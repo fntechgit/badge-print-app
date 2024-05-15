@@ -75,8 +75,8 @@ export default ({badge}) => {
         <div id="badge-artboard" className={`bdg-artboard card ${isStaffBadge ? "staff-badge" : ""}`}>
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
-                <Textfit mode="single" max={45} className="first-name" contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
-                <Textfit mode="single" max={45} className="last-name" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
+                <Textfit mode="single" max={45} onInput={forceUpdate} className="first-name" contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
+                <Textfit mode="single" max={45} onInput={forceUpdate} className="last-name" contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>       
                 {!isPartnerFeature && <Textfit mode="single" max={15} className="pronouns" onInput={forceUpdate} contentEditable suppressContentEditableWarning={true}>{badge.getPronouns()}</Textfit>}                       
             </div>
             {!isPartnerFeature && 
