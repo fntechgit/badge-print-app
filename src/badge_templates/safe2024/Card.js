@@ -17,83 +17,43 @@ const useForceUpdate = () => {
 
 export default ({ badge }) => {
   const forceUpdate = useForceUpdate();
-  const fullNameRef = useRef(null);
-  const companyRef = useRef(null);
-  const [isFullNameMultiLine, setIsFullNameMultiLine] = useState(false);
-  const [isCompanyMultiLine, setIsCompanyMultiLine] = useState(false);
-  useEffect(() => {
-    if (fullNameRef.current === null) return false;
-    setIsFullNameMultiLine(fullNameRef.current.clientHeight > 46);
-  }, [fullNameRef]);
-  useEffect(() => {
-    if (companyRef.current === null) return false;
-    setIsCompanyMultiLine(companyRef.current.clientHeight > 42);
-  }, [companyRef]);
-  const companyMarginTop = useCallback(() => {
-    if (!isFullNameMultiLine && !isCompanyMultiLine) return "6.3mm";
-    if (!isFullNameMultiLine && isCompanyMultiLine) return "4.3mm";
-    if (isFullNameMultiLine && !isCompanyMultiLine) return "3.3mm";
-    if (isFullNameMultiLine && isCompanyMultiLine) return "3.3mm";
-    return 0;
-  }, [isFullNameMultiLine, isCompanyMultiLine]);
   return (
   <>
     <div id="badge-artboard" className="bdg-artboard">
       <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
       <div className="text-boxes">
-        {badge.getFullName() && !isFullNameMultiLine &&
-        <span
-          ref={fullNameRef}
-          className="full-name"
-          contentEditable
-          suppressContentEditableWarning={true}
-          onInput={() => setIsFullNameMultiLine(fullNameRef.current.clientHeight > 46)}
-        >
-          {badge.getFullName()}
-        </span>
+        <div style={{ height: "70px"}}>
+        {badge.getFullName() && 
+          <Textfit
+            max={32}
+            className="full-name"
+            onInput={forceUpdate}
+            contentEditable
+            suppressContentEditableWarning={true}
+            style={{
+              height: "70px"
+            }}
+          >
+            {badge.getFullName()}
+          </Textfit>
         }
-        {isFullNameMultiLine && badge.getFirstName() &&
-        <Textfit
-          mode="single"
-          max={32}
-          className="name"
-          onInput={forceUpdate}
-          contentEditable
-          suppressContentEditableWarning={true}
-        >
-          {badge.getFirstName()}
-        </Textfit>
-        }
-        {isFullNameMultiLine && badge.getLastName() &&
-        <Textfit
-          mode="single"
-          max={32}
-          className="name"
-          onInput={forceUpdate}
-          contentEditable
-          suppressContentEditableWarning={true}
-        >
-          {badge.getLastName()}
-        </Textfit>
-        }
+        </div>
         {badge.getCompany() &&
-        <span
-          ref={companyRef}
+        <Textfit
+          max={24}
+          mode="single"
           className="company"
+          onInput={forceUpdate}
           contentEditable
           suppressContentEditableWarning={true}
-          onInput={() => setIsCompanyMultiLine(companyRef.current.clientHeight > 42)}
-          style={{
-            marginTop: companyMarginTop(),
-            fontSize: isCompanyMultiLine ? "16.83pt" : "24.5pt",
-          }}
         >
           {badge.getCompany()}
-        </span>
+        </Textfit>
         }
         {badge.getExtraQuestionValue("jobTitle") &&
         <Textfit
           max={17}
+          mode="single"
           className="job-title"
           onInput={forceUpdate}
           contentEditable
