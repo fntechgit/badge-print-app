@@ -20,13 +20,14 @@ export default ({ badge }) => {
   const [isCompanyMultiLine, setIsCompanyMultiLine] = useState(false);
   useEffect(() => {
     if (companyRef.current === null) return false;
-    setIsCompanyMultiLine(companyRef.current.clientHeight > 42);
+    setIsCompanyMultiLine(companyRef.current.clientHeight > 26);
   }, [companyRef]);
   const companyMarginTop = useCallback(() => {
     if (!isCompanyMultiLine) return "2.3mm";
     if (isCompanyMultiLine) return "10.8mm";
     return 0;
   }, [isCompanyMultiLine]);
+  const companyHeight = useCallback(() => isCompanyMultiLine ? "75px" : "38px", [isCompanyMultiLine])
   return (
   <>
     <div id="badge-artboard" className="bdg-artboard">
@@ -43,29 +44,30 @@ export default ({ badge }) => {
               height: "75px"
             }}
           >
-            {badge.getFirstName()} <br />
-            {badge.getLastName()}
+            {badge.getFullName()} 
           </Textfit>
         }
-        {badge.getCompany() &&
-          <Textfit
-            max={24}
-            min={22}
-            ref={companyRef}
-            className="company"
-            onInput={forceUpdate}
-            contentEditable
-            suppressContentEditableWarning={true}
-            style={{
-              marginTop: companyMarginTop(),
-              maxHeight: "75px",
-              minHeight: "26px"
-              // height: "48px"
-            }}
-          >
-            {badge.getCompany()}
-          </Textfit>
-        }
+        <div style={{ position: "relative", display: "flex"}}>
+          {badge.getCompany() &&
+            <Textfit
+              max={24}
+              min={22}
+              mode="multi"
+              className="company"
+              onInput={forceUpdate}
+              contentEditable
+              suppressContentEditableWarning={true}
+              style={{
+                // width: "282px",
+                // maxHeight: "75px",
+                // height: "75px",
+                display: "flex"
+              }}
+            >
+              <span ref={companyRef}>{badge.getCompany()}</span>
+            </Textfit>
+          }
+        </div>
         {badge.getExtraQuestionValue("jobTitle") &&
           <Textfit
             max={17}
