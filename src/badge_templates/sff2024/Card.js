@@ -109,14 +109,14 @@ const Company = ({
       {companyLines > 2 && (
         <Textfit
           mode="multi"
-          max={24.5}
+          max={24}
           className="company"
           contentEditable
           suppressContentEditableWarning={true}
           onInput={forceUpdate}
           style={{
             marginTop: companyMarginTop(),
-            height: companyLineHeight * 2,
+            height: companyLineHeight * 1.8,
           }}
         >
           {company}
@@ -136,7 +136,7 @@ const Badge = ({ badge }) => {
     if (fullNameLines === 1 && companyLines <= 1) return "11.3mm";
     if (fullNameLines === 1 && companyLines > 1) return "10.8mm";
     if (fullNameLines > 1 && companyLines <= 1) return "2.3mm";
-    if (fullNameLines > 1 && companyLines > 1) return "3.3mm";
+    if (fullNameLines > 1 && companyLines > 1) return "2.5mm";
     return 0;
   }, [fullNameLines, companyLines]);
 
