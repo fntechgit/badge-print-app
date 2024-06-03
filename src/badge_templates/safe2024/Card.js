@@ -5,8 +5,7 @@ import React, {
   useCallback
 } from "react";
 import { Textfit } from "react-textfit";
-
-import background_img from "./images/background.png";
+//import background_img from "./images/background.png";
 import mdi_feature from "./images/mdi.png";
 import "./styles/styles_1.less";
 
@@ -39,7 +38,9 @@ export default ({ badge }) => {
   return (
   <>
     <div id="badge-artboard" className="bdg-artboard">
-      <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
+      {
+        //<img id="badge-artboard-img" className="bdg-image" src={background_img}/>
+      }
       <div className="text-boxes">
           {badge.getFullName() && !isFullNameMultiLine &&
           <span
