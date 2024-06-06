@@ -7,18 +7,17 @@ import {
 } from "openstack-uicore-foundation/lib/utils/actions";
 import { clearAccessToken } from "openstack-uicore-foundation/lib/security/methods";
 
-import {getAccessTokenSafely} from '../utils/utils';
+import {getAccessTokenSafely} from "../utils/utils";
 
-
-export const REQUEST_SUMMITS     = 'REQUEST_SUMMITS';
-export const RECEIVE_SUMMITS     = 'RECEIVE_SUMMITS';
-export const SET_SUMMIT          = 'SET_SUMMIT';
-export const CLEAR_SUMMIT        = 'CLEAR_SUMMIT';
-export const REQUEST_SUMMIT      = 'REQUEST_SUMMIT';
-export const RECEIVE_SUMMIT      = 'RECEIVE_SUMMIT';
-export const SET_ACCESS_TOKEN_QS = 'SET_ACCESS_TOKEN_QS';
-export const GET_EXTRA_QUESTIONS = 'GET_EXTRA_QUESTIONS';
-export const RECEIVE_MARKETING_SETTINGS = 'RECEIVE_MARKETING_SETTINGS';
+export const REQUEST_SUMMITS     = "REQUEST_SUMMITS";
+export const RECEIVE_SUMMITS     = "RECEIVE_SUMMITS";
+export const SET_SUMMIT          = "SET_SUMMIT";
+export const CLEAR_SUMMIT        = "CLEAR_SUMMIT";
+export const REQUEST_SUMMIT      = "REQUEST_SUMMIT";
+export const RECEIVE_SUMMIT      = "RECEIVE_SUMMIT";
+export const SET_ACCESS_TOKEN_QS = "SET_ACCESS_TOKEN_QS";
+export const GET_EXTRA_QUESTIONS = "GET_EXTRA_QUESTIONS";
+export const RECEIVE_MARKETING_SETTINGS = "RECEIVE_MARKETING_SETTINGS";
 
 export const setAccessTokenQS = (accessToken) => (dispatch) => {
     dispatch(createAction(SET_ACCESS_TOKEN_QS)({accessToken}));
@@ -32,8 +31,8 @@ export const loadSummits = () => async (dispatch, getState) => {
 
     let params = {
         access_token : accessToken,
-        expand: 'order_extra_questions,order_extra_questions.values',
-        relations: 'order_extra_questions',
+        expand: "order_extra_questions,order_extra_questions.values",
+        relations: "order_extra_questions",
         page: 1,
         per_page: 100,
     };
@@ -64,7 +63,7 @@ export const getSummit = (summitSlug) => async (dispatch, getState) => {
 
     const params = {
         access_token: accessToken,
-        expand: 'order_extra_questions,order_extra_questions.values',
+        expand: "order_extra_questions,order_extra_questions.values",
     };
 
     return getRequest(
@@ -87,8 +86,8 @@ export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getSta
 
     const params = {
         access_token: accessToken,
-        expand: '*sub_question_rules,*sub_question,*values',
-        order: 'order',
+        expand: "*sub_question_rules,*sub_question,*values",
+        order: "order",
         page: 1,
         per_page: 100,
     };
@@ -101,7 +100,7 @@ export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getSta
     )(params)(dispatch).then(() => {
         dispatch(stopLoading());
     }).catch(e => {
-        console.log('ERROR: ', e);
+        console.log("ERROR: ", e);
         clearAccessToken();
         dispatch(stopLoading());
         return Promise.reject(e);
@@ -174,4 +173,4 @@ export const getMarketingSettings = (summitId, perPage = 100) => (dispatch) => {
         dispatch(stopLoading());
         return Promise.reject(e);
     });
-  };
+};
