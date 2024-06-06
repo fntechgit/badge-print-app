@@ -11,7 +11,7 @@ import {
 
 import {getAccessTokenSafely} from '../utils/utils';
 import {QR_SEARCH_CRITERIA} from '../utils/constants';
-
+import { Base64 } from 'js-base64';
 export const REQUEST_TICKET            = 'REQUEST_TICKET';
 export const RECEIVE_TICKET            = 'RECEIVE_TICKET';
 export const REQUEST_TICKETS           = 'REQUEST_TICKETS';
@@ -23,6 +23,7 @@ export const TICKET_UPDATED            = 'TICKET_UPDATED';
 const DefaultPageSize = 100;
 
 export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
+
     const { baseState } = getState();
     const { summit, accessTokenQS } = baseState;
     const accessToken = await getAccessTokenSafely(accessTokenQS);
@@ -34,7 +35,7 @@ export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
         expand: 'badge, badge.features, promo_code, ticket_type, owner, owner.member, owner.extra_questions'
     };
 
-    let encodedQRCode = btoa(qrCode);
+    let encodedQRCode = Base64.encode(qrCode);
 
     return getRequest(
         createAction(REQUEST_TICKET),

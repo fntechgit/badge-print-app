@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import T from "i18n-react/dist/i18n-react";
 import history from '../history';
-import QrReader from 'react-qr-reader'
+//import QrReader from 'react-qr-reader'
+import QrReader from '../components/QrReader';
 import Swal from "sweetalert2";
 import validator from 'validator';
 import {
@@ -17,6 +18,7 @@ import ErrorPage from './error-page';
 import { ATTENDEE_STATUS_INCOMPLETE, PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL, PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME } from '../utils/constants';
 import "../styles/find-ticket-page.less"
 import {QR_SEARCH_CRITERIA} from '../utils/constants';
+
 class FindTicketPage extends React.Component {
 
     constructor(props) {
@@ -165,7 +167,7 @@ class FindTicketPage extends React.Component {
         const setting = marketingSettings?.find(s => s.key === summitSetting);
         return setting?.value === "1" ? true : false;
     }
-    
+
     render(){
         const { embedded, showQRreader, showErrorPage, alreadyCheckedIn, error } = this.state;
         const { searchTerm} = this.props;
