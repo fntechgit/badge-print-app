@@ -1,4 +1,4 @@
-export const setDocumentColors = (data) => {
+export const setCSSVars = (data) => {
     if (typeof document !== 'undefined') {
         data.forEach(setting => {
             if (getComputedStyle(document.documentElement).getPropertyValue(`--${setting.key}`)) {

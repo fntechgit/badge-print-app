@@ -29,7 +29,8 @@ import {
     CLEAR_SELECTED_TICKET,
     TICKET_UPDATED,
 } from "../actions/ticket-actions";
-import {setDocumentColors} from "../utils/methods";
+
+import {setCSSVars} from "../utils/methods";
 
 const DEFAULT_STATE = {
     allSummits: [],
@@ -115,8 +116,8 @@ const baseReducer = (state = DEFAULT_STATE, action) => {
               return { ...state, loading: false, extraQuestions: extraQuestions }
         }
         case RECEIVE_MARKETING_SETTINGS: {
-            const marketingSettings = payload?.response?.data || [];
-            setDocumentColors(marketingSettings);
+            const marketingSettings = payload;
+            setCSSVars(marketingSettings);
             return { ...state, marketingSettings }
         }
         default:

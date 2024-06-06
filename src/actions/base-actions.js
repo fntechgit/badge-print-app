@@ -18,7 +18,6 @@ export const REQUEST_SUMMIT      = 'REQUEST_SUMMIT';
 export const RECEIVE_SUMMIT      = 'RECEIVE_SUMMIT';
 export const SET_ACCESS_TOKEN_QS = 'SET_ACCESS_TOKEN_QS';
 export const GET_EXTRA_QUESTIONS = 'GET_EXTRA_QUESTIONS';
-export const REQUEST_MARKETING_SETTINGS = 'REQUEST_MARKETING_SETTINGS';
 export const RECEIVE_MARKETING_SETTINGS = 'RECEIVE_MARKETING_SETTINGS';
 
 export const setAccessTokenQS = (accessToken) => (dispatch) => {
@@ -44,7 +43,7 @@ export const loadSummits = () => async (dispatch, getState) => {
         createAction(RECEIVE_SUMMITS),
         `${window.API_BASE_URL}/api/v1/summits/all`,
         authErrorHandler
-    )(params)(dispatch).then(() => 
+    )(params)(dispatch).then(() =>
         dispatch(stopLoading())
     );
 };
@@ -97,7 +96,7 @@ export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getSta
     return getRequest(
         null,
         createAction(GET_EXTRA_QUESTIONS),
-        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/attendees/${attendeeId}/allowed-extra-questions`,        
+        `${window.API_BASE_URL}/api/v1/summits/${summit.id}/attendees/${attendeeId}/allowed-extra-questions`,
         authErrorHandler
     )(params)(dispatch).then(() => {
         dispatch(stopLoading());
@@ -109,27 +108,69 @@ export const getExtraQuestions = (summit, attendeeId) => async (dispatch, getSta
     });
 }
 
-export const getMarketingSettings = (summitId) => (dispatch) => {
+/**
+ * @param summitId
+ * @param perPage
+ * @returns {(function(*): (Promise<never>))|*}
+ */
+export const getMarketingSettings = (summitId, perPage = 100) => (dispatch) => {
 
     dispatch(startLoading());
 
     if(!summitId) return Promise.reject();
 
     let params = {
-      per_page: 100,
-      page: 1,
-      key__contains : 'BADGE_TEMPLATE',
+        page: 1,
+        per_page: perPage,
     };
-  
+
+    // get first page
+    const endpoint = `${window.MARKETING_API_BASE_URL}/api/public/v1/config-values/all/shows/${summitId}`
     return getRequest(
-      createAction(REQUEST_MARKETING_SETTINGS),
-      createAction(RECEIVE_MARKETING_SETTINGS),
-      `${window.MARKETING_API_BASE_URL}/api/public/v1/config-values/all/shows/${summitId}`,
+      createAction('DUMMY'),
+      createAction('DUMMY'),
+      endpoint,
       authErrorHandler
-    )(params)(dispatch).then(() => {
-        dispatch(stopLoading());
+    )(params)(dispatch).then((payload) => {
+        const { response } = payload;
+        const { total, per_page, data: initial_data} = response;
+        // then do a promise all to get remaining ones
+        const totalPages = Math.ceil(total / per_page);
+        if(totalPages === 1) {
+            // we have only one page ...
+            dispatch(createAction(RECEIVE_MARKETING_SETTINGS)(initial_data));
+            dispatch(stopLoading());
+            return;
+        }
+        // only continue if totalPages > 1
+        let params = Array.from({length: totalPages}, (_, i) => {
+              return {
+                  page: i + 1,
+                  per_page: per_page,
+              };
+          }
+        )
+        // get remaining ones
+        Promise.all(params.map(p =>
+          getRequest(
+            createAction('DUMMY'),
+            createAction('DUMMY'),
+            endpoint,
+            authErrorHandler
+          )(p)(dispatch)
+        ))
+          .then((responses) => {
+              let marketingSettings = [];
+              responses?.forEach(e => marketingSettings.push(...e?.response?.data));
+              marketingSettings = [...initial_data, ...marketingSettings];
+              dispatch(createAction(RECEIVE_MARKETING_SETTINGS)(marketingSettings));
+              dispatch(stopLoading());
+          })
+          .catch(err => {
+              dispatch(stopLoading());
+              return Promise.reject(e);
+          });
     }).catch(e => {
-        console.log('ERROR: ', e);
         dispatch(stopLoading());
         return Promise.reject(e);
     });
