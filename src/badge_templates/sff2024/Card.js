@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Textfit } from "react-textfit";
-//import background_img from "./images/background.png";
+import background_img from "./images/background.png";
 import "./styles/styles_1.less";
 
 const calculateNumberOfLines = (ref) => {
@@ -143,9 +143,7 @@ const Badge = ({ badge }) => {
   return (
     <>
       <div id="badge-artboard" className="bdg-artboard">
-        {
-        //<img id="badge-artboard-img" className="bdg-image" src={background_img} alt="Background" />
-        }
+        <img id="badge-artboard-img" className="bdg-image" src={background_img} alt="Background" />
         <div className="text-boxes">
           <FullName
             badge={badge}
