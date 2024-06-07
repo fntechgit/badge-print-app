@@ -143,7 +143,7 @@ const Badge = ({ badge }) => {
   return (
     <>
       <div id="badge-artboard" className="bdg-artboard">
-        <img id="badge-artboard-img" className="bdg-image" src={background_img} alt="Background" />
+        <img id="badge-artboard-img" className="bdg-image no-print" src={background_img} alt="Background" />
         <div className="text-boxes">
           <FullName
             badge={badge}

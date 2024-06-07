@@ -39,7 +39,7 @@ export default ({ badge }) => {
   return (
   <>
     <div id="badge-artboard" className="bdg-artboard">
-      <img id="badge-artboard-img" className="bdg-image" src={background_img}/>
+      <img id="badge-artboard-img" className="bdg-image no-print" src={background_img}/>
       <div className="text-boxes">
           {badge.getFullName() && !isFullNameMultiLine &&
           <span
