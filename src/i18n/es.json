@@ -47,6 +47,7 @@
   "preview": {
     "confirm"           : "Confirmar e Imprimir",
     "cancel"            : "Cancelar",
+    "loading"           : "Cargando...",
     "loading_badge"     : "Cargando credencial...",
     "loading_tickets"   : "Cargando tickets...",
     "summit_missing"    : "Show o Ticket faltante en url. Por favor contacta mesa de entrada.",

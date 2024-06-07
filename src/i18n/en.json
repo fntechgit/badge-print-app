@@ -48,6 +48,7 @@
   "preview": {
     "confirm"           : "Confirm & Print",
     "cancel"            : "Cancel",
+    "loading"           : "Loading...",
     "loading_badge"     : "Loading badge...",
     "loading_tickets"   : "Loading tickets...",
     "summit_missing"    : "Show slug or Ticket missing in url. Please contact help-desk.",
