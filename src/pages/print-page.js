@@ -361,28 +361,34 @@ class PrintPage extends React.Component {
         
         return (
             <div className="container print-page-wrapper">
-                { !embedded && this.isPrintJobInitialized() &&
-                <div className="row">
-                    <div className="col-md-6">
-                    { printJob.indexOf(`${badgeTicketId}|${badgeViewType}`) + 1}
-                    /
-                    { printJob.length }
-                    </div>
-                    { !printJobComplete &&
-                    <div className="col-md-6 text-right">
-                        <label>
-                            <input type="checkbox" checked={autoPrintMode} onChange={this.toggleAutoPrintMode} />
-                            <span>&nbsp; auto print mode</span>
-                        </label>
-                        <Timeout callback={this.processPrintJob} paused={!autoPrintMode} />
+                {this.isPrintJobInitialized() &&
+                <>
+                    {!embedded &&
+                    <div className="row">
+                        <div className="col-md-6">
+                            { printJob.indexOf(`${badgeTicketId}|${badgeViewType}`) + 1}
+                            /
+                            { printJob.length }
+                        </div>
+                        {!printJobComplete &&
+                        <div className="col-md-6 text-right">
+                            <label>
+                                <input type="checkbox" checked={autoPrintMode} onChange={this.toggleAutoPrintMode} />
+                                <span>&nbsp; auto print mode</span>
+                            </label>
+                        </div>
+                        }
                     </div>
                     }
-                </div>
+                    {!printJobComplete &&
+                    <Timeout callback={this.processPrintJob} paused={!autoPrintMode} />
+                    }
+                </>
                 }                
                 { this.isPrintJobInitialized() && !autoPrintMode && !printJobComplete &&
                 <div className="row print-buttons-wrapper">
                     <div className="col-md-1 col-md-offset-3">
-                        { !embedded &&
+                        {!embedded &&
                         <button className="btn btn-danger" disabled={this.isFirstInPrintJob()} onClick={this.goToPrevBadge}>
                             {T.translate("<")}
                         </button>
@@ -399,7 +405,7 @@ class PrintPage extends React.Component {
                         </button>
                     </div>
                     <div className="col-md-1">
-                        { !embedded &&
+                        {!embedded &&
                         <button className="btn btn-primary" disabled={this.isLastInPrintJob()} onClick={this.goToNextBadge}>
                             {T.translate(">")}
                         </button>
