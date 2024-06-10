@@ -1,0 +1,104 @@
+@font-face {
+	font-family: "Proxima Nova Bold";
+  	src: url('~fonts/ProximaNova/ProximaNovaBold.otf') format('opentype');
+	font-weight: 300;
+}
+
+@media screen {
+	#badge-artboard {
+		border: thin solid #000000;
+	}
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #000000 !important;
+	}
+}
+
+.card {
+	width: 89mm; 
+	height: 142.2mm;
+	img { height: 100%; }
+	overflow: hidden;
+}
+.staff-badge {
+	.text-box {
+		div {
+			color: #000000 !important;
+		}
+	}
+	.title-section, .company-section {
+		div {
+			color: #000000 !important;
+		}
+	}
+}
+
+.bdg-artboard {
+	font-family: "Proxima Nova Bold", sans-serif;
+	font-weight: 300;
+}
+.badge-feature-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: table;
+	width: 100%;
+	color: #000000 !important;
+	text-transform: uppercase;
+	.badge-feature {
+		display: table-cell;
+		vertical-align: middle;
+		height: 46px;
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+		font-weight: 500;
+		&.speaker{
+			background-color: #62D675;
+		}
+		&.media {
+			background-color: #FDC746;
+		}
+	}
+	
+}
+.text-box {
+	position: absolute;
+	top: 58.5mm;
+	padding: 0 5.5mm;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+	.first-name {
+		font-weight: 600;
+		font-size: 38pt;
+		line-height: 1;
+	}
+	.last-name {
+		font-weight: 600;
+		font-size: 38pt;
+		line-height: 1;
+	}
+}
+.company-section {
+	display: inline-block;
+	position: absolute;
+	padding: 0 5.5mm;
+	bottom: 50.2mm;
+	line-height: 1;
+	width: 300px,
+}
+
+#t-shirt-size {
+	position: absolute;
+	left: 6.7mm;
+	bottom: 0.7mm;
+	color: white !important;
+	letter-spacing: 0.5em;
+	margin-right: -0.5em;
+}

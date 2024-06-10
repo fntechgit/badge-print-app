@@ -19,7 +19,7 @@ const BadgeTypes = {
     generalAttendee: "General Attendee Badge",
     staff: "Staff/Employee Badge",
     media: "Media Badge",
-  };
+};
 
 const useForceUpdate = () => {
   const [value, setValue] = useState(0);
