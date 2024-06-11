@@ -1,7 +1,7 @@
 @font-face {
 	font-family: "Proxima Nova Bold";
   	src: url('~fonts/ProximaNova/ProximaNovaBold.otf') format('opentype');
-	font-weight: 300;
+	// font-weight: 300;
 }
 
 @media screen {
@@ -25,16 +25,6 @@
 }
 .bdg-artboard {
 	font-family: "Proxima Nova Bold", sans-serif;
-	font-weight: 300;
-}
-.badge-feature-wrapper {
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: table;
-	width: 100%;
-	color: #000000 !important;
-	text-transform: uppercase;
 }
 .text-box {
 	position: absolute;
@@ -45,15 +35,31 @@
 	width: 100%;
 	text-align: center;
 	margin: 0 auto;
-	.first-name {
-		font-weight: 600;
-		font-size: 38pt;
-		line-height: 1;
+	.name-wrapper {
+		position: relative;
+		text-align: center;
+		width: 300px
 	}
-	.last-name {
-		font-weight: 600;
-		font-size: 38pt;
-		line-height: 1;
+	.first-name-wrapper {
+		height: 45px;
+		.first-name {
+			font-size: 38pt;
+			line-height: 1;
+		}
+	}
+	.last-name-wrapper {
+		height: 35px;
+		.last-name {
+			font-size: 38pt;
+			line-height: 1;
+		}
+	}
+	.name {
+		text-align: center;
+		position: absolute;
+		bottom: 0;
+		width: 300px;
+		margin: 0 auto;
 	}
 }
 .company-section {
@@ -62,5 +68,10 @@
 	padding: 0 5.5mm;
 	bottom: 50.2mm;
 	line-height: 1;
-	width: 300px,
+	width: 300px;
+	.company {
+		text-align: center;
+		width: 300px;
+		padding: 0 20px,
+	}
 }

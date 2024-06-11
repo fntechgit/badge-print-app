@@ -1,5 +1,4 @@
 import React, {
-    useRef,
     useState,
     useLayoutEffect
 } from 'react';
@@ -24,7 +23,6 @@ const companyColor = {
     attendee: "#6CCCE0",
     other: "#006680"
 }
-
 
 const useForceUpdate = () => {
     const [value, setValue] = useState(0);
@@ -59,30 +57,25 @@ export default ({ badge }) => {
         }
       }, [badgeType]);
     return (
-        <div id="badge-artboard" className={`bdg-artboard card zebra-card`}>
+        <div id="badge-artboard" className="bdg-artboard card zebra-card">
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
-                <div className="first-name-wrapper" style={{ position: "relative", height: "45px", textAlign: "center", width: "300px"}}>
-                    <Textfit mode="single" max={45} onInput={forceUpdate} className="first-name" contentEditable suppressContentEditableWarning={true} style={{ textAlign: "center", color: nameLineColor, position: "absolute", bottom: "0", width: "300px", margin: "0 auto"}}>{badge.getFirstName()}</Textfit>
+                <div className="first-name-wrapper name-wrapper">
+                    <Textfit mode="single" max={42} onInput={forceUpdate} className="first-name name" contentEditable suppressContentEditableWarning={true} style={{ color: nameLineColor }}>{badge.getFirstName()}</Textfit>
                 </div>
-                <div className="last-name-wrapper" style={{ position: "relative", height: "35px", textAlign: "center", width: "300px"}}>
-                    <Textfit mode="single" max={35} onInput={forceUpdate} className="last-name" contentEditable suppressContentEditableWarning={true} style={{ textAlign: "center", color: nameLineColor, position: "absolute", bottom: "0", width: "300px", margin: "0 auto"}}>{badge.getLastName()}</Textfit>               
+                <div className="last-name-wrapper name-wrapper">
+                    <Textfit mode="single" max={35} onInput={forceUpdate} className="last-name name" contentEditable suppressContentEditableWarning={true} style={{ color: nameLineColor }}>{badge.getLastName()}</Textfit>               
                 </div>       
             </div>
-            <div className={`company-section`}>
+            <div className="company-section">
                 <Textfit 
-                    mode={'single'} 
+                    mode="single" 
                     max={20} 
-                    className={`company`} 
+                    className="company"
                     onInput={forceUpdate} 
                     contentEditable 
                     suppressContentEditableWarning={true} 
-                    style={{ 
-                        textAlign: "center",
-                        width: "300px",
-                        padding: "0 20px",
-                        color: companyLineColor
-                    }}
+                    style={{ color: companyLineColor }}
                 >
                 {badge.getCompany()}
                 </Textfit>
