@@ -116,14 +116,14 @@ const Company = ({
       {companyLines > lineLimit && (
         <Textfit
           mode="multi"
-          max={24}
+          max={overCrowded ? 20 : 24}
           className="company"
           contentEditable
           suppressContentEditableWarning={true}
           onInput={forceUpdate}
           style={{
-            marginTop: overCrowded ? 0 : companyMarginTop(),
-            height: companyLineHeight * 1.8,
+            marginTop: overCrowded ? "5px" : companyMarginTop(),
+            height: overCrowded ? (companyLineHeight * 1.8) - 5 : companyLineHeight * 1.8,
             marginBottom: overCrowded ? 0 : "inherit"
           }}
         >
