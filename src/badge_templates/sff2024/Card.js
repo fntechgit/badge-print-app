@@ -45,6 +45,7 @@ const FullName = ({ badge, fullNameLines, setFullNameLines, forceUpdate }) => {
           contentEditable
           suppressContentEditableWarning={true}
           onInput={forceUpdate}
+          onReady={() => window.dispatchEvent(new CustomEvent("resize"))}
         >
           {badge.getFirstName()}
         </Textfit>
@@ -57,6 +58,7 @@ const FullName = ({ badge, fullNameLines, setFullNameLines, forceUpdate }) => {
           contentEditable
           suppressContentEditableWarning={true}
           onInput={forceUpdate}
+          onReady={() => window.dispatchEvent(new CustomEvent("resize"))}
         >
           {badge.getLastName()}
         </Textfit>
