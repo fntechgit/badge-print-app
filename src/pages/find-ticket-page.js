@@ -1,11 +1,9 @@
-import React from 'react';
+import * as React from "react";
 import { connect } from "react-redux";
 import T from "i18n-react/dist/i18n-react";
-import history from '../history';
-//import QrReader from 'react-qr-reader'
-import QrReader from '../components/QrReader';
 import Swal from "sweetalert2";
-import validator from 'validator';
+import validator from "validator";
+import history from "../history";
 import {
     findTicketByQRCode,
     findTicketsByName,
@@ -13,11 +11,12 @@ import {
     findExternalTicketsByEmail,
     setSelectedTicket
 } from "../actions/ticket-actions";
-import {scanQRCode} from "../actions/qrcode-actions";
-import ErrorPage from './error-page';
+import { scanQRCode } from "../actions/qrcode-actions";
+import QrReader from "../components/QrReader";
+import ErrorPage from "./error-page";
 import { ATTENDEE_STATUS_INCOMPLETE, PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL, PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME } from '../utils/constants';
+
 import "../styles/find-ticket-page.less"
-import {QR_SEARCH_CRITERIA} from '../utils/constants';
 
 class FindTicketPage extends React.Component {
 
@@ -29,7 +28,7 @@ class FindTicketPage extends React.Component {
             showQRreader     : false,
             showErrorPage    : false,
             alreadyCheckedIn : false,
-            error            : '',
+            error            : "",
         };
 
     }
@@ -49,13 +48,13 @@ class FindTicketPage extends React.Component {
                         this.setState({ alreadyCheckedIn: true });
                         return;
                     }
-                    if (ticket.owner.status === 'Incomplete') {
+                    if (ticket.owner.status === "Incomplete") {
                         history.push(`/check-in/${summit.slug}/extra-questions`);
                         return;
                     }
                 }
                 history.push(`/check-in/${summit.slug}/tickets/${ticket.id}`);
-            })
+            }).catch((error) => this.setState({ showErrorPage: true }))
         }
     };
 
@@ -102,7 +101,7 @@ class FindTicketPage extends React.Component {
             return;
         }
 
-        this.setState({ error: 'name' });
+        this.setState({ error: "name" });
 
     };
 
@@ -132,14 +131,14 @@ class FindTicketPage extends React.Component {
             history.push(`/check-in/${summit.slug}/select-ticket`);
         } else {
             // empty data set , check if we have external reg feed
-            if (summit.external_registration_feed_type != '' && useExternalFallback) {
+            if (summit.external_registration_feed_type != "" && useExternalFallback) {
                 findExternalTicketsByEmail(this.email.value).then((data) => {
                     this.processFindByEmailData(data, false);
-                });
+                }).catch(() => this.setState({ showErrorPage: true }));
                 return;
             }
 
-            this.setState({showErrorPage: true})
+            this.setState({ showErrorPage: true })
         }
     }
 
@@ -151,7 +150,7 @@ class FindTicketPage extends React.Component {
             findTicketsByEmail(email).then((data) => this.processFindByEmailData(data));
             return;
         }
-        this.setState({ error: 'email' });
+        this.setState({ error: "email" });
     };
 
     handleScanQRCode = () => {
@@ -162,7 +161,7 @@ class FindTicketPage extends React.Component {
         );
     };
 
-    hideFieldFromSetting = (summitSetting) => {
+    shouldHideField = (summitSetting) => {
         const { marketingSettings } = this.props;
         const setting = marketingSettings?.find(s => s.key === summitSetting);
         return setting?.value === "1" ? true : false;
@@ -170,15 +169,14 @@ class FindTicketPage extends React.Component {
 
     render(){
         const { embedded, showQRreader, showErrorPage, alreadyCheckedIn, error } = this.state;
-        const { searchTerm} = this.props;
+        const { searchTerm } = this.props;
 
         if (alreadyCheckedIn) {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.checked_in")}
-                    message={searchTerm == QR_SEARCH_CRITERIA ? T.translate("find_ticket.checked_in_message_qr_code")
-                        : T.translate("find_ticket.checked_in_message", { search_term: searchTerm })
-                        }
+                    message={searchTerm ? T.translate("find_ticket.checked_in_message", { search_term: searchTerm }) :
+                        T.translate("find_ticket.checked_in_message_qr_code")}
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ alreadyCheckedIn: false })}
                 />
@@ -189,7 +187,8 @@ class FindTicketPage extends React.Component {
             return (
                 <ErrorPage
                     title={T.translate("find_ticket.not_found")}
-                    message={ searchTerm == QR_SEARCH_CRITERIA ?  T.translate("find_ticket.not_found_message_qr_code") : T.translate("find_ticket.not_found_message", { search_term: searchTerm })}
+                    message={ searchTerm ? T.translate("find_ticket.not_found_message", { search_term: searchTerm }) :
+                        T.translate("find_ticket.not_found_message_qr_code")}
                     linkText={T.translate("find_ticket.try_again")}
                     onLinkClick={() => this.setState({ showErrorPage: false })}
                 />
@@ -217,7 +216,7 @@ class FindTicketPage extends React.Component {
                                 delay={300}
                                 onError={this.handleError}
                                 onScan={this.handleScan}
-                                style={{ width: '300px' }}
+                                style={{ width: "300px" }}
                             />
                             }
                         </div>
@@ -241,65 +240,65 @@ class FindTicketPage extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <div className="row">
-                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL) &&
-                                <div className="col-md-12 find-tix-wrapper">
-                                    <div className="find-tix-label">
-                                        {T.translate("find_ticket.email_title")}
-                                    </div>
-                                    <div className="find-tix-form">
-                                        <input
-                                            className={`form-control input ${error === 'email' && 'error'}`}
-                                            id="email"
-                                            type="email"
-                                            placeholder={T.translate("find_ticket.email")}
-                                            ref={el => this.email = el}
-                                            onChange={() => this.setState({error: ''})}
-                                        />
-                                        { error === 'email' &&
-                                        <p className="error">{T.translate("find_ticket.valid_email")}</p>
-                                        }
-                                    </div>
-                                    <div className="find-tix-button">
-                                        <button className="btn btn-primary" onClick={this.handleFindByEmail}>
-                                            {T.translate("general.continue")}
-                                        </button>
-                                    </div>
+                            {!this.shouldHideField(PRINT_APP_HIDE_FIND_TICKET_BY_EMAIL) &&
+                            <div className="col-md-12 find-tix-wrapper">
+                                <div className="find-tix-label">
+                                    {T.translate("find_ticket.email_title")}
                                 </div>
+                                <div className="find-tix-form">
+                                    <input
+                                        className={`form-control input ${error === "email" && "error"}`}
+                                        id="email"
+                                        type="email"
+                                        placeholder={T.translate("find_ticket.email")}
+                                        ref={el => this.email = el}
+                                        onChange={() => this.setState({error: ""})}
+                                    />
+                                    { error === 'email' &&
+                                    <p className="error">{T.translate("find_ticket.valid_email")}</p>
+                                    }
+                                </div>
+                                <div className="find-tix-button">
+                                    <button className="btn btn-primary" onClick={this.handleFindByEmail}>
+                                        {T.translate("general.continue")}
+                                    </button>
+                                </div>
+                            </div>
                             }
-                            {!this.hideFieldFromSetting(PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME) &&
-                                <div className="col-md-12 find-tix-wrapper">
-                                    <div className="find-tix-label">
-                                        {T.translate("find_ticket.name_title")}
-                                    </div>
-                                    <div className="find-tix-form">
-                                        <input
-                                            className={`form-control input ${error === 'name' && 'error'}`}
-                                            id="first_name"
-                                            type="text"
-                                            spellCheck="false"
-                                            placeholder={T.translate("find_ticket.first_name")}
-                                            ref={el => this.firstName = el}
-                                            onChange={() => this.setState({error: ''})}
-                                        />
-                                        <input
-                                            className={`form-control input ${error === 'name' && 'error'}`}
-                                            id="last_name"
-                                            type="text"
-                                            spellCheck="false"
-                                            placeholder={T.translate("find_ticket.last_name")}
-                                            ref={el => this.lastName = el}
-                                            onChange={() => this.setState({error: ''})}
-                                        />
-                                        { error === 'name' &&
-                                            <p className="error">{T.translate("find_ticket.valid_name")}</p>
-                                        }
-                                    </div>
-                                    <div className="find-tix-button">
-                                        <button className="btn btn-primary" onClick={this.handleFindByName}>
-                                            {T.translate("general.continue")}
-                                        </button>
-                                    </div>
+                            {!this.shouldHideField(PRINT_APP_HIDE_FIND_TICKET_BY_FULLNAME) &&
+                            <div className="col-md-12 find-tix-wrapper">
+                                <div className="find-tix-label">
+                                    {T.translate("find_ticket.name_title")}
                                 </div>
+                                <div className="find-tix-form">
+                                    <input
+                                        className={`form-control input ${error === "name" && "error"}`}
+                                        id="first_name"
+                                        type="text"
+                                        spellCheck="false"
+                                        placeholder={T.translate("find_ticket.first_name")}
+                                        ref={el => this.firstName = el}
+                                        onChange={() => this.setState({error: ''})}
+                                    />
+                                    <input
+                                        className={`form-control input ${error === "name" && "error"}`}
+                                        id="last_name"
+                                        type="text"
+                                        spellCheck="false"
+                                        placeholder={T.translate("find_ticket.last_name")}
+                                        ref={el => this.lastName = el}
+                                        onChange={() => this.setState({error: ''})}
+                                    />
+                                    { error === "name" &&
+                                        <p className="error">{T.translate("find_ticket.valid_name")}</p>
+                                    }
+                                </div>
+                                <div className="find-tix-button">
+                                    <button className="btn btn-primary" onClick={this.handleFindByName}>
+                                        {T.translate("general.continue")}
+                                    </button>
+                                </div>
+                            </div>
                             }
                         </div>
                     </div>

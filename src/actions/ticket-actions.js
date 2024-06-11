@@ -9,7 +9,13 @@ import {
 } from "openstack-uicore-foundation/lib/utils/actions";
 import { Base64 } from 'js-base64';
 import { getAccessTokenSafely } from "../utils/utils";
-import { QR_SEARCH_CRITERIA } from "../utils/constants";
+import {
+  handleAuthAlert,
+  withAlertHandler,
+  alertErrorAndRethrow,
+  alertNetworkOrServerErrorAndRethrow
+} from "../utils/errorHandling";
+
 export const REQUEST_TICKET            = "REQUEST_TICKET";
 export const RECEIVE_TICKET            = "RECEIVE_TICKET";
 export const REQUEST_TICKETS           = "REQUEST_TICKETS";
@@ -39,13 +45,11 @@ export const findTicketByQRCode = (qrCode) => async (dispatch, getState) => {
         createAction(REQUEST_TICKET),
         createAction(RECEIVE_TICKET),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${encodedQRCode}`,
-        authErrorHandler,
-        { search_term: QR_SEARCH_CRITERIA } // we send hardcode string bc the search criteria is an opaque string
-    )(params)(dispatch).then((payload) => {
-            dispatch(stopLoading());
-            return payload.response;
-        }
-    );
+        withAlertHandler(authErrorHandler, handleAuthAlert)
+    )(params)(dispatch)
+        .then((payload) => payload.response)
+        .catch(alertNetworkOrServerErrorAndRethrow)
+        .finally(() => dispatch(stopLoading()));
 };
 
 export const setSelectedTicket = (ticket) => (dispatch) => Promise.resolve().then(() => {
@@ -76,12 +80,12 @@ export const findTicketsByName = (firstName, lastName) => async (dispatch, getSt
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        authErrorHandler,
+        withAlertHandler(authErrorHandler, handleAuthAlert),
         { search_term: name }
-    )(params)(dispatch).then((payload) => {
-        dispatch(stopLoading());
-        return payload.response.data;
-    });
+    )(params)(dispatch)
+        .then((payload) => payload.response.data)
+        .catch(alertNetworkOrServerErrorAndRethrow)
+        .finally(() => dispatch(stopLoading()));
 };
 
 export const findTicketsByEmail = (email) => async (dispatch, getState) => {
@@ -102,12 +106,12 @@ export const findTicketsByEmail = (email) => async (dispatch, getState) => {
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets`,
-        authErrorHandler,
+        withAlertHandler(authErrorHandler, handleAuthAlert),
         { search_term: email }
-    )(params)(dispatch).then((payload) => {
-        dispatch(stopLoading());
-        return payload.response.data;
-    });
+    )(params)(dispatch)
+        .then((payload) => payload.response.data)
+        .catch(alertNetworkOrServerErrorAndRethrow)
+        .finally(() => dispatch(stopLoading()));
 };
 
 export const findExternalTicketsByEmail = (email) => async (dispatch, getState) => {
@@ -128,12 +132,12 @@ export const findExternalTicketsByEmail = (email) => async (dispatch, getState) 
         createAction(REQUEST_TICKETS),
         createAction(RECEIVE_TICKETS),
         `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/external`,
-        authErrorHandler,
+        withAlertHandler(authErrorHandler, handleAuthAlert),
         { search_term: email }
-    )(params)(dispatch).then((payload) => {
-        dispatch(stopLoading());
-        return payload.response.data;
-    });
+    )(params)(dispatch)
+        .then((payload) => payload.response.data)
+        .catch(alertNetworkOrServerErrorAndRethrow)
+        .finally(() => dispatch(stopLoading()));
 };
 export const getAllTickets = ({
     filters = [],

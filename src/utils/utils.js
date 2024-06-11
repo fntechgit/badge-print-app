@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import T from "i18n-react/dist/i18n-react";
 import {
   getAccessToken,
   initLogOut
@@ -8,7 +9,6 @@ import {
   startLoading,
   stopLoading
 } from "openstack-uicore-foundation/lib/utils/actions";
-import { NetworkError } from "./errorHandling";
 
 export const useForceUpdate = () => {
   const [value, setValue] = useState(0);
@@ -76,6 +76,7 @@ export const retryRequest = (
   baseDelay = BASE_DELAY,
   inBackground = false,
 ) => async (dispatch) => {
+  let lastError;
   for (let retries = 1; retries <= maxRetries; retries++) {
     const delay = baseDelay * 2 ** retries; // exponential backoff
     console.log(`Retrying in ${delay} ms (${retries}/${maxRetries})...`);
@@ -86,13 +87,19 @@ export const retryRequest = (
       if (!inBackground) dispatch(stopLoading());
       return response;
     } catch (error) {
-      console.error(`API request error: ${error.err}`);
-      if (error.err.status) throw error;
+      // if http error is known, throw
+      if (error.err.status) {
+        console.error(`API request error: ${error.err}`);
+        throw error;
+      }
+      // if its a network error, save last
+      lastError = error
     }
   }
   if (!inBackground) dispatch(stopLoading());
-  console.error("Max retries reached. Unable to complete the API request.");
-  throw new NetworkError("Max retries reached.");
+  lastError.message = T.translate("errors.max_retries_error");
+  console.error(lastError);
+  throw lastError;
 };
 
 export const retryOnNetworkError = (
@@ -104,9 +111,11 @@ export const retryOnNetworkError = (
   try {
     return await request();
   } catch (error) {
-    console.error(`API request error: ${error.err}`);
     // if http error is known, throw
-    if (error.err.status) throw error;
+    if (error.err.status) {
+      console.error(`API request error: ${error.err}`);
+      throw error;
+    }
     // if its a network error and retryInBackground, first resolve and then keep trying
     if (!error.err.status && retryInBackground) {
       const backgroundRetry = retryRequest(request, maxRetries, baseDelay, retryInBackground)(dispatch);
@@ -124,27 +133,27 @@ export const retryInBackgroundOnNetworkError = (
 ) => async (dispatch) => retryOnNetworkError(request, maxRetries, baseDelay, true)(dispatch);
 
 export const getMarketingBadgeSettings = (marketingSettings) => {
-    const background = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_BACKGROUND_IMG")[0];
-    const firstnameColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_FIRST_NAME_COLOR")[0];
-    const lastnameColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_LAST_NAME_COLOR")[0];
-    const companyColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_COMPANY_COLOR")[0];
-    return {
-        background: {
-            file: background?.file,
-            type: background?.type,
-            value: background?.value
-        },
-        firstnameColor: {
-            type: firstnameColor?.type,
-            value: firstnameColor?.value
-        },
-        lastnameColor: {
-            type: lastnameColor?.type,
-            value: lastnameColor?.value
-        },
-        companyColor: {
-            type: companyColor?.type,
-            value: companyColor?.value
-        },
+  const background = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_BACKGROUND_IMG")[0];
+  const firstnameColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_FIRST_NAME_COLOR")[0];
+  const lastnameColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_LAST_NAME_COLOR")[0];
+  const companyColor = marketingSettings.filter(m => m.key === "BADGE_TEMPLATE_COMPANY_COLOR")[0];
+  return {
+    background: {
+      file: background?.file,
+      type: background?.type,
+      value: background?.value
+    },
+    firstnameColor: {
+      type: firstnameColor?.type,
+      value: firstnameColor?.value
+    },
+    lastnameColor: {
+      type: lastnameColor?.type,
+      value: lastnameColor?.value
+    },
+    companyColor: {
+      type: companyColor?.type,
+      value: companyColor?.value
     }
+  }
 };
