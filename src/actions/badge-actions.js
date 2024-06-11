@@ -12,8 +12,9 @@ import {
   retryInBackgroundOnNetworkError
 } from "../utils/utils";
 import {
-  customAuthErrorHandler,
-  handleCustomErrorAndRethrow
+  handleAuthAlert,
+  withAlertHandler,
+  alertErrorAndRethrow
 } from "../utils/errorHandling";
 
 import { exec } from "../services/wkbridge";
@@ -51,10 +52,10 @@ export const getBadge = (
       createAction(REQUEST_BADGE),
       createAction(BADGE_RECEIVED),
      `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}/badge/current${viewPath}/print`,
-      customAuthErrorHandler,
+      withAlertHandler(authErrorHandler, handleAuthAlert),
       { viewType }
     )(params)(dispatch)
-  )(dispatch).catch(handleCustomErrorAndRethrow).finally(() =>
+  )(dispatch).catch(alertErrorAndRethrow).finally(() =>
     dispatch(stopLoading())
   );
 };
@@ -85,7 +86,7 @@ export const incrementBadgePrintCount = (
       createAction(BADGE_PRINT_COUNT_INCREMENT_RECEIVED),
      `${window.API_BASE_URL}/api/v1/summits/${summit.id}/tickets/${ticketId}/badge/current${viewPath}/print`,
       { check_in: checkIn },
-      customAuthErrorHandler
+      withAlertHandler(authErrorHandler, handleAuthAlert)
     )(params)(dispatch)
   )(dispatch);
 };
