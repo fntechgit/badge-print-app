@@ -51,7 +51,7 @@
     "valid_name"        : "Por favor ingresa un nombre válido.",
     "not_found"         : "Ticket no encontrado",
     "not_found_message" : "No se encontró ningún ticket usando _{search_term}_. \nPor favor consulta a un miembro del personal si crees que esto es incorrecto.",
-    "not_found_message_qr_code" : "No se encontró ningún ticket usando el código QR \nPor favor consulta a un miembro del personal si crees que esto es incorrecto.",
+    "not_found_message_qr_code" : "No se encontró ningún ticket usando el código QR. \nPor favor consulta a un miembro del personal si crees que esto es incorrecto.",
     "checked_in"        : "Ya has hecho check-in",
     "checked_in_message": "El asistente _{search_term}_ ya ha hecho check-in. \nPor favor consulta a un miembro del personal si crees que esto es incorrecto.",
     "checked_in_message_qr_code": "El asistente ya ha hecho check-in. \nPor favor consulta a un miembro del personal si crees que esto es incorrecto.",

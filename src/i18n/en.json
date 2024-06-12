@@ -51,7 +51,7 @@
     "valid_name"        : "Please enter a valid name.",
     "not_found"         : "Ticket not found",
     "not_found_message" : "No ticket was found using _{search_term}_. \nPlease see a staff member for assistance if you feel this is incorrect.",
-    "not_found_message_qr_code" : "No ticket was found using QR code \nPlease see a staff member for assistance if you feel this is incorrect.",
+    "not_found_message_qr_code" : "No ticket was found using QR code. \nPlease see a staff member for assistance if you feel this is incorrect.",
     "checked_in"        : "Already checked-in",
     "checked_in_message": "Attendee _{search_term}_ has already checked-in. \nPlease see a staff member for assistance if you feel this is incorrect.",
     "checked_in_message_qr_code": "Attendee has already checked-in. \nPlease see a staff member for assistance if you feel this is incorrect.",
