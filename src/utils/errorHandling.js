@@ -37,20 +37,24 @@ const getClientErrorTitle = (error) => {
 };
 
 export const alertError = (error) => {
+  let title, message;
+
   if (isClientError(error)) {
-    const message = getClientErrorMessage(error);
-    const title = getClientErrorTitle(error);
-    const swalPayload = buildSwalErrorPayload(title, message);
-    Swal.fire(swalPayload);
+    title = getClientErrorTitle(error);
+    message = getClientErrorMessage(error);
   } else if (isServerError(error)) {
-    const swalPayload = buildSwalErrorPayload(T.translate("errors.server_error_title"), T.translate("errors.server_error"));
-    Swal.fire(swalPayload);
+    title = T.translate("errors.server_error_title");
+    message = T.translate("errors.server_error");
   } else if (isNetworkError(error)) {
-    const swalPayload = buildSwalErrorPayload(T.translate("errors.network_error_title"), error.message || T.translate("errors.network_error"));
-    Swal.fire(swalPayload);
+    title = T.translate("errors.network_error_title");
+    message = error.message || T.translate("errors.network_error");
   } else {
     console.error("An unexpected error occurred: ", error);
+    return;
   }
+
+  const swalPayload = buildSwalErrorPayload(title, message);
+  Swal.fire(swalPayload);
 };
 
 export const alertErrorAndRethrow = (error) => {
