@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { Textfit } from 'react-textfit';
 
-import './zebra-card.less';
+import './styles/zebra-card.less';
 
 import background_staff from '../images/staff.png';
 
