@@ -61,10 +61,10 @@ export default ({ badge }) => {
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={backgroundImg}/>
             <div className="text-box">
                 <div className="first-name-wrapper name-wrapper">
-                    <Textfit mode="single" max={42} onInput={forceUpdate} className="first-name name" contentEditable suppressContentEditableWarning={true} style={{ color: nameLineColor }}>{badge.getFirstName()}</Textfit>
+                    <Textfit mode="single" max={42} onInput={forceUpdate} className="first-name name" contentEditable suppressContentEditableWarning={true}>{badge.getFirstName()}</Textfit>
                 </div>
                 <div className="last-name-wrapper name-wrapper">
-                    <Textfit mode="single" max={35} onInput={forceUpdate} className="last-name name" contentEditable suppressContentEditableWarning={true} style={{ color: nameLineColor }}>{badge.getLastName()}</Textfit>               
+                    <Textfit mode="single" max={35} onInput={forceUpdate} className="last-name name" contentEditable suppressContentEditableWarning={true}>{badge.getLastName()}</Textfit>               
                 </div>       
             </div>
             <div className="company-section">
