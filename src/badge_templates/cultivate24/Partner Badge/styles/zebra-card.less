@@ -18,27 +18,31 @@
 }
 
 @media print {
-	.text-box {
-		div {
-			color: #003A49 !important;
+	.partner {
+		.text-box {
+			div {
+				color: #003A49 !important;
+			}
 		}
-	}
-	.company-section {
-		div {
-			color: #006680 !important;
+		.company-section {
+			div {
+				color: #006680 !important;
+			}
 		}
 	}
 }
 
 @media screen {
-	.text-box {
-		div {
-			color: #003A49 !important;
+	.partner {
+		.text-box {
+			div {
+				color: #003A49 !important;
+			}
 		}
-	}
-	.company-section {
-		div {
-			color: #006680 !important;
+		.company-section {
+			div {
+				color: #006680 !important;
+			}
 		}
 	}
 }
@@ -52,54 +56,56 @@
 .bdg-artboard {
 	font-family: "Proxima Nova Bold", sans-serif;
 }
-.text-box {
-	position: absolute;
-	top: 59.5mm;
-	padding: 0 5.5mm;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	text-align: center;
-	margin: 0 auto;
-	.name-wrapper {
-		position: relative;
-		text-align: center;
-		width: 290px;
-		color: #003A49 !important;
-	}
-	.first-name-wrapper {
-		height: 45px;
-		.first-name {
-			font-size: 38pt;
-			line-height: 1;
-		}
-	}
-	.last-name-wrapper {
-		height: 35px;
-		.last-name {
-			font-size: 38pt;
-			line-height: 1;
-		}
-	}
-	.name {
-		text-align: center;
+.partner {
+	.text-box {
 		position: absolute;
-		bottom: 0;
-		width: 290px;
-		margin: 0 auto;
-	}
-}
-.company-section {
-	display: inline-block;
-	position: absolute;
-	padding: 0 5.5mm;
-	bottom: 49.2mm;
-	line-height: 1;
-	width: 300px;
-	color: #006680 !important;
-	.company {
+		top: 59.5mm;
+		padding: 0 5.5mm;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
 		text-align: center;
+		margin: 0 auto;
+		.name-wrapper {
+			position: relative;
+			text-align: center;
+			width: 290px;
+			color: #003A49 !important;
+		}
+		.first-name-wrapper {
+			height: 45px;
+			.first-name {
+				font-size: 38pt;
+				line-height: 1;
+			}
+		}
+		.last-name-wrapper {
+			height: 35px;
+			.last-name {
+				font-size: 38pt;
+				line-height: 1;
+			}
+		}
+		.name {
+			text-align: center;
+			position: absolute;
+			bottom: 0;
+			width: 290px;
+			margin: 0 auto;
+		}
+	}
+	.company-section {
+		display: inline-block;
+		position: absolute;
+		padding: 0 5.5mm;
+		bottom: 49.2mm;
+		line-height: 1;
 		width: 300px;
-		padding: 0 20px,
+		color: #006680 !important;
+		.company {
+			text-align: center;
+			width: 300px;
+			padding: 0 20px,
+		}
 	}
 }

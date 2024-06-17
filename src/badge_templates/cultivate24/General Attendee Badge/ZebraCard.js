@@ -15,7 +15,7 @@ const useForceUpdate = () => {
 export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     return (
-        <div id="badge-artboard" className="bdg-artboard card zebra-card">
+        <div id="badge-artboard" className="bdg-artboard card zebra-card general-attendee">
             <img id="badge-artboard-img" className="bdg-image bdg-image-front" src={background_attendee}/>
             <div className="text-box">
                 <div className="first-name-wrapper name-wrapper">
