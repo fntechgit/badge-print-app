@@ -1,0 +1,120 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "Builder Sans Regular";
+  src: url('~fonts/Roblox/RobloxBETA-Regular-v1.007.otf');
+}
+@font-face {
+  font-family: "Builder Extended Bold";
+  src: url('~fonts/Roblox/RobloxDisplayBETA-Bold-v1.003.otf');
+}
+
+@media print {
+	/* this overrules bootstrap print text color */
+	*, ::after, ::before {
+			color: #000 !important;
+	}
+}
+
+.zebra-card {
+	font-family: "Builder Sans Regular";
+
+	width: 89mm;
+	height: 142.2mm;
+	img { height: 100%; }
+
+	overflow: hidden;
+
+	.bdg-image {
+		position: absolute;
+	}
+
+	.bar {
+		position: absolute;
+		bottom: 0mm;
+		left: 0mm;
+		height: 16.52mm;
+		width: 100%;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		span {
+			padding: 0 7mm;
+			font-family: "Builder Extended Bold";
+			font-size: 24.1pt;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 26px; /* 108.333% */
+			letter-spacing: 0.42px;
+			text-transform: uppercase;
+			margin-top: -1mm;
+		}
+		.white {
+			color: #FFF !important;
+		}
+		.black {
+			color: #010101 !important;
+		}
+		@media print {
+			.white {
+				color: #FFF !important;
+			}
+			.black {
+				color: #010101 !important;
+			}
+		}
+	}
+	.badge-features {
+		position: relative;
+		padding: 0mm 7mm 21.5mm 7mm;
+		.bug {
+			height: 70px;
+			width: 70px;
+		}
+		.badge-feature {
+			position: absolute;
+		}
+		.keynote {
+			top: 35mm;
+		}
+		.ria {
+			top: 57mm;
+		}
+	}
+	.text-boxes {
+		position: absolute;
+		bottom: 0mm;
+		left: 0mm;
+		width: 89mm;
+		padding: 0mm 7mm 21.5mm 7mm;
+		display: flex;
+		flex-direction: column;
+		color: #FFF !important;
+		div {
+			color: #FFF !important;
+		}
+		z-index: 1000;
+		.user-name {
+			// position: absolute;
+			// bottom: 0;
+			font-family: "Builder Extended Bold";
+			font-style: normal;
+			//font-weight: 900;
+			line-height: 1; /* 133.333% */
+			letter-spacing: 0.48px;
+		}
+		
+		.pronouns {
+			min-height: 36px;
+		}
+		.user-name + .pronouns,
+		.user-name + .company,
+		.first-name + .pronouns,
+		.first-name + .company {
+			padding-top: 1mm;
+		}
+		.pronouns + .company {
+			margin-top: -1mm;
+		}
+	}
+}

@@ -1,0 +1,140 @@
+/* -- general styles -- */
+
+@font-face {
+  font-family: "Builder Sans Regular";
+  src: url('~fonts/Roblox/RobloxBETA-Regular-v1.007.otf');
+}
+@font-face {
+  font-family: "Builder Extended Bold";
+  src: url('~fonts/Roblox/RobloxDisplayBETA-Bold-v1.003.otf');
+}
+
+.wristband {
+	font-family: "Builder Sans Regular";
+	height: 337mm;
+	width: 41mm;
+	
+	.strip-fill {
+		position: absolute;
+		top: 1mm;
+		left: 13.35mm;
+		width: 15mm;
+		height: 156mm;
+	}
+
+	.background-fill {
+		position: absolute;
+		top: 157mm;
+		left: 5.3mm;
+		width: 31mm;
+		height: 137mm;
+	}
+
+	.mesh {
+		position: absolute;
+		bottom: 43mm;
+		left: 5mm;
+		width: 31mm;
+		transform: rotate(180deg);
+	}
+
+	.qr-code-wrapper {
+		position: absolute;
+		top: 249mm;
+		left: 0; 
+		right: -3px; 
+		margin-left: auto; 
+		margin-right: auto;
+		height: 107px;
+    	width: 107px;
+		background-color: #fff!important;
+		border: 2mm solid #fff;
+		&.black-border {
+			background-color: #000!important;
+			border: 2mm solid #000;
+		}
+		.qrcode-box {
+			width: 92px;
+			height: 92px;
+			background-color: #fff!important;
+			border: 2mm solid #fff;
+			border-bottom: 1.6mm solid #fff;
+		}
+	}
+	@media print {
+		.qrcode-box {
+			background-color: #fff!important;
+		}
+	}
+
+	.logo-fill {
+		position: absolute;
+		top: 204mm;
+		left: -4mm;
+		width: 50mm;
+		height: 13mm;
+		padding: 0px;
+		border-radius: 45px;
+		.logo {
+			position: relative;
+			height: 100px;
+			width: 130px;
+			margin-top: -6.8mm;
+			margin-left: 8mm;
+		}
+	}
+
+	.user-name {
+	  font-family: "Builder Extended Bold";
+	  position: absolute;
+	  top: 117mm;
+	  left: 18.5mm;
+	  height: 50mm;
+	  overflow: hidden;
+	  white-space: nowrap;
+	}
+
+	.name {
+	  position: absolute;
+	  top: 18mm;
+	  height: 50mm;
+	  text-transform: capitalize;
+	  overflow: hidden;
+	  white-space: nowrap;
+	  text-align: center;
+	}
+
+	.first-name {
+		left: 16.2mm;
+	}
+
+	.last-name {
+		left: 20.8mm;
+	}
+}
+
+.white {
+  color: white!important;
+}
+
+.black {
+	color: #100420!important;
+}
+
+@media print {
+	.white {
+  	color: white!important;
+	}
+	.black {
+		color: #100420!important;
+	}
+}
+
+.text-vertical {
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+}
+
+.rotate-270 {
+	transform: rotate(270deg);
+}
