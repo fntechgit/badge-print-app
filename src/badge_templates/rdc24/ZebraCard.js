@@ -133,6 +133,7 @@ export default ({ badge }) => {
                     className="text-box pronouns"
                     contentEditable
                     suppressContentEditableWarning={true}
+                    onInput={forceUpdate} 
                 >
                     {pronouns != PronounsQuestionAnswers.NotListedAbove &&
                     pronouns != PronounsQuestionAnswers.DontDisclose && pronouns}
@@ -144,6 +145,7 @@ export default ({ badge }) => {
                         className="text-box company"
                         contentEditable
                         suppressContentEditableWarning={true}
+                        onInput={forceUpdate} 
                     >
                         {badge.getCompany()}
                     </Textfit>
