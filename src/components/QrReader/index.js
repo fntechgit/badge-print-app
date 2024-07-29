@@ -48,9 +48,9 @@ const QrReader = ({onError, onScan}) => {
     // 🧹 Clean up on unmount.
     // 🚨 This removes the QR Scanner from rendering and using camera when it is closed or removed from the UI.
     return () => {
-      if (!videoEl?.current) {
         scanner?.current?.stop();
-      }
+        scanner?.current?.destroy();
+        scanner.current = null;      
     };
   }, []);
 
