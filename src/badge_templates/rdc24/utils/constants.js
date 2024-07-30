@@ -23,12 +23,12 @@ export const BadgeTypes = {
 };
 
 export const BadgeTypesDisplayName = {
-    [BadgeTypes.Staff]: 'Employee',
+    [BadgeTypes.Staff]: 'Builder',
     [BadgeTypes.Attendee]: 'Attendee',
     [BadgeTypes.Speaker]: 'Speaker',
     [BadgeTypes.ExternalSpeaker]: 'Speaker',
     [BadgeTypes.Press]: 'Media',
-    [BadgeTypes.Guest]: 'Attendee',
+    [BadgeTypes.Guest]: 'Guest',
 };
 
 export const ZebraCardBadgeTypesColor = {
