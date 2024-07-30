@@ -113,6 +113,18 @@ export default ({ badge }) => {
                     contentEditable>{badge.getFirstName()}
                 </div>
             }
+            { lastName &&
+                <div
+                    className={`name last-name text-vertical ${darkTheme ? 'white' : 'black'}`}
+                    contentEditable>{lastName}
+                </div>
+            }
+            { !lastName && badge.getLastName() &&
+                <div
+                    className={`name last-name text-vertical ${darkTheme ? 'white' : 'black'}`}
+                    contentEditable>{lastName}
+                </div>
+            }
         </div>
     </>
     );
