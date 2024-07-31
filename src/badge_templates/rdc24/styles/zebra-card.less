@@ -90,22 +90,23 @@
 		display: flex;
 		flex-direction: column;
 		color: #FFF !important;
+		overflow: hidden;
 		div {
 			color: #FFF !important;
 		}
 		z-index: 1000;
 		.user-name {
-			// position: absolute;
-			// bottom: 0;
 			font-family: "Builder Extended Bold";
 			font-style: normal;
-			//font-weight: 900;
-			line-height: 1; /* 133.333% */
+			line-height: 1;
 			letter-spacing: 0.48px;
 		}
 		
 		.pronouns {
 			min-height: 36px;
+		}
+		.company {
+			padding-right: 20px;
 		}
 		.user-name + .pronouns,
 		.user-name + .company,

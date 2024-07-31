@@ -145,7 +145,7 @@ export default ({ badge }) => {
                         className="text-box company"
                         contentEditable
                         suppressContentEditableWarning={true}
-                        onInput={forceUpdate} 
+                        onInput={forceUpdate}
                     >
                         {badge.getCompany()}
                     </Textfit>
