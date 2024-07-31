@@ -37,7 +37,13 @@ export default ({ badge }) => {
     const forceUpdate = useForceUpdate();
     const barRef = useRef(null);
     const [username, setUsername] = useState(null);
+    const badgeTypeName = badge.getBadgeTypeName() == BadgeTypes.Staff &&
+                          badge.getFeature("Speaker") ?
+                          "Speaker" : BadgeTypesDisplayName[badge.getBadgeTypeName()];
+    const badgeFeatures = badge.getAllFeatures();
     useLayoutEffect(() => {
+        const usernameOnBadge = badge.getExtraQuestionValue(ExtraQuestionsKeys.UsernameOnBadge) === "true";
+        const firstName = badge.getExtraQuestionValue(ExtraQuestionsKeys.FirstName);
         const barColor = BadgeTypesColor[badge.getBadgeTypeName()];
         if (barColor)
             barRef.current.style.setProperty('background-color', barColor, 'important');
@@ -82,12 +88,6 @@ export default ({ badge }) => {
         backgroundImage = background_speaker_external;
         break;
     }
-    const badgeTypeName = badge.getBadgeTypeName() == BadgeTypes.Staff &&
-                          badge.getFeature("Speaker") ?
-                          "Speaker" : BadgeTypesDisplayName[badge.getBadgeTypeName()];
-    const usernameOnBadge = !!badge.getExtraQuestionValue(ExtraQuestionsKeys.UsernameOnBadge);
-    const firstName = badge.getExtraQuestionValue(ExtraQuestionsKeys.FirstName);
-    const badgeFeatures = badge.getAllFeatures();
     return (
         <div id="badge-artboard" className="bdg-artboard zebra-card">
             <img id="badge-artboard-img" className="bdg-image" src={backgroundImage}/>
