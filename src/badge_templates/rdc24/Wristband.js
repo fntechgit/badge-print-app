@@ -48,7 +48,6 @@ export default ({ badge }) => {
         }
         let usernameAnswer =
             badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
-        if(usernameAnswer[0] === "@") usernameAnswer = usernameAnswer.substring(1);
         
         if (badge.getBadgeTypeName() == BadgeTypes.Press || badge.getBadgeTypeName() == BadgeTypes.Guest) {
             setUsername(firstName); // display first name only if badge type is Press or RDC Guest
@@ -56,7 +55,7 @@ export default ({ badge }) => {
             if (usernameAnswer && usernameAnswer.trim() !== '' &&
                 usernameAnswer != 'N/A' && usernameAnswer != 'n/a') {
                 // display username only if opted to in extra questions, otherwise - display first name
-                setUsername(usernameOnBadge ? `@${usernameAnswer}` : firstName);
+                setUsername(usernameOnBadge ? usernameAnswer : firstName);
             } else {
                 const userIdAnswer =
                     badge.getExtraQuestionValue(ExtraQuestionsKeys.UserId);

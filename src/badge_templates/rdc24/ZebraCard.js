@@ -49,8 +49,6 @@ export default ({ badge }) => {
             barRef.current.style.setProperty('background-color', barColor, 'important');
         let usernameAnswer =
             badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
-            
-        if(usernameAnswer[0] === "@") usernameAnswer = usernameAnswer.substring(1);
 
         if (badge.getBadgeTypeName() == BadgeTypes.Press || badge.getBadgeTypeName() == BadgeTypes.Guest) {
             setUsername(firstName); // display first name only if badge type is Press or RDC Guest
