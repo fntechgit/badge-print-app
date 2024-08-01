@@ -38,8 +38,9 @@ export default ({ badge }) => {
     const over21 = badge.getExtraQuestionValue(ExtraQuestionsKeys.Over21) === "Yes";
     const firstName = badge.getExtraQuestionValue(ExtraQuestionsKeys.FirstName);
     const lastName = badge.getExtraQuestionValue(ExtraQuestionsKeys.LastName);
-    const usernameOnBadge = !!badge.getExtraQuestionValue(ExtraQuestionsKeys.UsernameOnBadge);
+    
     useLayoutEffect(() => {
+        const usernameOnBadge = badge.getExtraQuestionValue(ExtraQuestionsKeys.UsernameOnBadge) === "true";
         const backgroundColor = BadgeTypesColor[badge.getBadgeTypeName()];
         if (backgroundColor) {
             backgroundFillRef.current.style.setProperty('background-color', backgroundColor, 'important');
