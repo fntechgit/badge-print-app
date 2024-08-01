@@ -46,8 +46,10 @@ export default ({ badge }) => {
             stripFillRef.current.style.setProperty('background-color', backgroundColor, 'important');
             artboardRef.current.style.setProperty('background-color', backgroundColor);
         }
-        const usernameAnswer =
+        let usernameAnswer =
             badge.getExtraQuestionValue(ExtraQuestionsKeys.Username);
+        if(usernameAnswer[0] === "@") usernameAnswer = usernameAnswer.substring(1);
+        
         if (badge.getBadgeTypeName() == BadgeTypes.Press || badge.getBadgeTypeName() == BadgeTypes.Guest) {
             setUsername(firstName); // display first name only if badge type is Press or RDC Guest
         } else {
