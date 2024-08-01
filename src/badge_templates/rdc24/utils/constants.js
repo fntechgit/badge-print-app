@@ -35,16 +35,16 @@ export const ZebraCardBadgeTypesColor = {
     [BadgeTypes.Staff]: '#232323',
     [BadgeTypes.Attendee]: '#FFFFFF',
     [BadgeTypes.Speaker]: '#005ED9',
-    [BadgeTypes.ExternalSpeaker]: '#F14C18',
+    [BadgeTypes.ExternalSpeaker]: '#F16618',
     [BadgeTypes.Press]: '#89DC65',
-    [BadgeTypes.Guest]: '#F14C18',
+    [BadgeTypes.Guest]: '#F16618',
 };
 
 export const WristbandBadgeTypesColor = {
     [BadgeTypes.Staff]: '#232323',
     [BadgeTypes.Attendee]: '#FFFFFF',
     [BadgeTypes.Speaker]: '#005ED9',
-    [BadgeTypes.ExternalSpeaker]: '#F14C18',
+    [BadgeTypes.ExternalSpeaker]: '#F16618',
     [BadgeTypes.Press]: '#89DC65',
-    [BadgeTypes.Guest]: '#F14C18',
+    [BadgeTypes.Guest]: '#F16618',
 };
